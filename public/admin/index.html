@@ -90,8 +90,12 @@
       } catch (e) {}
 
       (function () {
-        var USER = "sveltia-cms.user";
+        var USER = "sveltia-cms.user", PASS = "tz-admin-pass";
+        // دخول واحد للوحتين: كلمة السر تُحفظ على هذا الجهاز، وصفحة الإحصائيات تستعملها مباشرة
+        var toStats = /[?&]to=stats/.test(location.search);
+        var savedPass = null; try { savedPass = localStorage.getItem(PASS); } catch (e) {}
         function startCms() {
+          if (toStats) { location.replace("stats.html"); return; }
           var g = document.getElementById("gate"); if (g) g.remove();
           var s = document.createElement("script"); s.src = "sveltia/sveltia-cms.js"; document.body.appendChild(s);
           // زر الإحصائيات فوق اللوحة
@@ -105,7 +109,7 @@
         }
         var stored = null;
         try { stored = JSON.parse(localStorage.getItem(USER) || "null"); } catch (e) {}
-        if (stored && stored.token) { startCms(); return; }
+        if (stored && stored.token && (!toStats || savedPass)) { startCms(); return; }
 
         var boot = document.getElementById("boot"); if (boot) boot.remove();
         var gate = document.getElementById("gate"), msg = document.getElementById("msg");
@@ -122,6 +126,7 @@
             var plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(box.iv) }, key, b64(box.data));
             var token = new TextDecoder().decode(plain);
             localStorage.setItem(USER, JSON.stringify({ backendName: "github", token: token }));
+            try { localStorage.setItem(PASS, document.getElementById("pw").value); } catch (e) {}
             startCms();
           } catch (e) { msg.textContent = "كلمة السر غير صحيحة"; }
         });
