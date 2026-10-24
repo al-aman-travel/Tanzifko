@@ -8,7 +8,7 @@
  * بعد شراء الدومين وتوجيهه إلى GitHub Pages: اكتبه هنا (مثل 'tanzeefko.com') فقط.
  * البناء يضع ملف CNAME تلقائيًا، وتُفتح الفهرسة، وتتحول كل الروابط إلى الجذر.
  */
-export const DOMAIN = '';
+export const DOMAIN = 'hawiyatkw.com';
 
 export const PREVIEW = !DOMAIN;
 export const SITE = DOMAIN ? `https://${DOMAIN}` : 'https://al-aman-travel.github.io';

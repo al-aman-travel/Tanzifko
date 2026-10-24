@@ -15,7 +15,7 @@
 2. في إعدادات المستودع ← Pages: ضع الدومين نفسه في Custom domain وفعّل Enforce HTTPS.
 3. وجّه الدومين من شركة التسجيل إلى GitHub Pages (سجلات A الأربعة وسجل CNAME لـ www).
 
-قبل ربط الدومين يعمل الموقع للمعاينة على `https://al-aman-travel.github.io/Tanzifko/`، وكل صفحاته noindex حتى لا يفهرس جوجل رابطًا مؤقتًا.
+الدومين: hawiyatkw.com (اشتُري من Hostinger في 24 أكتوبر 2026).
 
 ## التطوير
 ```
