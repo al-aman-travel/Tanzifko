@@ -46,9 +46,9 @@ export const licenseTextEn = business.crNumber
   : '';
 
 export const description =
-  `${business.name} تؤجّر حاويات الأنقاض والمخلفات في جميع مناطق الكويت: حاوية أنقاض 12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب للأخشاب والكرتون والإطارات، مع التوصيل والتبديل والرفع. الطلب عبر واتساب ${business.whatsapp}.`;
+  `${business.name} تؤجّر حاويات الأنقاض والمخلفات في جميع مناطق الكويت: حاويات أنقاض 6 و12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب للأخشاب والكرتون والإطارات، مع التوصيل والتبديل والرفع. الطلب عبر واتساب ${business.whatsapp}.`;
 export const descriptionEn =
-  `${business.nameEn} offers skip hire and waste container rental across Kuwait: a 12 m³ rubble skip for bricks, marble and construction waste, and a 30 m³ skip for wood, cardboard and tyres, with delivery, swap and pickup in every area. Order on WhatsApp +965 ${business.whatsapp}.`;
+  `${business.nameEn} offers skip hire and waste container rental across Kuwait: 6 m³ and 12 m³ rubble skips for bricks, marble and construction waste, and a 30 m³ skip for wood, cardboard and tyres, with delivery, swap and pickup in every area. Order on WhatsApp +965 ${business.whatsapp}.`;
 
 /** الخدمات التشغيلية الفعلية (توصيل / تبديل / رفع) */
 export const operations = [

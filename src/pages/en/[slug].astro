@@ -82,7 +82,7 @@ const paragraphs = d.bodyEn.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean
 
     {others.length > 0 && (
       <section class="mt-12">
-        <h2 class="text-2xl font-bold">Other container</h2>
+        <h2 class="text-2xl font-bold">Other containers</h2>
         <p class="mt-1 text-muted">To compare sizes, see the <a class="text-brand underline" href={href('/en/container-sizes/')}>container size guide</a>.</p>
         <div class="mt-5 grid gap-5 md:grid-cols-2">{others.map((o) => <ContainerCard c={o} lang="en" />)}</div>
       </section>

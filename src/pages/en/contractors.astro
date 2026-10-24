@@ -58,7 +58,7 @@ const wa = waLink(`Hello ${business.shortEn}, we are a company and need containe
     </section>
     <section class="mt-12">
       <h2 class="text-2xl font-bold">Available containers</h2>
-      <div class="mt-5 grid gap-5 md:grid-cols-2">{list.map((c) => <ContainerCard c={c} lang="en" />)}</div>
+      <div class="mt-5 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{list.map((c) => <ContainerCard c={c} lang="en" />)}</div>
       <p class="mt-4">If your company needs a different size, <a class="font-bold text-brand underline" href={href(custom.pathEn)}>we design and build the container to your size</a>.</p>
     </section>
     <section class="mt-12">

@@ -53,6 +53,7 @@ collections:
         required: false
         options:
           - {label: "غير محدد", value: ""}
+          - {label: "حاوية 6 متر مكعب", value: "hawiya-6-metr"}
           - {label: "حاوية أنقاض 12 متر مكعب", value: "hawiyat-anqad"}
           - {label: "حاوية 30 متر مكعب", value: "hawiya-30-metr"}
         hint: "اختر المقاس فقط إن كنت متأكدًا — تظهر الصورة حينها في صفحة الحاوية."

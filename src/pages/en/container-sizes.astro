@@ -11,16 +11,17 @@ import { href } from '../../lib/url';
 const list = await containers();
 const crumbs = [{ name: 'Home', path: '/en/' }, { name: 'Container sizes', path: '/en/container-sizes/' }];
 const faqs = [
-  { question: 'Which container sizes does Tanzeefko Local offer?', answer: 'A 12 m³ rubble container for bricks, marble and construction waste, and a 30 m³ container (6 × 2.30 × 2.10 m) for wood, cardboard and tyres. We also build containers in other sizes on request.' },
+  { question: 'Which container sizes does Tanzeefko Local offer?', answer: 'A 6 m³ skip and a 12 m³ rubble skip for rubble, bricks, marble and construction waste, and a 30 m³ container (6 × 2.30 × 2.10 m) for wood, cardboard and tyres. We also build containers in other sizes on request.' },
   { question: 'What is the difference between the 12 m³ and 30 m³ containers?', answer: 'The 12 m³ container is for heavy waste such as rubble, bricks and marble. The 30 m³ container is for bulky, lighter waste such as wood, cardboard and tyres.' },
-  { question: 'Do you have 6 m³ or 14 m³ skips?', answer: 'Our standard sizes are 12 m³ and 30 m³. If your company needs another size, we build the container to order.' },
+  { question: 'Do you have a 6 m³ skip?', answer: 'Yes. The 6 m³ skip is available to rent and is our smallest container.' },
+  { question: 'Do you have a 14 m³ skip?', answer: 'Our standard sizes are 6, 12 and 30 m³. If your company needs another size, we build the container to order.' },
   { question: 'How do I choose the right size?', answer: `Choose by the type of waste first. If you are not sure, send the type of work and the area on WhatsApp +965 ${business.whatsapp} and we will suggest a size.` },
   { question: 'What if the container fills up before the work is done?', answer: 'We take the full container away and leave an empty one, and collect it when the work is finished.' },
 ];
 ---
 <BaseLayout
   lang="en"
-  title="Skip sizes in Kuwait: 12 m³ vs 30 m³ rubble containers"
+  title="Skip sizes in Kuwait: 6, 12 and 30 m³ rubble containers"
   description={`Container size guide from ${business.nameEn}: a 12 m³ container for bricks and marble, a 30 m³ container (6 × 2.30 × 2.10 m) for wood and cardboard, and custom sizes on request.`}
   faqs={faqs}
   breadcrumbs={crumbs}
@@ -53,6 +54,8 @@ const faqs = [
       </table>
     </div>
     <section class="prose-ar mt-10 max-w-3xl">
+      <h2>Smaller amounts: the 6 m³ skip</h2>
+      <p>The 6 m³ skip is our smallest container, for smaller amounts of rubble and construction and renovation waste. <a href={href('/en/skip-6m3/')}>6 m³ skip details</a>.</p>
       <h2>Heavy waste: the 12 m³ container</h2>
       <p>Rubble, bricks, marble and construction and renovation waste are heavy, so they go in the 12 m³ rubble container. It suits demolition, renovation and finishing work on homes, villas and construction sites.</p>
       <h2>Bulky waste: the 30 m³ container</h2>
@@ -62,7 +65,7 @@ const faqs = [
     </section>
     <section class="mt-12">
       <h2 class="text-2xl font-bold">Available containers</h2>
-      <div class="mt-5 grid gap-5 md:grid-cols-2">{list.map((c) => <ContainerCard c={c} lang="en" />)}</div>
+      <div class="mt-5 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{list.map((c) => <ContainerCard c={c} lang="en" />)}</div>
     </section>
     <FAQ faqs={faqs} title="Frequently asked questions" />
     <a class="btn btn-wa mt-10" href={waGeneralEn()} target="_blank" rel="noopener">Ask us about the right size on WhatsApp</a>

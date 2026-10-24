@@ -32,7 +32,7 @@ const wa = waLink(`مرحبًا ${business.short}، نريد تفصيل حاوي
     <div class="mt-4 grid gap-8 lg:grid-cols-[1fr_24rem]">
       <div>
         <h1 class="text-3xl font-bold leading-snug">تفصيل حاويات حسب الطلب بالمقاس الذي تحتاجه شركتك</h1>
-        <p class="mt-4 text-lg">إلى جانب مقاسَي 12 و30 متر مكعب، نفصّل ونصمّم الحاوية بالمقاس الذي تطلبه الشركة، بما يناسب نوع المخلفات وطبيعة موقع العمل.</p>
+        <p class="mt-4 text-lg">إلى جانب المقاسات الجاهزة 6 و12 و30 متر مكعب، نفصّل ونصمّم الحاوية بالمقاس الذي تطلبه الشركة، بما يناسب نوع المخلفات وطبيعة موقع العمل.</p>
         <h2 class="mt-8 text-xl font-bold">ما نحتاجه منك</h2>
         <ul class="mt-3 list-disc space-y-1 ps-6">
           <li>الأبعاد أو السعة المطلوبة</li>
@@ -47,7 +47,7 @@ const wa = waLink(`مرحبًا ${business.short}، نريد تفصيل حاوي
     <FAQ faqs={faqs} />
     <section class="mt-12">
       <h2 class="text-2xl font-bold">المقاسات الجاهزة</h2>
-      <div class="mt-5 grid gap-5 md:grid-cols-2">{list.map((c) => <ContainerCard c={c} />)}</div>
+      <div class="mt-5 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{list.map((c) => <ContainerCard c={c} />)}</div>
     </section>
   </div>
 </BaseLayout>

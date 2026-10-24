@@ -18,7 +18,7 @@ const featured = (await works({ featured: true })).slice(0, 6);
 const hero = await heroImage(heroSrc, '(min-width: 1024px) 28rem, 100vw');
 
 const faqs = [
-  { question: 'ما مقاسات الحاويات المتوفرة؟', answer: 'حاوية أنقاض 12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب (6 × 2.30 × 2.1 م) للأخشاب والكرتون والإطارات.' },
+  { question: 'ما مقاسات الحاويات المتوفرة؟', answer: 'حاوية 6 متر مكعب وحاوية أنقاض 12 متر مكعب للأنقاض والطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب (6 × 2.30 × 2.1 م) للأخشاب والكرتون والإطارات.' },
   { question: 'هل تفصّلون حاويات بمقاسات خاصة؟', answer: `نعم، نفصّل ونصمّم الحاوية بالمقاس الذي تطلبه الشركة. أرسل المقاس ونوع المخلفات عبر واتساب ${business.whatsapp}.` },
   { question: 'هل تبدّلون الحاوية عند امتلائها؟', answer: 'نعم، نرفع الحاوية الممتلئة ونضع مكانها حاوية فارغة، ونرفعها نهائيًا عند انتهاء العمل.' },
   { question: 'كيف أطلب حاوية؟', answer: `عبر واتساب ${business.whatsapp}: أرسل منطقة العمل ونوع المخلفات والموعد، ونؤكد لك التوفر وموعد التوصيل.` },
@@ -29,8 +29,8 @@ const faqs = [
 ];
 ---
 <BaseLayout
-  title={`تأجير حاويات انقاض في الكويت 12 و30 متر مكعب — ${business.short}`}
-  description={`${business.name}: تأجير حاويات أنقاض 12 متر مكعب وحاويات 30 متر مكعب للأخشاب والكرتون والإطارات في الكويت، وتفصيل حاويات بالمقاس المطلوب. اطلب عبر واتساب ${business.whatsapp}.`}
+  title={`تأجير حاويات انقاض في الكويت 6 و12 و30 متر مكعب — ${business.short}`}
+  description={`${business.name}: تأجير حاويات أنقاض 6 و12 متر مكعب وحاويات 30 متر مكعب للأخشاب والكرتون والإطارات في الكويت، وتفصيل حاويات بالمقاس المطلوب. اطلب عبر واتساب ${business.whatsapp}.`}
   faqs={faqs}
   alternate="/en/"
   preloadImage={hero}
@@ -40,7 +40,7 @@ const faqs = [
       <div>
         <p class="font-semibold text-sun">{business.name}</p>
         <h1 class="mt-2 text-3xl font-bold leading-snug md:text-4xl">تأجير حاويات الأنقاض والمخلفات في الكويت</h1>
-        <p class="mt-4 max-w-2xl text-lg text-white/85">حاوية أنقاض 12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب للأخشاب والكرتون والإطارات. نوصل الحاوية، ونبدّلها عند امتلائها، ونرفعها عند انتهاء العمل.</p>
+        <p class="mt-4 max-w-2xl text-lg text-white/85">حاويات أنقاض 6 و12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب للأخشاب والكرتون والإطارات. نوصل الحاوية، ونبدّلها عند امتلائها، ونرفعها عند انتهاء العمل.</p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a class="btn btn-sun" href={href('/talab-hawiya/')}>اطلب حاوية</a>
           <a class="btn btn-wa" href={waGeneral()} target="_blank" rel="noopener">واتساب {business.whatsapp}</a>
@@ -54,13 +54,13 @@ const faqs = [
   <section class="container-page mt-12">
     <h2 class="text-2xl font-bold">مقاسات الحاويات</h2>
     <p class="mt-1 text-muted">ايجار حاوية انقاض لترميم منزل، أو حاويات لمشروع شركة مقاولات: اختر الحاوية حسب نوع المخلفات، أو راجع <a class="text-brand underline" href={href('/maqasat-hawiyat/')}>دليل مقاسات الحاويات</a>.</p>
-    <div class="mt-5 grid gap-5 md:grid-cols-2">
+    <div class="mt-5 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
       {list.map((c) => <ContainerCard c={c} />)}
     </div>
     <div class="mt-5 flex flex-col gap-4 rounded-2xl border-2 border-sun bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
       <div>
         <h3 class="text-xl font-bold">{custom.title}</h3>
-        <p class="mt-1 text-muted">تحتاج مقاسًا غير 12 أو 30 متر مكعب؟ {custom.short}</p>
+        <p class="mt-1 text-muted">تحتاج مقاسًا غير 6 أو 12 أو 30 متر مكعب؟ {custom.short}</p>
       </div>
       <a class="btn btn-brand shrink-0" href={href(custom.path)}>تفاصيل التفصيل</a>
     </div>
