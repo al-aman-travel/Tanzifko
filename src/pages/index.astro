@@ -6,7 +6,7 @@ import Clients from '../components/Clients.astro';
 import TrustBar from '../components/TrustBar.astro';
 import ServiceAreas from '../components/ServiceAreas.astro';
 import FAQ from '../components/FAQ.astro';
-import { business, operations, custom, priceFaq, areasFaq } from '../data/business';
+import { business, operations, custom, priceFaq, areasFaq, restaurants, contractsFaq } from '../data/business';
 import { waGeneral } from '../data/whatsapp';
 import { containers, works } from '../lib/content';
 import { heroImage } from '../lib/hero';
@@ -23,6 +23,7 @@ const faqs = [
   { question: 'هل تبدّلون الحاوية عند امتلائها؟', answer: 'نعم، نرفع الحاوية الممتلئة ونضع مكانها حاوية فارغة، ونرفعها نهائيًا عند انتهاء العمل.' },
   { question: 'كيف أطلب حاوية؟', answer: `عبر واتساب ${business.whatsapp}: أرسل منطقة العمل ونوع المخلفات والموعد، ونؤكد لك التوفر وموعد التوصيل.` },
   areasFaq,
+  contractsFaq,
   priceFaq(business.whatsapp),
   { question: 'ما ساعات العمل؟', answer: `يوميًا من 7 صباحًا حتى 10 مساءً، طوال أيام الأسبوع.` },
   { question: 'هل تعملون مع شركات المقاولات؟', answer: 'نعم، لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات.' },
@@ -63,6 +64,13 @@ const faqs = [
         <p class="mt-1 text-muted">تحتاج مقاسًا غير 6 أو 12 أو 30 متر مكعب؟ {custom.short}</p>
       </div>
       <a class="btn btn-brand shrink-0" href={href(custom.path)}>تفاصيل التفصيل</a>
+    </div>
+    <div class="mt-4 flex flex-col gap-4 rounded-2xl border border-line bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h3 class="text-xl font-bold">{restaurants.title}</h3>
+        <p class="mt-1 text-muted">{restaurants.short}</p>
+      </div>
+      <a class="btn btn-line shrink-0" href={href(restaurants.path)}>حاويات المطاعم</a>
     </div>
   </section>
 

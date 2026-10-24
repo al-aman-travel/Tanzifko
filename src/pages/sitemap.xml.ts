@@ -42,6 +42,7 @@ export const GET: APIRoute = async ({ site }) => {
     })),
     { ar: '/manatiq-alkhidma/', en: '/en/service-areas/', files: ['src/pages/manatiq-alkhidma.astro', 'src/pages/en/service-areas.astro', 'src/data/areas.ts', ...SHARED] },
     { ar: '/maqasat-hawiyat/', en: '/en/container-sizes/', files: ['src/pages/maqasat-hawiyat.astro', 'src/pages/en/container-sizes.astro', 'src/content/containers', ...SHARED] },
+    { ar: '/hawiyat-qumama-lilmataem/', en: '/en/restaurant-garbage-containers/', files: ['src/pages/hawiyat-qumama-lilmataem.astro', 'src/pages/en/restaurant-garbage-containers.astro', ...SHARED] },
     { ar: custom.path, en: custom.pathEn, files: ['src/pages/tafseel-hawiyat.astro', 'src/pages/en/custom-containers.astro', ...SHARED] },
     { ar: '/hawiyat-lilmuqawilin/', en: '/en/contractors/', files: ['src/pages/hawiyat-lilmuqawilin.astro', 'src/pages/en/contractors.astro', 'src/data/areas.ts', ...SHARED, ...workFiles] },
     { ar: '/aamaluna/', en: '/en/our-work/', files: ['src/pages/aamaluna.astro', 'src/pages/en/our-work.astro', 'src/content/works'], images: all.map(img) },

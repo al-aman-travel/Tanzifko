@@ -46,9 +46,9 @@ export const licenseTextEn = business.crNumber
   : '';
 
 export const description =
-  `${business.name} تؤجّر حاويات الأنقاض والمخلفات في جميع مناطق الكويت: حاويات أنقاض 6 و12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب للأخشاب والكرتون والإطارات، مع التوصيل والتبديل والرفع. الطلب عبر واتساب ${business.whatsapp}.`;
+  `${business.name} تؤجّر حاويات الأنقاض والمخلفات في جميع مناطق الكويت: حاويات أنقاض 6 و12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب للأخشاب والكرتون والإطارات، مع التوصيل والتبديل والرفع، وحاويات قمامة للمطاعم، وعقود شهرية وسنوية. الطلب عبر واتساب ${business.whatsapp}.`;
 export const descriptionEn =
-  `${business.nameEn} offers skip hire and waste container rental across Kuwait: 6 m³ and 12 m³ rubble skips for bricks, marble and construction waste, and a 30 m³ skip for wood, cardboard and tyres, with delivery, swap and pickup in every area. Order on WhatsApp +965 ${business.whatsapp}.`;
+  `${business.nameEn} offers skip hire and waste container rental across Kuwait: 6 m³ and 12 m³ rubble skips for bricks, marble and construction waste, and a 30 m³ skip for wood, cardboard and tyres, with delivery, swap and pickup in every area, plus restaurant garbage containers and monthly or annual contracts. Order on WhatsApp +965 ${business.whatsapp}.`;
 
 /** الخدمات التشغيلية الفعلية (توصيل / تبديل / رفع) */
 export const operations = [
@@ -88,3 +88,17 @@ export const custom = {
   path: '/tafseel-hawiyat/',
   pathEn: '/en/custom-containers/',
 };
+
+/** حاويات قمامة للمطاعم (أكّده المالك) */
+export const restaurants = {
+  title: 'حاويات قمامة للمطاعم',
+  titleEn: 'Garbage containers for restaurants',
+  short: 'نوفر حاويات قمامة للمطاعم بعقود شهرية وسنوية.',
+  shortEn: 'We supply garbage containers for restaurants on monthly and annual contracts.',
+  path: '/hawiyat-qumama-lilmataem/',
+  pathEn: '/en/restaurant-garbage-containers/',
+};
+
+/** العقود الشهرية والسنوية (أكّده المالك) */
+export const contractsFaq = { question: 'هل لديكم عقود شهرية وسنوية؟', answer: 'نعم، لدينا نظام عقود شهرية وسنوية للشركات والمشاريع والمطاعم، إلى جانب الطلب لمرة واحدة.' };
+export const contractsFaqEn = { question: 'Do you offer monthly and annual contracts?', answer: 'Yes. We offer monthly and annual contracts for companies, projects and restaurants, as well as one-off orders.' };

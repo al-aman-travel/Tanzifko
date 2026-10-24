@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FAQ from '../../components/FAQ.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import ServiceAreas from '../../components/ServiceAreas.astro';
+import { business, restaurants, contractsFaqEn, areasFaqEn } from '../../data/business';
+import { waLink } from '../../data/whatsapp';
+import { href } from '../../lib/url';
+
+const crumbs = [{ name: 'Home', path: '/en/' }, { name: restaurants.titleEn, path: restaurants.pathEn }];
+const faqs = [
+  { question: 'Do you supply garbage containers for restaurants?', answer: `Yes. ${business.nameEn} supplies garbage containers for restaurants in every area of Kuwait.` },
+  contractsFaqEn,
+  { question: 'How do I order garbage containers for my restaurant?', answer: `Send the restaurant name, location, number of containers and contract type (monthly or annual) on WhatsApp +965 ${business.whatsapp}, and we will send you a quote.` },
+  { question: 'How much does a restaurant garbage container cost?', answer: `Prices depend on the order and contract type. Send the details on WhatsApp +965 ${business.whatsapp} and we will send you the price.` },
+  areasFaqEn,
+];
+const wa = waLink(`Hello ${business.shortEn}, I need garbage containers for a restaurant.\nRestaurant:\nLocation:\nNumber of containers:\nContract (monthly / annual):`);
+---
+<BaseLayout
+  lang="en"
+  title="Restaurant garbage containers in Kuwait — monthly and annual contracts"
+  description={`${business.nameEn} supplies garbage containers for restaurants in every area of Kuwait on monthly and annual contracts. Licensed for solid waste transport. Order on WhatsApp +965 ${business.whatsapp}.`}
+  faqs={faqs}
+  breadcrumbs={crumbs}
+  alternate={restaurants.path}
+  service={{ name: restaurants.titleEn, url: new URL(Astro.url.pathname, Astro.site).toString(), description: restaurants.shortEn }}
+>
+  <div class="container-page pt-6">
+    <Breadcrumbs items={crumbs} lang="en" />
+    <h1 class="mt-4 text-3xl font-bold leading-snug">Garbage containers for restaurants in Kuwait on monthly and annual contracts</h1>
+    <p class="mt-4 max-w-3xl text-lg">Alongside rubble skips and construction waste containers, we supply garbage containers for restaurants in every area of Kuwait, on monthly or annual contracts.</p>
+    <div class="mt-5"><TrustBar lang="en" tone="light" /></div>
+    <section class="mt-10 grid gap-4 sm:grid-cols-3">
+      <div class="rounded-xl border border-line bg-white p-5"><h2 class="font-bold">Monthly contract</h2><p class="mt-1 text-sm text-muted">For restaurants that want a flexible term.</p></div>
+      <div class="rounded-xl border border-line bg-white p-5"><h2 class="font-bold">Annual contract</h2><p class="mt-1 text-sm text-muted">Year-round service under one agreement.</p></div>
+      <div class="rounded-xl border border-line bg-white p-5"><h2 class="font-bold">All of Kuwait</h2><p class="mt-1 text-sm text-muted">We serve restaurants in all six governorates.</p></div>
+    </section>
+    <section class="mt-12 max-w-3xl">
+      <h2 class="text-2xl font-bold">What we need from you</h2>
+      <ul class="mt-3 list-disc space-y-1 ps-6"><li>Restaurant name and location</li><li>Number of containers</li><li>Contract type: monthly or annual</li></ul>
+      <a class="btn btn-wa mt-6" href={wa} target="_blank" rel="noopener">Request a quote on WhatsApp</a>
+      <p class="mt-6">For renovation waste from your restaurant, see our <a class="text-brand underline" href={href('/en/container-sizes/')}>skip sizes</a>.</p>
+    </section>
+    <ServiceAreas lang="en" />
+    <FAQ faqs={faqs} title="Frequently asked questions" />
+  </div>
+</BaseLayout>

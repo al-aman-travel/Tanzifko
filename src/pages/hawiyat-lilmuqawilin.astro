@@ -6,7 +6,7 @@ import Clients from '../components/Clients.astro';
 import ServiceAreas from '../components/ServiceAreas.astro';
 import WorkGrid from '../components/WorkGrid.astro';
 import FAQ from '../components/FAQ.astro';
-import { business, operations, licenseText, custom } from '../data/business';
+import { business, operations, licenseText, custom, contractsFaq } from '../data/business';
 import { waLink } from '../data/whatsapp';
 import { containers, works } from '../lib/content';
 import { projectTypes, newCities } from '../data/areas';
@@ -17,6 +17,7 @@ const gallery = (await works()).slice(0, 6);
 const crumbs = [{ name: 'الرئيسية', path: '/' }, { name: 'حاويات للشركات والمشاريع', path: '/hawiyat-lilmuqawilin/' }];
 const sectors = ['شركات المقاولات الإنشائية', 'شركات المقاولات الهندسية', 'شركات الترميم والتشطيبات', 'المحلات والمخازن والورش', 'أصحاب المنازل والفلل'];
 const faqs = [
+  contractsFaq,
   { question: 'هل تتعاقدون مع شركات المقاولات؟', answer: 'نعم، لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات.' },
   ...(business.crNumber ? [{ question: 'هل الشركة مرخّصة لنقل النفايات؟', answer: `نعم، ${business.name} مرخّصة لنشاط نقل النفايات الصلبة والسائلة بسجل تجاري رقم ${business.crNumber}، وحاصلة على موافقة بلدية الكويت والهيئة العامة للبيئة.` }] : []),
   { question: 'هل توفرون حاويات لمشاريع الهدم والبناء الجديد؟', answer: 'نعم، نوفر حاويات لمشاريع البناء الجديد والهدم والترميم والتشطيبات، مع تبديل الحاوية عند امتلائها طوال مدة المشروع.' },
@@ -41,6 +42,12 @@ const wa = waLink(`مرحبًا ${business.short}، نحن شركة ونحتاج
       <h2 class="text-2xl font-bold">عقود وسابقة أعمال</h2>
       <p class="mt-2 max-w-3xl">لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات، منها:</p>
       <Clients />
+    </section>
+
+    <section class="mt-12 rounded-2xl border-2 border-sun bg-white p-6">
+      <h2 class="text-2xl font-bold">عقود شهرية وسنوية للشركات</h2>
+      <p class="mt-2 max-w-3xl">لدينا نظام عقود شهرية وسنوية لتوفير الحاويات وتبديلها طوال مدة المشروع، إلى جانب الطلب لمرة واحدة.</p>
+      <a class="btn btn-wa mt-4" href={wa} target="_blank" rel="noopener">اطلب عرض عقد عبر واتساب</a>
     </section>
 
     <section class="mt-12">

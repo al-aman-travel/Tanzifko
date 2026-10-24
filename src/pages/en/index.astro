@@ -6,7 +6,7 @@ import Clients from '../../components/Clients.astro';
 import TrustBar from '../../components/TrustBar.astro';
 import ServiceAreas from '../../components/ServiceAreas.astro';
 import FAQ from '../../components/FAQ.astro';
-import { business, operations, custom, priceFaqEn, areasFaqEn } from '../../data/business';
+import { business, operations, custom, priceFaqEn, areasFaqEn, restaurants, contractsFaqEn } from '../../data/business';
 import { waGeneralEn } from '../../data/whatsapp';
 import { containers, works } from '../../lib/content';
 import { heroImage } from '../../lib/hero';
@@ -23,6 +23,7 @@ const faqs = [
   { question: 'Do you swap the container when it is full?', answer: 'Yes. We take the full container away and leave an empty one, and collect it when the work is finished.' },
   { question: 'How do I order a container?', answer: `On WhatsApp +965 ${business.whatsapp}: send the work area, the type of waste and the date, and we will confirm availability and the delivery time.` },
   areasFaqEn,
+  contractsFaqEn,
   priceFaqEn(business.whatsapp),
   { question: 'What are your working hours?', answer: 'Daily, 7 am to 10 pm, every day of the week.' },
   { question: 'Do you work with contracting companies?', answer: 'Yes. We have contracts with major contracting companies in Kuwait and track record with renovation, engineering contracting and finishing companies.' },
@@ -62,6 +63,13 @@ const faqs = [
         <p class="mt-1 text-muted">Need a size other than 6, 12 or 30 m³? {custom.shortEn}</p>
       </div>
       <a class="btn btn-brand shrink-0" href={href(custom.pathEn)}>Custom containers</a>
+    </div>
+    <div class="mt-4 flex flex-col gap-4 rounded-2xl border border-line bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h3 class="text-xl font-bold">{restaurants.titleEn}</h3>
+        <p class="mt-1 text-muted">{restaurants.shortEn}</p>
+      </div>
+      <a class="btn btn-line shrink-0" href={href(restaurants.pathEn)}>Restaurant containers</a>
     </div>
   </section>
 

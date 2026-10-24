@@ -1,5 +1,5 @@
 ---
-import { business, description, descriptionEn, licenseText, licenseTextEn, custom } from '../data/business';
+import { business, description, descriptionEn, licenseText, licenseTextEn, custom, restaurants } from '../data/business';
 import { waGeneral, waGeneralEn } from '../data/whatsapp';
 import { containers } from '../lib/content';
 import { href } from '../lib/url';
@@ -25,6 +25,7 @@ const address = isEn ? business.addressEn : business.address;
         {list.map((c) => <li><a class="hover:text-sun" href={href(isEn ? `/en/${c.data.enSlug}/` : `/${c.id}/`)}>{isEn ? c.data.titleEn : c.data.title}</a></li>)}
         <li><a class="hover:text-sun" href={href(isEn ? '/en/service-areas/' : '/manatiq-alkhidma/')}>{isEn ? 'Service areas in Kuwait' : 'مناطق الخدمة في الكويت'}</a></li>
         <li><a class="hover:text-sun" href={href(isEn ? '/en/container-sizes/' : '/maqasat-hawiyat/')}>{isEn ? 'Container size guide' : 'دليل مقاسات الحاويات'}</a></li>
+        <li><a class="hover:text-sun" href={href(isEn ? restaurants.pathEn : restaurants.path)}>{isEn ? restaurants.titleEn : restaurants.title}</a></li>
         <li><a class="hover:text-sun" href={href(isEn ? custom.pathEn : custom.path)}>{isEn ? custom.titleEn : custom.title}</a></li>
         <li><a class="hover:text-sun" href={href(isEn ? '/en/contractors/' : '/hawiyat-lilmuqawilin/')}>{isEn ? 'For contractors and projects' : 'حاويات للشركات والمشاريع'}</a></li>
         <li><a class="hover:text-sun" href={href(isEn ? '/en/our-work/' : '/aamaluna/')}>{isEn ? 'Our work' : 'أعمالنا'}</a></li>

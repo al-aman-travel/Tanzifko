@@ -5,7 +5,7 @@ import ContainerCard from '../../components/ContainerCard.astro';
 import Clients from '../../components/Clients.astro';
 import ServiceAreas from '../../components/ServiceAreas.astro';
 import FAQ from '../../components/FAQ.astro';
-import { business, operations, licenseTextEn, custom } from '../../data/business';
+import { business, operations, licenseTextEn, custom, contractsFaqEn } from '../../data/business';
 import { href } from '../../lib/url';
 import { waLink } from '../../data/whatsapp';
 import { containers } from '../../lib/content';
@@ -15,6 +15,7 @@ const list = await containers();
 const crumbs = [{ name: 'Home', path: '/en/' }, { name: 'Contractors and projects', path: '/en/contractors/' }];
 const sectors = ['Construction contractors', 'Engineering contractors', 'Renovation and finishing companies', 'Shops, warehouses and workshops', 'Home and villa owners'];
 const faqs = [
+  contractsFaqEn,
   { question: 'Do you work under contract with contracting companies?', answer: 'Yes. We have contracts with major contracting companies in Kuwait and track record with renovation, engineering contracting and finishing companies.' },
   { question: 'Do you supply skips for demolition and new-build projects?', answer: 'Yes. We supply skips for new construction, demolition, renovation and finishing projects, and swap them when full for the whole project.' },
   { question: 'Which containers suit construction sites?', answer: 'The 12 m³ rubble container for bricks, marble and construction waste, and the 30 m³ container for wood, cardboard and tyres.' },
@@ -45,6 +46,11 @@ const wa = waLink(`Hello ${business.shortEn}, we are a company and need containe
         <p class="mt-2 max-w-3xl">{business.nameEn}: {licenseTextEn}</p>
       </section>
     )}
+    <section class="mt-12 rounded-2xl border-2 border-sun bg-white p-6">
+      <h2 class="text-2xl font-bold">Monthly and annual contracts</h2>
+      <p class="mt-2 max-w-3xl">We offer monthly and annual contracts to supply and swap skips for the whole project, as well as one-off orders.</p>
+      <a class="btn btn-wa mt-4" href={wa} target="_blank" rel="noopener">Request a contract quote on WhatsApp</a>
+    </section>
     <section class="mt-12">
       <h2 class="text-2xl font-bold">Skips for every type of project</h2>
       <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

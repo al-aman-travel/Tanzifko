@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FAQ from '../components/FAQ.astro';
+import TrustBar from '../components/TrustBar.astro';
+import ServiceAreas from '../components/ServiceAreas.astro';
+import { business, restaurants, contractsFaq, areasFaq } from '../data/business';
+import { waLink } from '../data/whatsapp';
+import { href } from '../lib/url';
+
+const crumbs = [{ name: 'الرئيسية', path: '/' }, { name: restaurants.title, path: restaurants.path }];
+const faqs = [
+  { question: 'هل توفرون حاويات قمامة للمطاعم؟', answer: `نعم، ${business.name} توفر حاويات قمامة للمطاعم في جميع مناطق الكويت.` },
+  contractsFaq,
+  { question: 'كيف أطلب حاويات قمامة لمطعمي؟', answer: `أرسل اسم المطعم وموقعه وعدد الحاويات المطلوبة ونوع العقد (شهري أو سنوي) عبر واتساب ${business.whatsapp}، ونرسل لك العرض.` },
+  { question: 'كم سعر حاوية القمامة للمطاعم؟', answer: `السعر حسب الطلب ونوع العقد. أرسل التفاصيل عبر واتساب ${business.whatsapp} ونرسل لك السعر.` },
+  areasFaq,
+];
+const wa = waLink(`مرحبًا ${business.short}، أريد حاويات قمامة لمطعم.\nاسم المطعم:\nالموقع:\nعدد الحاويات:\nنوع العقد (شهري / سنوي):`);
+---
+<BaseLayout
+  title="حاويات قمامة للمطاعم في الكويت — عقود شهرية وسنوية"
+  description={`${business.name} توفر حاويات قمامة للمطاعم في جميع مناطق الكويت بعقود شهرية وسنوية. شركة مرخّصة لنقل النفايات الصلبة. اطلب عبر واتساب ${business.whatsapp}.`}
+  faqs={faqs}
+  breadcrumbs={crumbs}
+  alternate={restaurants.pathEn}
+  service={{ name: restaurants.title, url: new URL(Astro.url.pathname, Astro.site).toString(), description: restaurants.short }}
+>
+  <div class="container-page pt-6">
+    <Breadcrumbs items={crumbs} />
+    <h1 class="mt-4 text-3xl font-bold leading-snug">حاويات قمامة للمطاعم في الكويت بعقود شهرية وسنوية</h1>
+    <p class="mt-4 max-w-3xl text-lg">إلى جانب حاويات الأنقاض ومخلفات البناء، نوفر حاويات قمامة للمطاعم في جميع مناطق الكويت، بنظام عقود شهرية أو سنوية.</p>
+    <div class="mt-5"><TrustBar tone="light" /></div>
+
+    <section class="mt-10 grid gap-4 sm:grid-cols-3">
+      <div class="rounded-xl border border-line bg-white p-5"><h2 class="font-bold">عقد شهري</h2><p class="mt-1 text-sm text-muted">للمطاعم التي تريد مرونة في المدة.</p></div>
+      <div class="rounded-xl border border-line bg-white p-5"><h2 class="font-bold">عقد سنوي</h2><p class="mt-1 text-sm text-muted">لخدمة مستمرة طوال السنة باتفاق واحد.</p></div>
+      <div class="rounded-xl border border-line bg-white p-5"><h2 class="font-bold">جميع مناطق الكويت</h2><p class="mt-1 text-sm text-muted">نخدم المطاعم في المحافظات الست.</p></div>
+    </section>
+
+    <section class="mt-12 max-w-3xl">
+      <h2 class="text-2xl font-bold">ما نحتاجه منك</h2>
+      <ul class="mt-3 list-disc space-y-1 ps-6">
+        <li>اسم المطعم وموقعه</li>
+        <li>عدد الحاويات المطلوبة</li>
+        <li>نوع العقد: شهري أو سنوي</li>
+      </ul>
+      <a class="btn btn-wa mt-6" href={wa} target="_blank" rel="noopener">اطلب عرضًا عبر واتساب</a>
+      <p class="mt-6">ولمخلفات ترميم المطعم أو تجديده، راجع <a class="text-brand underline" href={href('/maqasat-hawiyat/')}>مقاسات حاويات الأنقاض</a>.</p>
+    </section>
+
+    <ServiceAreas />
+    <FAQ faqs={faqs} />
+  </div>
+</BaseLayout>

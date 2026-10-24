@@ -5,7 +5,7 @@
  * كل قيمة هنا منشورة أيضًا في نص الصفحة، ولا تُضاف تقييمات أو أسعار غير حقيقية.
  */
 import { getCollection } from 'astro:content';
-import { business, description, descriptionEn, custom, governorates } from '../data/business';
+import { business, description, descriptionEn, custom, governorates, restaurants } from '../data/business';
 import { abs } from '../lib/url';
 
 export interface Props {
@@ -86,6 +86,7 @@ const org: Record<string, unknown> = {
         },
       })),
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: isEn ? custom.titleEn : custom.title, url: abs(isEn ? custom.pathEn : custom.path, site) } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: isEn ? restaurants.titleEn : restaurants.title, url: abs(isEn ? restaurants.pathEn : restaurants.path, site) } },
     ],
   },
 };
