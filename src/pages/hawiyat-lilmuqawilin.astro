@@ -5,7 +5,7 @@ import ContainerCard from '../components/ContainerCard.astro';
 import Clients from '../components/Clients.astro';
 import WorkGrid from '../components/WorkGrid.astro';
 import FAQ from '../components/FAQ.astro';
-import { business, operations } from '../data/business';
+import { business, operations, licenseText } from '../data/business';
 import { waLink } from '../data/whatsapp';
 import { containers, works } from '../lib/content';
 import { href } from '../lib/url';
@@ -15,6 +15,7 @@ const gallery = (await works()).slice(0, 6);
 const crumbs = [{ name: 'الرئيسية', path: '/' }, { name: 'حاويات للمقاولين والشركات', path: '/hawiyat-lilmuqawilin/' }];
 const faqs = [
   { question: 'هل تتعاقدون مع شركات المقاولات؟', answer: 'نعم، لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات.' },
+  ...(business.crNumber ? [{ question: 'هل الشركة مرخّصة لنقل النفايات؟', answer: `نعم، ${business.name} مرخّصة لنشاط نقل النفايات الصلبة والسائلة بسجل تجاري رقم ${business.crNumber}، وحاصلة على موافقة بلدية الكويت والهيئة العامة للبيئة.` }] : []),
   { question: 'ما الحاويات المناسبة لمواقع البناء؟', answer: 'حاوية الأنقاض 12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب للأخشاب والكرتون والإطارات.' },
   { question: 'كيف نطلب حاويات لمشروع؟', answer: `راسلونا عبر واتساب ${business.whatsapp} باسم الشركة وموقع المشروع وأنواع المخلفات وعدد الحاويات المتوقع، ونرتب معكم التوصيل والتبديل.` },
 ];
@@ -37,6 +38,13 @@ const wa = waLink(`مرحبًا ${business.short}، نحن شركة ونحتاج
       <p class="mt-2 max-w-3xl">لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات، منها:</p>
       <Clients />
     </section>
+
+    {licenseText && (
+      <section class="mt-12 rounded-2xl border border-line bg-white p-6">
+        <h2 class="text-2xl font-bold">الترخيص والموافقات</h2>
+        <p class="mt-2 max-w-3xl">{business.legalName}: {licenseText}</p>
+      </section>
+    )}
 
     <section class="mt-12">
       <h2 class="text-2xl font-bold">الحاويات المتوفرة</h2>

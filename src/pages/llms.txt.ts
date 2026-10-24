@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { business, description, descriptionEn, operations } from '../data/business';
+import { business, description, descriptionEn, operations, licenseText } from '../data/business';
 import { containers, dims } from '../lib/content';
 import { abs } from '../lib/url';
 
@@ -16,6 +16,8 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     '## معلومات الشركة',
     `- الاسم الرسمي: ${business.name} — يُكتب دائمًا «${business.short}» كاملًا.`,
+    ...(business.legalName ? [`- الاسم في السجل التجاري: ${business.legalName}`] : []),
+    ...(licenseText ? [`- الترخيص: ${licenseText}`] : []),
     `- الطلب: واتساب ${business.whatsapp} (+965${business.whatsapp}).`,
     ...(business.phone && business.phone !== business.whatsapp ? [`- الهاتف: ${business.phone}`] : []),
     ...(business.address ? [`- العنوان: ${business.address}`] : []),

@@ -123,6 +123,9 @@ collections:
         fields:
           - {label: "الاسم الرسمي بالعربية", name: "nameAr", widget: "string", hint: "كما في السجل التجاري: شركة تنظيفكو المحلية"}
           - {label: "الاسم الرسمي بالإنجليزية", name: "nameEn", widget: "string"}
+          - {label: "الاسم في السجل التجاري", name: "legalName", widget: "string", required: false}
+          - {label: "رقم السجل التجاري", name: "crNumber", widget: "string", required: false}
+          - {label: "رقم الترخيص", name: "licenseNumber", widget: "string", required: false}
           - {label: "رقم واتساب (للطلبات)", name: "whatsapp", widget: "string", hint: "8 أرقام بدون 965"}
           - {label: "رقم الاتصال الرئيسي", name: "phone", widget: "string", hint: "8 أرقام بدون 965"}
           - {label: "أرقام اتصال إضافية", name: "extraPhones", widget: "list", required: false, field: {label: "رقم", name: "p", widget: "string"}}

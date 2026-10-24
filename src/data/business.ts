@@ -13,6 +13,10 @@ export const business = {
   name: clean(settings.nameAr),
   nameEn: clean(settings.nameEn),
   /** الاسم المختصر للعناوين: «تنظيفكو المحلية» */
+  /** الاسم القانوني كما في السجل التجاري */
+  legalName: clean(settings.legalName),
+  crNumber: clean(settings.crNumber),
+  licenseNumber: clean(settings.licenseNumber),
   short: clean(settings.nameAr).replace(/^شركة\s+/, ''),
   shortEn: clean(settings.nameEn).replace(/\s+Company$/i, ''),
   whatsapp: digits(settings.whatsapp),
@@ -28,6 +32,14 @@ export const business = {
   clients: (settings.clients as { name: string; nameEn?: string }[]).filter((c) => clean(c.name)),
   locale: 'ar_KW',
 };
+
+/** جملة الترخيص — من السجل التجاري، تظهر في صفحة المقاولين وتذييل الموقع */
+export const licenseText = business.crNumber
+  ? `شركة ذات مسؤولية محدودة، سجل تجاري رقم ${business.crNumber}، مرخّصة لنشاط نقل النفايات الصلبة والسائلة وخدمات التنظيف العام للمباني، وحاصلة على موافقة بلدية الكويت والهيئة العامة للبيئة.`
+  : '';
+export const licenseTextEn = business.crNumber
+  ? `A limited liability company, commercial registration no. ${business.crNumber}, licensed for solid and liquid waste transport and general building cleaning, with approvals from Kuwait Municipality and the Environment Public Authority.`
+  : '';
 
 export const description =
   `${business.name} تؤجّر حاويات المخلفات في الكويت: حاوية أنقاض 12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب للأخشاب والكرتون والإطارات، مع التوصيل والتبديل والرفع. الطلب عبر واتساب ${business.whatsapp}.`;

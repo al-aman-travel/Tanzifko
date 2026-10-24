@@ -1,20 +1,35 @@
 {
   "nameAr": "شركة تنظيفكو المحلية",
   "nameEn": "Tanzeefko Local Company",
+  "legalName": "شركة تنظيفكو المحلية لخدمات التنظيف العام للمباني ذ.م.م",
+  "crNumber": "463695",
+  "licenseNumber": "2022/12960",
   "whatsapp": "97502760",
   "phone": "97502760",
   "extraPhones": [],
-  "openingHoursText": "",
-  "openingHoursTextEn": "",
-  "address": "",
-  "addressEn": "",
+  "openingHoursText": "من 7 صباحًا حتى 10 مساءً",
+  "openingHoursTextEn": "7 am to 10 pm",
+  "address": "الفروانية، قطعة 3، شارع 106، مبنى نجيب عبدالعزيز عبدالله الحميضي، الدور 3، شقة 22",
+  "addressEn": "Al Farwaniya, Block 3, Street 106, Najeeb Abdulaziz Abdullah Al-Humaidhi Building, Floor 3, Unit 22",
   "mapUrl": "",
   "email": "",
   "instagram": "",
   "clients": [
-    { "name": "شركة ليماك للمقاولات الإنشائية", "nameEn": "Limak Construction Contracting Company" },
-    { "name": "شركة أركان الهندسية للمقاولات الإنشائية", "nameEn": "Arkan Engineering Construction Contracting Company" },
-    { "name": "شركة كي سي سي للهندسة والمقاولات", "nameEn": "KCC Engineering & Contracting Company" },
-    { "name": "شركة الشراع العربي للمقاولات الإنشائية", "nameEn": "Al Shira'a Al Arabi Construction Contracting Company" }
+    {
+      "name": "شركة ليماك للمقاولات الإنشائية",
+      "nameEn": "Limak Construction Contracting Company"
+    },
+    {
+      "name": "شركة أركان الهندسية للمقاولات الإنشائية",
+      "nameEn": "Arkan Engineering Construction Contracting Company"
+    },
+    {
+      "name": "شركة كي سي سي للهندسة والمقاولات",
+      "nameEn": "KCC Engineering & Contracting Company"
+    },
+    {
+      "name": "شركة الشراع العربي للمقاولات الإنشائية",
+      "nameEn": "Al Shira'a Al Arabi Construction Contracting Company"
+    }
   ]
 }

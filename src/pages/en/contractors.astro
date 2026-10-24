@@ -4,7 +4,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import ContainerCard from '../../components/ContainerCard.astro';
 import Clients from '../../components/Clients.astro';
 import FAQ from '../../components/FAQ.astro';
-import { business, operations } from '../../data/business';
+import { business, operations, licenseTextEn } from '../../data/business';
 import { waLink } from '../../data/whatsapp';
 import { containers } from '../../lib/content';
 
@@ -34,6 +34,12 @@ const wa = waLink(`Hello ${business.shortEn}, we are a company and need containe
       <p class="mt-2 max-w-3xl">We have contracts with major contracting companies in Kuwait and track record with renovation, engineering contracting and finishing companies, including:</p>
       <Clients lang="en" />
     </section>
+    {licenseTextEn && (
+      <section class="mt-12 rounded-2xl border border-line bg-white p-6">
+        <h2 class="text-2xl font-bold">Licence and approvals</h2>
+        <p class="mt-2 max-w-3xl">{business.nameEn}: {licenseTextEn}</p>
+      </section>
+    )}
     <section class="mt-12">
       <h2 class="text-2xl font-bold">Available containers</h2>
       <div class="mt-5 grid gap-5 md:grid-cols-2">{list.map((c) => <ContainerCard c={c} lang="en" />)}</div>
