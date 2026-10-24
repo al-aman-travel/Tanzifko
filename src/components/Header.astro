@@ -1,5 +1,5 @@
 ---
-import { business } from '../data/business';
+import { business, custom } from '../data/business';
 import { containers } from '../lib/content';
 import { Image } from 'astro:assets';
 import { href } from '../lib/url';
@@ -16,11 +16,13 @@ const list = await containers();
 const nav = isEn
   ? [
       ...list.map((c) => ({ href: href(`/en/${c.data.enSlug}/`), label: c.data.titleEn })),
+      { href: href(custom.pathEn), label: 'Custom sizes' },
       { href: href('/en/contractors/'), label: 'For contractors' },
       { href: href('/en/our-work/'), label: 'Our work' },
     ]
   : [
       ...list.map((c) => ({ href: href(`/${c.id}/`), label: c.data.title })),
+      { href: href(custom.path), label: 'تفصيل حسب الطلب' },
       { href: href('/hawiyat-lilmuqawilin/'), label: 'للمقاولين والشركات' },
       { href: href('/aamaluna/'), label: 'أعمالنا' },
     ];

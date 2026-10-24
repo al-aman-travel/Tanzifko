@@ -52,3 +52,13 @@ export const operations = [
   { title: 'تبديل الحاوية', titleEn: 'Container swap', text: 'عند امتلاء الحاوية نرفعها ونضع مكانها حاوية فارغة.', textEn: 'When the container is full, we take it away and leave an empty one.' },
   { title: 'رفع الحاوية', titleEn: 'Container pickup', text: 'نرفع الحاوية من الموقع عند انتهاء العمل.', textEn: 'We collect the container when the work is finished.' },
 ];
+
+/** تفصيل الحاويات حسب الطلب (كما ذكره المالك): نصمّم ونفصّل الحاوية بالمقاس الذي تطلبه الشركة */
+export const custom = {
+  title: 'تفصيل حاويات حسب الطلب',
+  titleEn: 'Custom-made containers',
+  short: 'نفصّل ونصمّم الحاوية بالمقاس الذي تطلبه الشركة.',
+  shortEn: 'We design and build containers to the size your company requests.',
+  path: '/tafseel-hawiyat/',
+  pathEn: '/en/custom-containers/',
+};

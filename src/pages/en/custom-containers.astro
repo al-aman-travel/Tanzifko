@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ContainerCard from '../../components/ContainerCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import { business, custom } from '../../data/business';
+import { waLink } from '../../data/whatsapp';
+import { containers } from '../../lib/content';
+import photo from '../../content/works/images/hawiyat-anqad-12-metr-134.jpg';
+
+const list = await containers();
+const crumbs = [{ name: 'Home', path: '/en/' }, { name: custom.titleEn, path: custom.pathEn }];
+const faqs = [
+  { question: 'Do you build containers in custom sizes?', answer: `Yes. ${business.nameEn} designs and builds containers to the size your company requests.` },
+  { question: 'What do you need to build a custom container?', answer: 'The required dimensions or capacity, the type of waste, the number of containers and where they will be used.' },
+  { question: 'How do I order a custom container?', answer: `Send the size and usage details on WhatsApp +965 ${business.whatsapp}, and we will contact you to confirm the design.` },
+];
+const wa = waLink(`Hello ${business.shortEn}, we need a custom-size container.\nCompany:\nDimensions or capacity:\nWaste type:\nNumber of containers:`);
+---
+<BaseLayout
+  lang="en"
+  title="Custom-made waste containers to your size in Kuwait"
+  description={`${business.nameEn} designs and builds waste containers to the size companies request in Kuwait. Send the dimensions and waste type on WhatsApp +965 ${business.whatsapp}.`}
+  faqs={faqs}
+  breadcrumbs={crumbs}
+  alternate={custom.path}
+  service={{ name: custom.titleEn, url: new URL(Astro.url.pathname, Astro.site).toString(), description: custom.shortEn }}
+>
+  <div class="container-page pt-6">
+    <Breadcrumbs items={crumbs} lang="en" />
+    <div class="mt-4 grid gap-8 lg:grid-cols-[1fr_24rem]">
+      <div>
+        <h1 class="text-3xl font-bold leading-snug">Custom-made containers to the size your company needs</h1>
+        <p class="mt-4 text-lg">Besides our 12 m³ and 30 m³ sizes, we design and build containers to the size your company requests, to suit the waste type and the work site.</p>
+        <h2 class="mt-8 text-xl font-bold">What we need from you</h2>
+        <ul class="mt-3 list-disc space-y-1 ps-6">
+          <li>Required dimensions or capacity</li>
+          <li>Type of waste</li>
+          <li>Number of containers</li>
+          <li>Where they will be used</li>
+        </ul>
+        <a class="btn btn-wa mt-6" href={wa} target="_blank" rel="noopener">Send the size on WhatsApp</a>
+      </div>
+      <Image src={photo} alt="Tanzeefko Local container after fabrication and painting" widths={[400, 640, 900]} sizes="(min-width: 1024px) 24rem, 100vw" class="w-full rounded-2xl object-cover" loading="eager" />
+    </div>
+    <FAQ faqs={faqs} title="Frequently asked questions" />
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold">Standard sizes</h2>
+      <div class="mt-5 grid gap-5 md:grid-cols-2">{list.map((c) => <ContainerCard c={c} lang="en" />)}</div>
+    </section>
+  </div>
+</BaseLayout>

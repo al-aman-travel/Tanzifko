@@ -4,7 +4,7 @@ import ContainerCard from '../../components/ContainerCard.astro';
 import WorkGrid from '../../components/WorkGrid.astro';
 import Clients from '../../components/Clients.astro';
 import FAQ from '../../components/FAQ.astro';
-import { business, operations } from '../../data/business';
+import { business, operations, custom } from '../../data/business';
 import { waGeneralEn } from '../../data/whatsapp';
 import { containers, works } from '../../lib/content';
 import { heroImage } from '../../lib/hero';
@@ -16,6 +16,7 @@ const featured = (await works({ featured: true })).slice(0, 6);
 const hero = await heroImage(heroSrc, '(min-width: 1024px) 28rem, 100vw');
 const faqs = [
   { question: 'Which container sizes do you have?', answer: 'A 12 m³ rubble container for bricks, marble and construction waste, and a 30 m³ container (6 × 2.30 × 2.1 m) for wood, cardboard and tyres.' },
+  { question: 'Do you build containers in custom sizes?', answer: `Yes. We design and build containers to the size your company requests. Send the size and waste type on WhatsApp +965 ${business.whatsapp}.` },
   { question: 'Do you swap the container when it is full?', answer: 'Yes. We take the full container away and leave an empty one, and collect it when the work is finished.' },
   { question: 'How do I order a container?', answer: `On WhatsApp +965 ${business.whatsapp}: send the work area, the type of waste and the date, and we will confirm availability and the delivery time.` },
   { question: 'Do you work with contracting companies?', answer: 'Yes. We have contracts with major contracting companies in Kuwait and track record with renovation, engineering contracting and finishing companies.' },
@@ -48,6 +49,13 @@ const faqs = [
     <h2 class="text-2xl font-bold">Container sizes</h2>
     <p class="mt-1 text-muted">Choose the container by the type of waste.</p>
     <div class="mt-5 grid gap-5 md:grid-cols-2">{list.map((c) => <ContainerCard c={c} lang="en" />)}</div>
+    <div class="mt-5 flex flex-col gap-4 rounded-2xl border-2 border-sun bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h3 class="text-xl font-bold">{custom.titleEn}</h3>
+        <p class="mt-1 text-muted">Need a size other than 12 or 30 m³? {custom.shortEn}</p>
+      </div>
+      <a class="btn btn-brand shrink-0" href={href(custom.pathEn)}>Custom containers</a>
+    </div>
   </section>
 
   <section class="container-page mt-14">

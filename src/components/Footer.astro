@@ -1,5 +1,5 @@
 ---
-import { business, description, descriptionEn, licenseText, licenseTextEn } from '../data/business';
+import { business, description, descriptionEn, licenseText, licenseTextEn, custom } from '../data/business';
 import { waGeneral, waGeneralEn } from '../data/whatsapp';
 import { containers } from '../lib/content';
 import { href } from '../lib/url';
@@ -23,6 +23,7 @@ const address = isEn ? business.addressEn : business.address;
       <p class="font-bold text-white">{isEn ? 'Containers' : 'الحاويات'}</p>
       <ul class="mt-2 space-y-1">
         {list.map((c) => <li><a class="hover:text-sun" href={href(isEn ? `/en/${c.data.enSlug}/` : `/${c.id}/`)}>{isEn ? c.data.titleEn : c.data.title}</a></li>)}
+        <li><a class="hover:text-sun" href={href(isEn ? custom.pathEn : custom.path)}>{isEn ? custom.titleEn : custom.title}</a></li>
         <li><a class="hover:text-sun" href={href(isEn ? '/en/contractors/' : '/hawiyat-lilmuqawilin/')}>{isEn ? 'For contractors and companies' : 'حاويات للمقاولين والشركات'}</a></li>
         <li><a class="hover:text-sun" href={href(isEn ? '/en/our-work/' : '/aamaluna/')}>{isEn ? 'Our work' : 'أعمالنا'}</a></li>
         <li><a class="hover:text-sun" href={href(isEn ? '/en/request/' : '/talab-hawiya/')}>{isEn ? 'Order a container' : 'اطلب حاوية'}</a></li>

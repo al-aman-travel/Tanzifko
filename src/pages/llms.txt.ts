@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { business, description, descriptionEn, operations, licenseText } from '../data/business';
+import { business, description, descriptionEn, operations, licenseText, custom } from '../data/business';
 import { containers, dims } from '../lib/content';
 import { abs } from '../lib/url';
 
@@ -32,6 +32,7 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     '## الخدمات',
     ...operations.map((o) => `- ${o.title}: ${o.text}`),
+    `- [${custom.title}](${u(custom.path)}): ${custom.short}`,
     '',
     ...(business.clients.length
       ? ['## عقود وسابقة أعمال', '- لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات، منها:', ...business.clients.map((c) => `  - ${c.name}`), '']

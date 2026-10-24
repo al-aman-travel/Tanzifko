@@ -4,7 +4,7 @@ import ContainerCard from '../components/ContainerCard.astro';
 import WorkGrid from '../components/WorkGrid.astro';
 import Clients from '../components/Clients.astro';
 import FAQ from '../components/FAQ.astro';
-import { business, operations } from '../data/business';
+import { business, operations, custom } from '../data/business';
 import { waGeneral } from '../data/whatsapp';
 import { containers, works } from '../lib/content';
 import { heroImage } from '../lib/hero';
@@ -17,6 +17,7 @@ const hero = await heroImage(heroSrc, '(min-width: 1024px) 28rem, 100vw');
 
 const faqs = [
   { question: 'ما مقاسات الحاويات المتوفرة؟', answer: 'حاوية أنقاض 12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب (6 × 2.30 × 2.1 م) للأخشاب والكرتون والإطارات.' },
+  { question: 'هل تفصّلون حاويات بمقاسات خاصة؟', answer: `نعم، نفصّل ونصمّم الحاوية بالمقاس الذي تطلبه الشركة. أرسل المقاس ونوع المخلفات عبر واتساب ${business.whatsapp}.` },
   { question: 'هل تبدّلون الحاوية عند امتلائها؟', answer: 'نعم، نرفع الحاوية الممتلئة ونضع مكانها حاوية فارغة، ونرفعها نهائيًا عند انتهاء العمل.' },
   { question: 'كيف أطلب حاوية؟', answer: `عبر واتساب ${business.whatsapp}: أرسل منطقة العمل ونوع المخلفات والموعد، ونؤكد لك التوفر وموعد التوصيل.` },
   { question: 'هل تعملون مع شركات المقاولات؟', answer: 'نعم، لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات.' },
@@ -24,7 +25,7 @@ const faqs = [
 ---
 <BaseLayout
   title={`تأجير حاويات أنقاض ومخلفات في الكويت — ${business.short}`}
-  description={`${business.name}: تأجير حاويات أنقاض 12 متر مكعب وحاويات 30 متر مكعب للأخشاب والكرتون والإطارات في الكويت، مع التوصيل والتبديل والرفع. اطلب عبر واتساب ${business.whatsapp}.`}
+  description={`${business.name}: تأجير حاويات أنقاض 12 متر مكعب وحاويات 30 متر مكعب للأخشاب والكرتون والإطارات في الكويت، وتفصيل حاويات بالمقاس المطلوب. اطلب عبر واتساب ${business.whatsapp}.`}
   faqs={faqs}
   alternate="/en/"
   preloadImage={hero}
@@ -49,6 +50,13 @@ const faqs = [
     <p class="mt-1 text-muted">اختر الحاوية حسب نوع المخلفات.</p>
     <div class="mt-5 grid gap-5 md:grid-cols-2">
       {list.map((c) => <ContainerCard c={c} />)}
+    </div>
+    <div class="mt-5 flex flex-col gap-4 rounded-2xl border-2 border-sun bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h3 class="text-xl font-bold">{custom.title}</h3>
+        <p class="mt-1 text-muted">تحتاج مقاسًا غير 12 أو 30 متر مكعب؟ {custom.short}</p>
+      </div>
+      <a class="btn btn-brand shrink-0" href={href(custom.path)}>تفاصيل التفصيل</a>
     </div>
   </section>
 
