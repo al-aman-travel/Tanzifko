@@ -1,0 +1,20 @@
+{
+  "nameAr": "شركة تنظيفكو المحلية",
+  "nameEn": "Tanzeefko Local Company",
+  "whatsapp": "97502760",
+  "phone": "97502760",
+  "extraPhones": [],
+  "openingHoursText": "",
+  "openingHoursTextEn": "",
+  "address": "",
+  "addressEn": "",
+  "mapUrl": "",
+  "email": "",
+  "instagram": "",
+  "clients": [
+    { "name": "شركة ليماك للمقاولات الإنشائية", "nameEn": "Limak Construction Contracting Company" },
+    { "name": "شركة أركان الهندسية للمقاولات الإنشائية", "nameEn": "Arkan Engineering Construction Contracting Company" },
+    { "name": "شركة كي سي سي للهندسة والمقاولات", "nameEn": "KCC Engineering & Contracting Company" },
+    { "name": "شركة الشراع العربي للمقاولات الإنشائية", "nameEn": "Al Shira'a Al Arabi Construction Contracting Company" }
+  ]
+}

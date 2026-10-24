@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import WorkGrid from '../components/WorkGrid.astro';
+import { business } from '../data/business';
+import { waGeneral } from '../data/whatsapp';
+import { works } from '../lib/content';
+
+const all = await works();
+const crumbs = [{ name: 'الرئيسية', path: '/' }, { name: 'أعمالنا', path: '/aamaluna/' }];
+---
+<BaseLayout
+  title="صور حاوياتنا في مواقع العمل بالكويت"
+  description={`صور حقيقية لحاويات ${business.name} في مواقع البناء والترميم بالكويت: حاويات أنقاض 12 متر مكعب وحاويات 30 متر مكعب للأخشاب والكرتون.`}
+  breadcrumbs={crumbs}
+  alternate="/en/our-work/"
+>
+  <div class="container-page pt-6">
+    <Breadcrumbs items={crumbs} />
+    <h1 class="mt-4 text-3xl font-bold">صور حاوياتنا في مواقع العمل</h1>
+    <p class="mt-3 max-w-3xl text-muted">صور حقيقية لحاويات {business.short} في مواقع البناء والترميم والمخازن في الكويت.</p>
+    <div class="mt-6"><WorkGrid items={all} /></div>
+    <a class="btn btn-wa mt-8" href={waGeneral()} target="_blank" rel="noopener">اطلب حاوية عبر واتساب</a>
+  </div>
+</BaseLayout>

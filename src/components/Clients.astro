@@ -1,0 +1,15 @@
+---
+import { business } from '../data/business';
+export interface Props { lang?: 'ar' | 'en' }
+const isEn = Astro.props.lang === 'en';
+---
+{business.clients.length > 0 && (
+  <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+    {business.clients.map((c) => (
+      <li class="flex items-center gap-3 rounded-xl border border-line bg-white p-4 font-semibold">
+        <span aria-hidden="true" class="h-8 w-1.5 shrink-0 rounded bg-sun"></span>
+        {isEn ? (c.nameEn || c.name) : c.name}
+      </li>
+    ))}
+  </ul>
+)}

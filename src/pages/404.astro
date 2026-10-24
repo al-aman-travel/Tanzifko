@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { href } from '../lib/url';
+---
+<BaseLayout title="الصفحة غير موجودة" noindex>
+  <section class="container-page py-20 text-center">
+    <h1 class="text-3xl font-bold">الصفحة غير موجودة</h1>
+    <p class="mt-3 text-muted">ربما تغيّر الرابط. ارجع للرئيسية أو اطلب حاوية مباشرة.</p>
+    <p class="mt-1 text-muted" lang="en" dir="ltr">Page not found.</p>
+    <div class="mt-6 flex justify-center gap-3">
+      <a class="btn btn-brand" href={href('/')}>الرئيسية</a>
+      <a class="btn btn-line" href={href('/talab-hawiya/')}>اطلب حاوية</a>
+    </div>
+  </section>
+</BaseLayout>

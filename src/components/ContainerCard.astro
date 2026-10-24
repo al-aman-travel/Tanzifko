@@ -1,0 +1,36 @@
+---
+import { Image } from 'astro:assets';
+import type { Container } from '../lib/content';
+import { dims } from '../lib/content';
+import { href } from '../lib/url';
+import { waContainer, waContainerEn } from '../data/whatsapp';
+
+export interface Props { c: Container; lang?: 'ar' | 'en'; headingLevel?: 'h2' | 'h3' }
+const { c, lang = 'ar', headingLevel = 'h3' } = Astro.props;
+const isEn = lang === 'en';
+const d = c.data;
+const title = isEn ? d.titleEn : d.title;
+const accepts = isEn ? d.acceptsEn : d.accepts;
+const size = dims(c, isEn);
+const url = href(isEn ? `/en/${d.enSlug}/` : `/${c.id}/`);
+const H = headingLevel;
+---
+<article class="flex flex-col overflow-hidden rounded-2xl border border-line bg-white">
+  {d.image && (
+    <a href={url} class="block bg-sand">
+      <Image src={d.image} alt={(isEn ? d.imageAltEn : d.imageAlt) ?? title} widths={[400, 640, 900]} sizes="(min-width: 768px) 36rem, 100vw" class="aspect-[4/3] w-full object-cover" loading="lazy" />
+    </a>
+  )}
+  <div class="flex flex-1 flex-col p-5">
+    <p class="text-sm font-bold text-brand">{d.capacity} {isEn ? 'm³' : 'متر مكعب'}</p>
+    <H class="mt-1 text-xl font-bold"><a href={url} class="hover:text-brand">{title}</a></H>
+    <dl class="mt-3 space-y-1 text-sm">
+      <div class="flex gap-2"><dt class="font-semibold">{isEn ? 'For:' : 'للمخلفات:'}</dt><dd>{accepts.join(isEn ? ', ' : '، ')}</dd></div>
+      {size && <div class="flex gap-2"><dt class="font-semibold">{isEn ? 'Size (L × W × H):' : 'الأبعاد (طول × عرض × ارتفاع):'}</dt><dd>{size}</dd></div>}
+    </dl>
+    <div class="mt-auto flex flex-wrap gap-2 pt-5">
+      <a class="btn btn-wa px-4 py-2 text-sm" href={isEn ? waContainerEn(d.titleEn) : waContainer(d.title)} target="_blank" rel="noopener">{isEn ? 'Order on WhatsApp' : 'اطلبها عبر واتساب'}</a>
+      <a class="btn btn-line px-4 py-2 text-sm" href={url}>{isEn ? 'Details' : 'التفاصيل'}</a>
+    </div>
+  </div>
+</article>

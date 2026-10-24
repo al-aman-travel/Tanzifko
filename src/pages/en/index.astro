@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContainerCard from '../../components/ContainerCard.astro';
+import WorkGrid from '../../components/WorkGrid.astro';
+import Clients from '../../components/Clients.astro';
+import FAQ from '../../components/FAQ.astro';
+import { business, operations } from '../../data/business';
+import { waGeneralEn } from '../../data/whatsapp';
+import { containers, works } from '../../lib/content';
+import { heroImage } from '../../lib/hero';
+import { href } from '../../lib/url';
+import heroSrc from '../../content/works/images/hawiyat-anqad-anboob-108.jpg';
+
+const list = await containers();
+const featured = (await works({ featured: true })).slice(0, 6);
+const hero = await heroImage(heroSrc, '(min-width: 1024px) 28rem, 100vw');
+const faqs = [
+  { question: 'Which container sizes do you have?', answer: 'A 12 m³ rubble container for bricks, marble and construction waste, and a 30 m³ container (6 × 2.30 × 2.1 m) for wood, cardboard and tyres.' },
+  { question: 'Do you swap the container when it is full?', answer: 'Yes. We take the full container away and leave an empty one, and collect it when the work is finished.' },
+  { question: 'How do I order a container?', answer: `On WhatsApp +965 ${business.whatsapp}: send the work area, the type of waste and the date, and we will confirm availability and the delivery time.` },
+  { question: 'Do you work with contracting companies?', answer: 'Yes. We have contracts with major contracting companies in Kuwait and track record with renovation, engineering contracting and finishing companies.' },
+];
+---
+<BaseLayout
+  lang="en"
+  title={`Rubble and waste container rental in Kuwait — ${business.shortEn}`}
+  description={`${business.nameEn}: 12 m³ rubble containers and 30 m³ containers for wood, cardboard and tyres in Kuwait, with delivery, swap and pickup. Order on WhatsApp +965 ${business.whatsapp}.`}
+  faqs={faqs}
+  alternate="/"
+  preloadImage={hero}
+>
+  <section class="bg-brand text-white">
+    <div class="container-page grid items-center gap-8 py-10 lg:grid-cols-[1fr_28rem] lg:py-14">
+      <div>
+        <p class="font-semibold text-sun">{business.nameEn}</p>
+        <h1 class="mt-2 text-3xl font-bold leading-snug md:text-4xl">Rubble and waste container rental in Kuwait</h1>
+        <p class="mt-4 max-w-2xl text-lg text-white/85">A 12 m³ rubble container for bricks, marble and construction waste, and a 30 m³ container for wood, cardboard and tyres. We deliver the container, swap it when it is full and collect it when the work is done.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a class="btn btn-sun" href={href('/en/request/')}>Order a container</a>
+          <a class="btn btn-wa" href={waGeneralEn()} target="_blank" rel="noopener">WhatsApp {business.whatsapp}</a>
+        </div>
+      </div>
+      <img src={hero.src} srcset={hero.srcset} sizes={hero.sizes} width={hero.width} height={hero.height} alt="Tanzeefko Local rubble container under a debris chute at a building under renovation" fetchpriority="high" decoding="async" class="aspect-[4/3] w-full rounded-2xl object-cover shadow-xl lg:aspect-[3/4]" />
+    </div>
+  </section>
+
+  <section class="container-page mt-12">
+    <h2 class="text-2xl font-bold">Container sizes</h2>
+    <p class="mt-1 text-muted">Choose the container by the type of waste.</p>
+    <div class="mt-5 grid gap-5 md:grid-cols-2">{list.map((c) => <ContainerCard c={c} lang="en" />)}</div>
+  </section>
+
+  <section class="container-page mt-14">
+    <h2 class="text-2xl font-bold">Our services</h2>
+    <ol class="mt-5 grid gap-4 sm:grid-cols-3">
+      {operations.map((o, i) => (
+        <li class="rounded-xl border border-line bg-white p-5">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sun font-bold">{i + 1}</span>
+          <h3 class="mt-3 font-bold">{o.titleEn}</h3>
+          <p class="mt-1 text-sm text-muted">{o.textEn}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="container-page mt-14">
+    <div class="rounded-2xl bg-sand p-6 md:p-8">
+      <h2 class="text-2xl font-bold">For contractors and renovation companies</h2>
+      <p class="mt-2 max-w-3xl">We have contracts with major contracting companies in Kuwait and track record with renovation, engineering contracting and finishing companies, including:</p>
+      <Clients lang="en" />
+      <a class="btn btn-brand mt-5" href={href('/en/contractors/')}>Containers for contractors</a>
+    </div>
+  </section>
+
+  {featured.length > 0 && (
+    <section class="container-page mt-14">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-2xl font-bold">Our containers on site</h2>
+        <a class="text-sm font-semibold underline" href={href('/en/our-work/')}>All photos</a>
+      </div>
+      <div class="mt-5"><WorkGrid items={featured} lang="en" /></div>
+    </section>
+  )}
+
+  <div class="container-page"><FAQ faqs={faqs} title="Frequently asked questions" /></div>
+</BaseLayout>

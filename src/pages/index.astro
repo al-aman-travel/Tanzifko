@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContainerCard from '../components/ContainerCard.astro';
+import WorkGrid from '../components/WorkGrid.astro';
+import Clients from '../components/Clients.astro';
+import FAQ from '../components/FAQ.astro';
+import { business, operations } from '../data/business';
+import { waGeneral } from '../data/whatsapp';
+import { containers, works } from '../lib/content';
+import { heroImage } from '../lib/hero';
+import { href } from '../lib/url';
+import heroSrc from '../content/works/images/hawiyat-anqad-anboob-108.jpg';
+
+const list = await containers();
+const featured = (await works({ featured: true })).slice(0, 6);
+const hero = await heroImage(heroSrc, '(min-width: 1024px) 28rem, 100vw');
+
+const faqs = [
+  { question: 'ما مقاسات الحاويات المتوفرة؟', answer: 'حاوية أنقاض 12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب (6 × 2.30 × 2.1 م) للأخشاب والكرتون والإطارات.' },
+  { question: 'هل تبدّلون الحاوية عند امتلائها؟', answer: 'نعم، نرفع الحاوية الممتلئة ونضع مكانها حاوية فارغة، ونرفعها نهائيًا عند انتهاء العمل.' },
+  { question: 'كيف أطلب حاوية؟', answer: `عبر واتساب ${business.whatsapp}: أرسل منطقة العمل ونوع المخلفات والموعد، ونؤكد لك التوفر وموعد التوصيل.` },
+  { question: 'هل تعملون مع شركات المقاولات؟', answer: 'نعم، لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات.' },
+];
+---
+<BaseLayout
+  title={`تأجير حاويات أنقاض ومخلفات في الكويت — ${business.short}`}
+  description={`${business.name}: تأجير حاويات أنقاض 12 متر مكعب وحاويات 30 متر مكعب للأخشاب والكرتون والإطارات في الكويت، مع التوصيل والتبديل والرفع. اطلب عبر واتساب ${business.whatsapp}.`}
+  faqs={faqs}
+  alternate="/en/"
+  preloadImage={hero}
+>
+  <section class="bg-brand text-white">
+    <div class="container-page grid items-center gap-8 py-10 lg:grid-cols-[1fr_28rem] lg:py-14">
+      <div>
+        <p class="font-semibold text-sun">{business.name}</p>
+        <h1 class="mt-2 text-3xl font-bold leading-snug md:text-4xl">تأجير حاويات الأنقاض والمخلفات في الكويت</h1>
+        <p class="mt-4 max-w-2xl text-lg text-white/85">حاوية أنقاض 12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب للأخشاب والكرتون والإطارات. نوصل الحاوية، ونبدّلها عند امتلائها، ونرفعها عند انتهاء العمل.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a class="btn btn-sun" href={href('/talab-hawiya/')}>اطلب حاوية</a>
+          <a class="btn btn-wa" href={waGeneral()} target="_blank" rel="noopener">واتساب {business.whatsapp}</a>
+        </div>
+      </div>
+      <img src={hero.src} srcset={hero.srcset} sizes={hero.sizes} width={hero.width} height={hero.height} alt="حاوية أنقاض من تنظيفكو المحلية تحت أنبوب تنزيل المخلفات من مبنى قيد الترميم" fetchpriority="high" decoding="async" class="aspect-[4/3] w-full rounded-2xl object-cover shadow-xl lg:aspect-[3/4]" />
+    </div>
+  </section>
+
+  <section class="container-page mt-12">
+    <h2 class="text-2xl font-bold">مقاسات الحاويات</h2>
+    <p class="mt-1 text-muted">اختر الحاوية حسب نوع المخلفات.</p>
+    <div class="mt-5 grid gap-5 md:grid-cols-2">
+      {list.map((c) => <ContainerCard c={c} />)}
+    </div>
+  </section>
+
+  <section class="container-page mt-14">
+    <h2 class="text-2xl font-bold">خدماتنا</h2>
+    <ol class="mt-5 grid gap-4 sm:grid-cols-3">
+      {operations.map((o, i) => (
+        <li class="rounded-xl border border-line bg-white p-5">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sun font-bold">{i + 1}</span>
+          <h3 class="mt-3 font-bold">{o.title}</h3>
+          <p class="mt-1 text-sm text-muted">{o.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="container-page mt-14">
+    <div class="rounded-2xl bg-sand p-6 md:p-8">
+      <h2 class="text-2xl font-bold">للمقاولين وشركات الترميم</h2>
+      <p class="mt-2 max-w-3xl">لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات، منها:</p>
+      <Clients />
+      <a class="btn btn-brand mt-5" href={href('/hawiyat-lilmuqawilin/')}>حاويات للمقاولين والشركات</a>
+    </div>
+  </section>
+
+  {featured.length > 0 && (
+    <section class="container-page mt-14">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-2xl font-bold">حاوياتنا في مواقع العمل</h2>
+        <a class="text-sm font-semibold underline" href={href('/aamaluna/')}>كل الصور</a>
+      </div>
+      <div class="mt-5"><WorkGrid items={featured} /></div>
+    </section>
+  )}
+
+  <div class="container-page"><FAQ faqs={faqs} /></div>
+
+  <section class="container-page mt-14">
+    <div class="rounded-2xl bg-brand p-6 text-white md:p-8">
+      <h2 class="text-2xl font-bold">تحتاج حاوية لموقع العمل؟</h2>
+      <p class="mt-2 text-white/85">أرسل منطقة العمل ونوع المخلفات عبر واتساب، ونؤكد لك التوفر وموعد التوصيل.</p>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a class="btn btn-sun" href={href('/talab-hawiya/')}>نموذج الطلب</a>
+        <a class="btn btn-wa" href={waGeneral()} target="_blank" rel="noopener">واتساب {business.whatsapp}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

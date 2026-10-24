@@ -1,0 +1,78 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ContainerCard from '../../components/ContainerCard.astro';
+import WorkGrid from '../../components/WorkGrid.astro';
+import FAQ from '../../components/FAQ.astro';
+import { operations } from '../../data/business';
+import { waContainerEn } from '../../data/whatsapp';
+import { containers, works, dims, type Container } from '../../lib/content';
+import { href, abs } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const list = await containers();
+  return list.map((c) => ({ params: { slug: c.data.enSlug }, props: { c } }));
+}
+const { c } = Astro.props as { c: Container };
+const d = c.data;
+const others = (await containers()).filter((x) => x.id !== c.id);
+const gallery = await works({ container: c.id });
+const size = dims(c, true);
+const path = `/en/${d.enSlug}/`;
+const crumbs = [{ name: 'Home', path: '/en/' }, { name: d.titleEn, path }];
+const paragraphs = d.bodyEn.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+---
+<BaseLayout
+  lang="en"
+  title={d.seoTitleEn ?? d.h1En}
+  description={d.descriptionEn}
+  faqs={d.faqsEn}
+  alternate={`/${c.id}/`}
+  breadcrumbs={crumbs}
+  service={{ name: d.titleEn, url: abs(path, Astro.site), description: d.descriptionEn, image: d.image ? new URL(d.image.src, Astro.site).toString() : undefined }}
+  ogImage={d.image?.src}
+>
+  <div class="container-page pt-6">
+    <Breadcrumbs items={crumbs} lang="en" />
+    <div class="mt-4 grid gap-8 lg:grid-cols-[1fr_26rem]">
+      <div>
+        <h1 class="text-3xl font-bold leading-snug">{d.h1En}</h1>
+        <dl class="mt-5 grid gap-3 sm:grid-cols-2">
+          <div class="rounded-xl border border-line bg-white p-4"><dt class="text-sm text-muted">Capacity</dt><dd class="text-xl font-bold">{d.capacity} m³</dd></div>
+          {size && <div class="rounded-xl border border-line bg-white p-4"><dt class="text-sm text-muted">Size (L × W × H)</dt><dd class="text-xl font-bold">{size}</dd></div>}
+          <div class="rounded-xl border border-line bg-white p-4 sm:col-span-2"><dt class="text-sm text-muted">Suitable waste</dt><dd class="font-bold">{d.acceptsEn.join(', ')}</dd>{d.notForEn && <dd class="mt-1 text-sm text-muted">{d.notForEn}</dd>}</div>
+        </dl>
+        <div class="prose-ar mt-5 text-lg">{paragraphs.map((p) => <p>{p}</p>)}</div>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a class="btn btn-wa" href={waContainerEn(d.titleEn)} target="_blank" rel="noopener">Order on WhatsApp</a>
+          <a class="btn btn-line" href={href('/en/request/')}>Request form</a>
+        </div>
+      </div>
+      {d.image && <Image src={d.image} alt={d.imageAltEn ?? d.titleEn} widths={[480, 720, 960]} sizes="(min-width: 1024px) 26rem, 100vw" class="w-full rounded-2xl object-cover" loading="eager" fetchpriority="high" />}
+    </div>
+
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold">Delivery, swap and pickup</h2>
+      <ul class="mt-4 grid gap-4 sm:grid-cols-3">
+        {operations.map((o) => <li class="rounded-xl border border-line bg-white p-5"><h3 class="font-bold">{o.titleEn}</h3><p class="mt-1 text-sm text-muted">{o.textEn}</p></li>)}
+      </ul>
+    </section>
+
+    {gallery.length > 0 && (
+      <section class="mt-12">
+        <h2 class="text-2xl font-bold">On site</h2>
+        <div class="mt-5"><WorkGrid items={gallery.slice(0, 6)} lang="en" /></div>
+      </section>
+    )}
+
+    <FAQ faqs={d.faqsEn} title="Frequently asked questions" />
+
+    {others.length > 0 && (
+      <section class="mt-12">
+        <h2 class="text-2xl font-bold">Other container</h2>
+        <div class="mt-5 grid gap-5 md:grid-cols-2">{others.map((o) => <ContainerCard c={o} lang="en" />)}</div>
+      </section>
+    )}
+  </div>
+</BaseLayout>

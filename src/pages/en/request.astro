@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RequestForm from '../../components/RequestForm.astro';
+import { business } from '../../data/business';
+
+const crumbs = [{ name: 'Home', path: '/en/' }, { name: 'Order a container', path: '/en/request/' }];
+---
+<BaseLayout
+  lang="en"
+  title="Order a rubble or waste container on WhatsApp"
+  description={`Order a container from ${business.nameEn}: choose the size and enter the work area, and the message reaches us on WhatsApp +965 ${business.whatsapp}.`}
+  breadcrumbs={crumbs}
+  alternate="/talab-hawiya/"
+>
+  <div class="container-page max-w-3xl pt-6">
+    <Breadcrumbs items={crumbs} lang="en" />
+    <h1 class="mt-4 text-3xl font-bold">Order a container</h1>
+    <p class="mt-3 text-muted">Choose the container and enter the work area, then press the button to open a ready WhatsApp message to +965 {business.whatsapp}.</p>
+    <div class="mt-6"><RequestForm lang="en" /></div>
+  </div>
+</BaseLayout>

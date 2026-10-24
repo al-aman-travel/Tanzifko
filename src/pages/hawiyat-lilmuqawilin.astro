@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ContainerCard from '../components/ContainerCard.astro';
+import Clients from '../components/Clients.astro';
+import WorkGrid from '../components/WorkGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import { business, operations } from '../data/business';
+import { waLink } from '../data/whatsapp';
+import { containers, works } from '../lib/content';
+import { href } from '../lib/url';
+
+const list = await containers();
+const gallery = (await works()).slice(0, 6);
+const crumbs = [{ name: 'الرئيسية', path: '/' }, { name: 'حاويات للمقاولين والشركات', path: '/hawiyat-lilmuqawilin/' }];
+const faqs = [
+  { question: 'هل تتعاقدون مع شركات المقاولات؟', answer: 'نعم، لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات.' },
+  { question: 'ما الحاويات المناسبة لمواقع البناء؟', answer: 'حاوية الأنقاض 12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب للأخشاب والكرتون والإطارات.' },
+  { question: 'كيف نطلب حاويات لمشروع؟', answer: `راسلونا عبر واتساب ${business.whatsapp} باسم الشركة وموقع المشروع وأنواع المخلفات وعدد الحاويات المتوقع، ونرتب معكم التوصيل والتبديل.` },
+];
+const wa = waLink(`مرحبًا ${business.short}، نحن شركة ونحتاج حاويات لمشروع.\nاسم الشركة:\nموقع المشروع:\nنوع المخلفات:\nعدد الحاويات المتوقع:`);
+---
+<BaseLayout
+  title="حاويات مخلفات لشركات المقاولات والترميم في الكويت"
+  description={`${business.name} تؤجّر حاويات الأنقاض والمخلفات لشركات المقاولات والترميم والتشطيبات في الكويت، مع التوصيل والتبديل والرفع. لدينا عقود مع شركات مقاولات كبرى.`}
+  faqs={faqs}
+  breadcrumbs={crumbs}
+  alternate="/en/contractors/"
+>
+  <div class="container-page pt-6">
+    <Breadcrumbs items={crumbs} />
+    <h1 class="mt-4 text-3xl font-bold leading-snug">حاويات مخلفات لشركات المقاولات والترميم في الكويت</h1>
+    <p class="mt-4 max-w-3xl text-lg">نؤجّر حاويات الأنقاض والمخلفات لمواقع البناء والترميم والتشطيبات، ونوصل الحاويات ونبدّلها عند امتلائها ونرفعها عند انتهاء العمل.</p>
+
+    <section class="mt-10">
+      <h2 class="text-2xl font-bold">عقود وسابقة أعمال</h2>
+      <p class="mt-2 max-w-3xl">لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات، منها:</p>
+      <Clients />
+    </section>
+
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold">الحاويات المتوفرة</h2>
+      <div class="mt-5 grid gap-5 md:grid-cols-2">{list.map((c) => <ContainerCard c={c} />)}</div>
+    </section>
+
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold">ما نقدمه للمشاريع</h2>
+      <ul class="mt-4 grid gap-4 sm:grid-cols-3">
+        {operations.map((o) => <li class="rounded-xl border border-line bg-white p-5"><h3 class="font-bold">{o.title}</h3><p class="mt-1 text-sm text-muted">{o.text}</p></li>)}
+      </ul>
+    </section>
+
+    {gallery.length > 0 && (
+      <section class="mt-12">
+        <h2 class="text-2xl font-bold">من مواقع العمل</h2>
+        <div class="mt-5"><WorkGrid items={gallery} /></div>
+      </section>
+    )}
+
+    <FAQ faqs={faqs} />
+
+    <div class="mt-10 rounded-2xl bg-brand p-6 text-white">
+      <h2 class="text-xl font-bold">طلب حاويات لمشروع</h2>
+      <p class="mt-1 text-white/85">أرسل اسم الشركة وموقع المشروع وأنواع المخلفات.</p>
+      <a class="btn btn-wa mt-4" href={wa} target="_blank" rel="noopener">راسلنا عبر واتساب</a>
+    </div>
+  </div>
+</BaseLayout>

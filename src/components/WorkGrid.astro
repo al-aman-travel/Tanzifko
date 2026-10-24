@@ -1,0 +1,20 @@
+---
+import { Image } from 'astro:assets';
+import type { Work } from '../lib/content';
+export interface Props { items: Work[]; lang?: 'ar' | 'en' }
+const { items, lang = 'ar' } = Astro.props;
+const isEn = lang === 'en';
+---
+<ul class="grid grid-cols-2 gap-3 md:grid-cols-3">
+  {items.map((w) => {
+    const caption = (isEn ? w.data.titleEn : undefined) ?? w.data.title;
+    return (
+      <li>
+        <figure class="overflow-hidden rounded-xl border border-line bg-white">
+          <Image src={w.data.image} alt={caption} widths={[320, 480, 720]} quality={70} sizes="(min-width: 768px) 23rem, 50vw" class="aspect-[3/4] w-full object-cover" loading="lazy" />
+          <figcaption class="p-2 text-xs text-muted md:text-sm">{caption}{w.data.area && ` — ${w.data.area}`}</figcaption>
+        </figure>
+      </li>
+    );
+  })}
+</ul>

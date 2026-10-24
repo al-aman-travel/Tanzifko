@@ -1,0 +1,76 @@
+---
+import { business } from '../data/business';
+import { containers } from '../lib/content';
+import { waGeneral, waGeneralEn } from '../data/whatsapp';
+
+export interface Props { lang?: 'ar' | 'en'; id?: string }
+const { lang = 'ar', id = 'request-form' } = Astro.props;
+const isEn = lang === 'en';
+const list = await containers();
+const t = isEn
+  ? {
+      name: 'Name or company', type: 'You are', size: 'Container', area: 'Work area', waste: 'Type of waste', date: 'Date needed', notes: 'Notes',
+      types: ['Construction contractor', 'Renovation or finishing company', 'Home or villa owner', 'Shop, warehouse or other'],
+      unsure: 'Not sure — advise me', send: 'Send the request on WhatsApp',
+      note: 'The form does not store or send your data anywhere: it only prepares a WhatsApp message that you send yourself.',
+      optional: '(optional)', head: `Hello ${business.shortEn}, I would like to order a container.`,
+    }
+  : {
+      name: 'الاسم أو اسم الشركة', type: 'نوع العميل', size: 'الحاوية', area: 'منطقة العمل', waste: 'نوع المخلفات', date: 'الموعد المطلوب', notes: 'ملاحظات',
+      types: ['شركة مقاولات', 'شركة ترميم أو تشطيبات', 'صاحب منزل أو فيلا', 'محل أو مخزن أو غير ذلك'],
+      unsure: 'لا أعرف — انصحوني', send: 'أرسل الطلب عبر واتساب',
+      note: 'النموذج لا يحفظ بياناتك ولا يرسلها لأي جهة؛ هو يجهّز رسالة واتساب ترسلها أنت.',
+      optional: '(اختياري)', head: `مرحبًا ${business.short}، أريد طلب حاوية.`,
+    };
+const sizes = list.map((c) => (isEn ? c.data.titleEn : c.data.title));
+const field = 'mt-1 w-full rounded-lg border border-line bg-white px-3 py-2.5';
+---
+<form id={id} data-wa-form data-wa={business.whatsapp} data-head={t.head} class="grid gap-4 rounded-2xl border border-line bg-white p-5 sm:grid-cols-2" novalidate>
+  <label class="block text-sm font-semibold">{t.size}
+    <select name={t.size} class={field} required>
+      {sizes.map((s) => <option>{s}</option>)}
+      <option>{t.unsure}</option>
+    </select>
+  </label>
+  <label class="block text-sm font-semibold">{t.type}
+    <select name={t.type} class={field}>
+      {t.types.map((s) => <option>{s}</option>)}
+    </select>
+  </label>
+  <label class="block text-sm font-semibold">{t.area}
+    <input name={t.area} class={field} required autocomplete="address-level2" />
+  </label>
+  <label class="block text-sm font-semibold">{t.date} <span class="font-normal text-muted">{t.optional}</span>
+    <input name={t.date} type="date" class={field} />
+  </label>
+  <label class="block text-sm font-semibold">{t.waste} <span class="font-normal text-muted">{t.optional}</span>
+    <input name={t.waste} class={field} />
+  </label>
+  <label class="block text-sm font-semibold">{t.name} <span class="font-normal text-muted">{t.optional}</span>
+    <input name={t.name} class={field} autocomplete="organization" />
+  </label>
+  <label class="block text-sm font-semibold sm:col-span-2">{t.notes} <span class="font-normal text-muted">{t.optional}</span>
+    <textarea name={t.notes} rows="3" class={field}></textarea>
+  </label>
+  <div class="sm:col-span-2">
+    <button type="submit" class="btn btn-wa w-full sm:w-auto">{t.send}</button>
+    <p class="mt-2 text-xs text-muted">{t.note}</p>
+    <noscript><a class="btn btn-wa mt-2" href={isEn ? waGeneralEn() : waGeneral()}>{t.send}</a></noscript>
+  </div>
+</form>
+<script>
+  // يجمع الحقول المعبأة في رسالة واحدة ويفتح واتساب — لا خادم ولا تخزين
+  document.querySelectorAll<HTMLFormElement>('form[data-wa-form]').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      const lines = [form.dataset.head ?? ''];
+      new FormData(form).forEach((v, k) => {
+        const s = String(v).trim();
+        if (s) lines.push(`${k}: ${s}`);
+      });
+      const url = `https://wa.me/965${form.dataset.wa}?text=${encodeURIComponent(lines.join('\n'))}`;
+      window.location.href = url;
+    });
+  });
+</script>

@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import WorkGrid from '../../components/WorkGrid.astro';
+import { business } from '../../data/business';
+import { waGeneralEn } from '../../data/whatsapp';
+import { works } from '../../lib/content';
+
+const all = await works();
+const crumbs = [{ name: 'Home', path: '/en/' }, { name: 'Our work', path: '/en/our-work/' }];
+---
+<BaseLayout
+  lang="en"
+  title="Photos of our containers on site in Kuwait"
+  description={`Real photos of ${business.nameEn} containers at construction and renovation sites in Kuwait: 12 m³ rubble containers and 30 m³ containers.`}
+  breadcrumbs={crumbs}
+  alternate="/aamaluna/"
+>
+  <div class="container-page pt-6">
+    <Breadcrumbs items={crumbs} lang="en" />
+    <h1 class="mt-4 text-3xl font-bold">Our containers on site</h1>
+    <p class="mt-3 max-w-3xl text-muted">Real photos of {business.shortEn} containers at construction, renovation and warehouse sites in Kuwait.</p>
+    <div class="mt-6"><WorkGrid items={all} lang="en" /></div>
+    <a class="btn btn-wa mt-8" href={waGeneralEn()} target="_blank" rel="noopener">Order a container on WhatsApp</a>
+  </div>
+</BaseLayout>

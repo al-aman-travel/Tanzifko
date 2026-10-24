@@ -1,0 +1,143 @@
+# لوحة التحكم (Sveltia CMS) — تكتب مباشرة إلى GitHub، بلا قاعدة بيانات ولا خادم.
+# أسماء الحقول (name) مطابقة لـ src/content.config.ts — لا تغيّرها وإلا يفشل البناء.
+
+backend:
+  name: github
+  repo: al-aman-travel/Tanzifko
+  branch: main
+
+app_title: "لوحة تنظيفكو المحلية"
+logo_url: ../favicon.svg
+output:
+  omit_empty_optional_fields: true
+editor:
+  preview: false
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+# الصور تُضغط في المتصفح قبل الرفع: WebP بجودة 85 وأقصى بُعد 2000 بكسل.
+# مكتبات الصور الجاهزة مُعطّلة: الموقع لا يعرض إلا صورًا حقيقية لحاوياتنا.
+media_libraries:
+  default:
+    config:
+      transformations:
+        raster_image: {format: webp, quality: 85, width: 2000, height: 2000}
+  stock_assets:
+    providers: []
+
+collections:
+  - name: "works"
+    label: "صور الأعمال"
+    label_singular: "صورة"
+    icon: "photo_library"
+    description: "صور حاوياتنا في مواقع العمل. ارفع الصورة واكتب وصفًا قصيرًا لما فيها."
+    folder: "src/content/works"
+    create: true
+    slug: "aamal-{{uuid_short}}"
+    identifier_field: title
+    summary: "{{title}}"
+    thumbnail: image
+    sortable_fields: ["order", "title"]
+    view_filters:
+      - {label: "في الرئيسية", field: featured, pattern: true}
+      - {label: "المسودات", field: draft, pattern: true}
+    media_folder: "images"
+    public_folder: "./images"
+    fields:
+      - {label: "📷 الصورة", name: "image", widget: "image", choose_url: false}
+      - {label: "وصف الصورة", name: "title", widget: "string", hint: "مثل: حاوية أنقاض أمام فيلا قيد الترميم. اكتب دائمًا «تنظيفكو المحلية» كاملة إن ذكرت الاسم."}
+      - label: "مقاس الحاوية في الصورة"
+        name: "container"
+        widget: "select"
+        required: false
+        options:
+          - {label: "غير محدد", value: ""}
+          - {label: "حاوية أنقاض 12 متر مكعب", value: "hawiyat-anqad"}
+          - {label: "حاوية 30 متر مكعب", value: "hawiya-30-metr"}
+        hint: "اختر المقاس فقط إن كنت متأكدًا — تظهر الصورة حينها في صفحة الحاوية."
+      - {label: "المنطقة", name: "area", widget: "string", required: false, hint: "مثل: الشويخ الصناعية. اختياري."}
+      - {label: "⭐ تظهر في الرئيسية", name: "featured", widget: "boolean", default: false}
+      - {label: "الوصف بالإنجليزية", name: "titleEn", widget: "string", required: false}
+      - {label: "⚙️ الترتيب", name: "order", widget: "number", default: 100, value_type: "int"}
+      - {label: "⚙️ مسودة (لا تظهر في الموقع)", name: "draft", widget: "boolean", default: false}
+
+  - name: "containers"
+    label: "الحاويات"
+    label_singular: "حاوية"
+    icon: "local_shipping"
+    description: "صفحة لكل مقاس. اكتب الأبعاد والأرقام كما هي فعلًا فقط؛ الحقل الفارغ لا يظهر في الموقع."
+    folder: "src/content/containers"
+    create: false
+    delete: false
+    identifier_field: title
+    media_folder: "images"
+    public_folder: "./images"
+    fields:
+      - {label: "اسم الحاوية", name: "title", widget: "string"}
+      - {label: "العنوان الرئيسي (H1)", name: "h1", widget: "string"}
+      - {label: "السعة (متر مكعب)", name: "capacity", widget: "number", value_type: "float", min: 1}
+      - {label: "الطول (متر)", name: "length", widget: "number", value_type: "float", required: false}
+      - {label: "العرض (متر)", name: "width", widget: "number", value_type: "float", required: false}
+      - {label: "الارتفاع (متر)", name: "height", widget: "number", value_type: "float", required: false}
+      - {label: "المخلفات المناسبة", name: "accepts", widget: "list", field: {label: "نوع", name: "item", widget: "string"}}
+      - {label: "ما لا يوضع فيها", name: "notFor", widget: "string", required: false}
+      - {label: "📷 الصورة الرئيسية", name: "image", widget: "image", required: false, choose_url: false}
+      - {label: "وصف الصورة", name: "imageAlt", widget: "string", required: false}
+      - {label: "المحتوى", name: "body", widget: "markdown", required: false}
+      - label: "أسئلة شائعة"
+        name: "faqs"
+        widget: "list"
+        required: false
+        fields:
+          - {label: "السؤال", name: "question", widget: "string"}
+          - {label: "الجواب", name: "answer", widget: "text"}
+      - {label: "🔎 عنوان جوجل", name: "seoTitle", widget: "string", required: false}
+      - {label: "🔎 وصف جوجل", name: "description", widget: "text", required: false}
+      - {label: "⚙️ الترتيب", name: "order", widget: "number", default: 0, value_type: "int"}
+      # ───── الإنجليزية ─────
+      - {label: "🇬🇧 رابط الصفحة الإنجليزية (لا تغيّره)", name: "enSlug", widget: "string"}
+      - {label: "🇬🇧 الاسم", name: "titleEn", widget: "string"}
+      - {label: "🇬🇧 العنوان الرئيسي", name: "h1En", widget: "string"}
+      - {label: "🇬🇧 المخلفات المناسبة", name: "acceptsEn", widget: "list", field: {label: "Type", name: "item", widget: "string"}}
+      - {label: "🇬🇧 ما لا يوضع فيها", name: "notForEn", widget: "string", required: false}
+      - {label: "🇬🇧 وصف الصورة", name: "imageAltEn", widget: "string", required: false}
+      - {label: "🇬🇧 المحتوى", name: "bodyEn", widget: "text", required: false}
+      - label: "🇬🇧 أسئلة شائعة"
+        name: "faqsEn"
+        widget: "list"
+        required: false
+        fields:
+          - {label: "Question", name: "question", widget: "string"}
+          - {label: "Answer", name: "answer", widget: "text"}
+      - {label: "🇬🇧 🔎 عنوان جوجل", name: "seoTitleEn", widget: "string", required: false}
+      - {label: "🇬🇧 🔎 وصف جوجل", name: "descriptionEn", widget: "text", required: false}
+
+  - name: "settings"
+    label: "بيانات الشركة"
+    icon: "business"
+    files:
+      - name: "company"
+        label: "بيانات الشركة"
+        file: "src/data/settings.json"
+        fields:
+          - {label: "الاسم الرسمي بالعربية", name: "nameAr", widget: "string", hint: "كما في السجل التجاري: شركة تنظيفكو المحلية"}
+          - {label: "الاسم الرسمي بالإنجليزية", name: "nameEn", widget: "string"}
+          - {label: "رقم واتساب (للطلبات)", name: "whatsapp", widget: "string", hint: "8 أرقام بدون 965"}
+          - {label: "رقم الاتصال الرئيسي", name: "phone", widget: "string", hint: "8 أرقام بدون 965"}
+          - {label: "أرقام اتصال إضافية", name: "extraPhones", widget: "list", required: false, field: {label: "رقم", name: "p", widget: "string"}}
+          - {label: "ساعات العمل (عربي)", name: "openingHoursText", widget: "string", required: false, hint: "مثل: من السبت إلى الخميس، 7 صباحًا – 5 مساءً. اتركه فارغًا ليختفي."}
+          - {label: "ساعات العمل (إنجليزي)", name: "openingHoursTextEn", widget: "string", required: false}
+          - {label: "العنوان (عربي)", name: "address", widget: "string", required: false, hint: "كما في السجل التجاري"}
+          - {label: "العنوان (إنجليزي)", name: "addressEn", widget: "string", required: false}
+          - {label: "رابط الموقع على الخريطة", name: "mapUrl", widget: "string", required: false}
+          - {label: "البريد الإلكتروني", name: "email", widget: "string", required: false}
+          - {label: "رابط إنستقرام", name: "instagram", widget: "string", required: false}
+          - label: "شركات لنا معها عقود أو سابقة أعمال"
+            name: "clients"
+            widget: "list"
+            required: false
+            hint: "تظهر في الرئيسية وصفحة المقاولين. احذف أي شركة لا تريد ذكرها."
+            fields:
+              - {label: "اسم الشركة", name: "name", widget: "string"}
+              - {label: "الاسم بالإنجليزية", name: "nameEn", widget: "string", required: false}

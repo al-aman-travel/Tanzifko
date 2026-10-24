@@ -1,0 +1,57 @@
+---
+import { business, description, descriptionEn } from '../data/business';
+import { abs } from '../lib/url';
+
+export interface Props {
+  faqs?: { question: string; answer: string }[];
+  breadcrumbs?: { name: string; url: string }[];
+  service?: { name: string; url: string; description?: string; image?: string };
+  lang?: 'ar' | 'en';
+}
+const { faqs = [], breadcrumbs = [], service, lang = 'ar' } = Astro.props;
+const isEn = lang === 'en';
+const home = abs('/', Astro.site);
+const orgId = `${home}#organization`;
+
+// Organization وليس LocalBusiness: العنوان الرسمي لم يُضف بعد. عند إضافته من اللوحة يُضاف للبيانات تلقائيًا.
+const phones = [business.phone, ...business.extraPhones].filter(Boolean).map((p) => `+965${p}`);
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'Organization',
+    '@id': orgId,
+    name: business.name,
+    alternateName: [business.short, business.nameEn, business.shortEn].filter(Boolean),
+    description: isEn ? descriptionEn : description,
+    url: home,
+    logo: abs('/icon-512.png', Astro.site),
+    image: abs('/og-image.jpg', Astro.site),
+    telephone: phones[0],
+    contactPoint: phones.map((telephone) => ({ '@type': 'ContactPoint', telephone, contactType: 'customer service', areaServed: 'KW', availableLanguage: ['ar', 'en'] })),
+    areaServed: { '@type': 'Country', name: 'Kuwait' },
+    ...(business.address ? { address: { '@type': 'PostalAddress', streetAddress: business.address, addressCountry: 'KW' } } : {}),
+    ...(business.email ? { email: business.email } : {}),
+    ...(business.sameAs.length ? { sameAs: business.sameAs } : {}),
+  },
+  { '@type': 'WebSite', '@id': `${home}#website`, url: home, name: business.name, alternateName: business.nameEn, inLanguage: ['ar-KW', 'en'], publisher: { '@id': orgId } },
+];
+if (breadcrumbs.length > 1) {
+  graph.push({ '@type': 'BreadcrumbList', itemListElement: breadcrumbs.map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.name, item: b.url })) });
+}
+if (faqs.length) {
+  graph.push({ '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })) });
+}
+if (service) {
+  graph.push({
+    '@type': 'Service',
+    name: service.name,
+    serviceType: isEn ? 'Waste container rental' : 'تأجير حاويات المخلفات',
+    url: service.url,
+    ...(service.description ? { description: service.description } : {}),
+    ...(service.image ? { image: service.image } : {}),
+    provider: { '@id': orgId },
+    areaServed: { '@type': 'Country', name: 'Kuwait' },
+  });
+}
+const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+---
+<script type="application/ld+json" set:html={json} />

@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ContainerCard from '../../components/ContainerCard.astro';
+import Clients from '../../components/Clients.astro';
+import FAQ from '../../components/FAQ.astro';
+import { business, operations } from '../../data/business';
+import { waLink } from '../../data/whatsapp';
+import { containers } from '../../lib/content';
+
+const list = await containers();
+const crumbs = [{ name: 'Home', path: '/en/' }, { name: 'For contractors', path: '/en/contractors/' }];
+const faqs = [
+  { question: 'Do you work under contract with contracting companies?', answer: 'Yes. We have contracts with major contracting companies in Kuwait and track record with renovation, engineering contracting and finishing companies.' },
+  { question: 'Which containers suit construction sites?', answer: 'The 12 m³ rubble container for bricks, marble and construction waste, and the 30 m³ container for wood, cardboard and tyres.' },
+  { question: 'How do we order containers for a project?', answer: `Message us on WhatsApp +965 ${business.whatsapp} with the company name, project location, waste types and the expected number of containers.` },
+];
+const wa = waLink(`Hello ${business.shortEn}, we are a company and need containers for a project.\nCompany:\nProject location:\nWaste type:\nNumber of containers:`);
+---
+<BaseLayout
+  lang="en"
+  title="Waste containers for contractors and renovation companies in Kuwait"
+  description={`${business.nameEn} rents rubble and waste containers to contracting, renovation and finishing companies in Kuwait, with delivery, swap and pickup.`}
+  faqs={faqs}
+  breadcrumbs={crumbs}
+  alternate="/hawiyat-lilmuqawilin/"
+>
+  <div class="container-page pt-6">
+    <Breadcrumbs items={crumbs} lang="en" />
+    <h1 class="mt-4 text-3xl font-bold leading-snug">Waste containers for contractors and renovation companies in Kuwait</h1>
+    <p class="mt-4 max-w-3xl text-lg">We rent rubble and waste containers for construction, renovation and finishing sites. We deliver the containers, swap them when full and collect them when the work is done.</p>
+    <section class="mt-10">
+      <h2 class="text-2xl font-bold">Contracts and track record</h2>
+      <p class="mt-2 max-w-3xl">We have contracts with major contracting companies in Kuwait and track record with renovation, engineering contracting and finishing companies, including:</p>
+      <Clients lang="en" />
+    </section>
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold">Available containers</h2>
+      <div class="mt-5 grid gap-5 md:grid-cols-2">{list.map((c) => <ContainerCard c={c} lang="en" />)}</div>
+    </section>
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold">What we provide</h2>
+      <ul class="mt-4 grid gap-4 sm:grid-cols-3">
+        {operations.map((o) => <li class="rounded-xl border border-line bg-white p-5"><h3 class="font-bold">{o.titleEn}</h3><p class="mt-1 text-sm text-muted">{o.textEn}</p></li>)}
+      </ul>
+    </section>
+    <FAQ faqs={faqs} title="Frequently asked questions" />
+    <a class="btn btn-wa mt-10" href={wa} target="_blank" rel="noopener">Message us on WhatsApp</a>
+  </div>
+</BaseLayout>
