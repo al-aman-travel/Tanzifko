@@ -24,6 +24,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          # Astro يتطلب Node 22.23.4 أو أحدث، ونسخة المشغّل المخزّنة قد تكون أقدم
+          check-latest: true
           cache: npm
       - name: Install
         run: npm ci
