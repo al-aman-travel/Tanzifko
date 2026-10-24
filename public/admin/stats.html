@@ -241,8 +241,9 @@
       })
       .catch(function (e) {
         if (e === 0) return;
-        if (gate.hidden) { $("meta").textContent = "تعذّر تحميل الإحصائيات: " + (e && e.message ? e.message : ""); }
-        else $("gmsg").textContent = "تعذّر الاتصال بخدمة الإحصائيات. حاول بعد قليل.";
+        // الخدمة غير متاحة (لم تُنشر بعد أو انقطاع): لا نعرض نموذج كلمة السر، بل رسالة واضحة داخل اللوحة
+        gate.hidden = true; gate.style.display = "none"; app.hidden = false;
+        $("meta").textContent = "خدمة الإحصائيات غير متاحة الآن — لم تُفعَّل على Netlify بعد أو هناك انقطاع مؤقت. كلمة السر صحيحة ولا حاجة لإدخالها مرة أخرى.";
       })
       .finally(function () { document.body.classList.remove("loading"); });
   }
