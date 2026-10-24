@@ -124,11 +124,17 @@ export default async (req: Request) => {
     }
   }
 
+  // ملخص ثابت في كل طلب: اليوم (منذ منتصف الليل بتوقيت الكويت) وآخر 7 و30 و365 يومًا
+  const yearDays = daysBack(365, now);
+  const yearAggs = await Promise.all(yearDays.map((d) => dayAgg(d, today, existing)));
+  const sumLast = (k: number) => { const a = emptyAgg(); yearAggs.slice(-k).forEach((x) => merge(a, x)); return { ...a.n, v: a.v }; };
+  const summary = { today: sumLast(1), week: sumLast(7), month: sumLast(30), year: sumLast(365) };
+
   const clicks = top(total.clicks, 20).map(([k, n]) => { const [t, l, p] = k.split("\u0001"); return { type: t, label: l, page: p, n }; });
   return Response.json(
     {
       ok: true, range, generatedAt: kwIso(now).slice(0, 16).replace("T", " "),
-      totals: { ...total.n, v: total.v }, prev, series, clicks,
+      totals: { ...total.n, v: total.v }, prev, series, clicks, summary,
       pages: top(total.pages, 12), refs: top(total.refs, 10), dev: total.dev, lang: total.lang, cc: top(total.cc, 8),
     },
     { headers: { ...h, "cache-control": "no-store" } },

@@ -86,6 +86,14 @@
     #gate { position: fixed; inset: 0; display: grid; place-content: center; gap: 12px; padding: 24px; background: var(--page); text-align: center; z-index: 20; }
     #gate input { font: inherit; font-size: 18px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; min-width: 260px; text-align: center; background: var(--surface-1); color: var(--text-primary); }
     #gate button { font: inherit; font-size: 18px; font-weight: 700; padding: 12px; border: 0; border-radius: 10px; background: var(--brand); color: #fff; }
+    table.sum { width: 100%; border-collapse: collapse; font-size: 14px; }
+    table.sum th, table.sum td { padding: 9px 4px; border-bottom: 1px solid var(--line); text-align: center; }
+    table.sum th:first-child, table.sum td:first-child { text-align: right; }
+    table.sum thead th { color: var(--text-secondary); font-size: 13px; }
+    table.sum td { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+    table.sum td:first-child { font-size: 13px; font-weight: 700; }
+    table.sum td:first-child i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-inline-end: 6px; }
+    table.sum tr.hl td { background: color-mix(in srgb, var(--c-wa) 10%, transparent); }
     .note { color: var(--text-muted); font-size: 12px; margin-top: 14px; }
     .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   </style>
@@ -111,14 +119,20 @@
       </div>
     </header>
 
-    <div class="seg" role="group" aria-label="الفترة">
-      <button type="button" data-r="24h">24 ساعة</button>
-      <button type="button" data-r="7d">أسبوع</button>
-      <button type="button" data-r="30d">شهر</button>
-      <button type="button" data-r="1y">سنة</button>
-    </div>
 
     <main id="main">
+      <section class="card" style="margin-top:0">
+        <h2>عدد النقرات</h2>
+        <p class="sub">اليوم منذ منتصف الليل، والأسبوع والشهر والسنة = آخر 7 و30 و365 يومًا</p>
+        <div style="overflow-x:auto"><table class="sum" id="sum"></table></div>
+      </section>
+
+      <div class="seg" role="group" aria-label="فترة الرسوم">
+        <button type="button" data-r="24h">24 ساعة</button>
+        <button type="button" data-r="7d">أسبوع</button>
+        <button type="button" data-r="30d">شهر</button>
+        <button type="button" data-r="1y">سنة</button>
+      </div>
       <section class="kpis" id="kpis" aria-label="الأرقام الرئيسية"></section>
 
       <section class="card">
@@ -270,6 +284,20 @@
     k.appendChild(kpi(T.v.ar, t.v, p && p.v, null));
     k.appendChild(kpi("نسبة التواصل من الزوار", rate, p && p.v ? (pc / p.v) * 100 : null, null, false, function (x) { return nf.format(Math.round(x * 10) / 10) + "%"; }));
 
+    var sm = d.summary, tb = $("sum"); tb.textContent = "";
+    if (sm) {
+      var thead = el("thead"), hr = el("tr");
+      ["", "اليوم", "أسبوع", "شهر", "سنة"].forEach(function (h) { hr.appendChild(el("th", { scope: "col" }, h)); });
+      thead.appendChild(hr); tb.appendChild(thead);
+      var tbody = el("tbody");
+      [["wa", T.wa.ar], ["order", T.order.ar], ["cta", T.cta.ar], ["call", T.call.ar], ["pv", T.pv.ar], ["v", T.v.ar]].forEach(function (r) {
+        var tr = el("tr", r[0] === "wa" ? { class: "hl" } : null);
+        var th = el("td"); var i = el("i"); i.style.background = "var(" + (T[r[0]].c) + ")"; th.appendChild(i); th.appendChild(document.createTextNode(r[1])); tr.appendChild(th);
+        ["today", "week", "month", "year"].forEach(function (k) { tr.appendChild(el("td", null, nf.format(sm[k][r[0]] || 0))); });
+        tbody.appendChild(tr);
+      });
+      tb.appendChild(tbody);
+    }
     $("pvSub").textContent = range === "24h" ? "عدد مرات فتح الصفحات في كل ساعة" : range === "1y" ? "عدد مرات فتح الصفحات في كل شهر" : "عدد مرات فتح الصفحات في كل يوم";
     lineChart($("pvChart"), d.series, "pv");
     stackChart($("actChart"), d.series);
