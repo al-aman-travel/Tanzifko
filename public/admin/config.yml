@@ -131,6 +131,8 @@ collections:
           - {label: "أرقام اتصال إضافية", name: "extraPhones", widget: "list", required: false, field: {label: "رقم", name: "p", widget: "string"}}
           - {label: "ساعات العمل (عربي)", name: "openingHoursText", widget: "string", required: false, hint: "مثل: من السبت إلى الخميس، 7 صباحًا – 5 مساءً. اتركه فارغًا ليختفي."}
           - {label: "ساعات العمل (إنجليزي)", name: "openingHoursTextEn", widget: "string", required: false}
+          - {label: "🔎 بداية الدوام لجوجل (24 ساعة)", name: "opens", widget: "string", required: false, hint: "مثل 07:00"}
+          - {label: "🔎 نهاية الدوام لجوجل (24 ساعة)", name: "closes", widget: "string", required: false, hint: "مثل 22:00"}
           - {label: "العنوان (عربي)", name: "address", widget: "string", required: false, hint: "كما في السجل التجاري"}
           - {label: "العنوان (إنجليزي)", name: "addressEn", widget: "string", required: false}
           - {label: "رابط الموقع على الخريطة", name: "mapUrl", widget: "string", required: false}

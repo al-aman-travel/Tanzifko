@@ -20,8 +20,9 @@ faqs:
   - question: كيف أطلب حاوية 30 متر مكعب؟
     answer: أرسل لنا عبر واتساب منطقة العمل ونوع المخلفات والموعد المطلوب، ونؤكد لك التوفر وموعد التوصيل.
 description: تأجير حاوية 30 متر مكعب في الكويت (6 × 2.30 × 2.1 م) للأخشاب والكرتون والإطارات، مع التوصيل والتبديل والرفع. اطلبها من تنظيفكو المحلية عبر واتساب.
-seoTitle: حاوية 30 متر مكعب للأخشاب والكرتون والإطارات في الكويت
+seoTitle: حاوية 30 متر مكعب للإيجار في الكويت — أخشاب وكرتون وإطارات
 order: 2
+seoTitleEn: 30 m³ container rental in Kuwait for wood, cardboard and tyres
 enSlug: container-30m3
 titleEn: 30 m³ container
 h1En: 30 m³ containers for wood, cardboard and tyres in Kuwait

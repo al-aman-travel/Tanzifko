@@ -1,0 +1,22 @@
+---
+import { business } from '../data/business';
+export interface Props { lang?: 'ar' | 'en'; tone?: 'dark' | 'light' }
+const { lang = 'ar', tone = 'dark' } = Astro.props;
+const isEn = lang === 'en';
+// من السجل التجاري — يظهر فقط حين يكون رقم السجل مسجّلًا في بيانات الشركة
+const items = business.crNumber
+  ? isEn
+    ? [`Commercial registration no. ${business.crNumber}`, 'Licensed for solid waste transport', 'Approved by the Environment Public Authority and Kuwait Municipality']
+    : [`سجل تجاري رقم ${business.crNumber}`, 'مرخّصة لنقل النفايات الصلبة', 'موافقة الهيئة العامة للبيئة وبلدية الكويت']
+  : [];
+---
+{items.length > 0 && (
+  <ul class:list={['flex flex-wrap gap-2 text-sm', tone === 'dark' ? 'text-white' : 'text-ink']} aria-label={isEn ? 'Licence' : 'الترخيص'}>
+    {items.map((t) => (
+      <li class:list={['flex items-center gap-1.5 rounded-full px-3 py-1', tone === 'dark' ? 'bg-white/10' : 'border border-line bg-white']}>
+        <svg aria-hidden="true" viewBox="0 0 20 20" class="h-4 w-4 shrink-0 text-sun" fill="currentColor"><path d="M10 1.5 3 4.5v5c0 4.2 3 7.8 7 9 4-1.2 7-4.8 7-9v-5l-7-3Zm-1 12-3.5-3.5 1.4-1.4L9 10.7l4.1-4.1 1.4 1.4L9 13.5Z"/></svg>
+        {t}
+      </li>
+    ))}
+  </ul>
+)}

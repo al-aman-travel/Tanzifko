@@ -5,6 +5,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import ContainerCard from '../../components/ContainerCard.astro';
 import WorkGrid from '../../components/WorkGrid.astro';
 import FAQ from '../../components/FAQ.astro';
+import TrustBar from '../../components/TrustBar.astro';
 import { operations } from '../../data/business';
 import { waContainerEn } from '../../data/whatsapp';
 import { containers, works, dims, type Container } from '../../lib/content';
@@ -48,6 +49,7 @@ const paragraphs = d.bodyEn.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean
           <a class="btn btn-wa" href={waContainerEn(d.titleEn)} target="_blank" rel="noopener">Order on WhatsApp</a>
           <a class="btn btn-line" href={href('/en/request/')}>Request form</a>
         </div>
+        <div class="mt-5"><TrustBar lang="en" tone="light" /></div>
       </div>
       {d.image && <Image src={d.image} alt={d.imageAltEn ?? d.titleEn} widths={[480, 720, 960]} sizes="(min-width: 1024px) 26rem, 100vw" class="w-full rounded-2xl object-cover" loading="eager" fetchpriority="high" />}
     </div>
@@ -71,6 +73,7 @@ const paragraphs = d.bodyEn.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean
     {others.length > 0 && (
       <section class="mt-12">
         <h2 class="text-2xl font-bold">Other container</h2>
+        <p class="mt-1 text-muted">To compare sizes, see the <a class="text-brand underline" href={href('/en/container-sizes/')}>container size guide</a>.</p>
         <div class="mt-5 grid gap-5 md:grid-cols-2">{others.map((o) => <ContainerCard c={o} lang="en" />)}</div>
       </section>
     )}

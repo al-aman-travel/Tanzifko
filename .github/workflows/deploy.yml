@@ -20,6 +20,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # السجل الكامل: تاريخ آخر تعديل لكل صفحة في خريطة الموقع يُقرأ من git
+          fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:

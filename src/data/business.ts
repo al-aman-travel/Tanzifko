@@ -24,6 +24,8 @@ export const business = {
   extraPhones: (settings.extraPhones as string[]).map(digits).filter(Boolean),
   openingHoursText: clean(settings.openingHoursText),
   openingHoursTextEn: clean(settings.openingHoursTextEn),
+  /** ساعات العمل لجوجل (24 ساعة): من اللوحة، مثل 07:00 و22:00 */
+  openingHours: clean(settings.opens) && clean(settings.closes) ? { opens: clean(settings.opens), closes: clean(settings.closes) } : null,
   address: clean(settings.address),
   addressEn: clean(settings.addressEn),
   mapUrl: clean(settings.mapUrl),

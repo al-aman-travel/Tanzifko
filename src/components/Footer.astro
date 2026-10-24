@@ -23,6 +23,7 @@ const address = isEn ? business.addressEn : business.address;
       <p class="font-bold text-white">{isEn ? 'Containers' : 'الحاويات'}</p>
       <ul class="mt-2 space-y-1">
         {list.map((c) => <li><a class="hover:text-sun" href={href(isEn ? `/en/${c.data.enSlug}/` : `/${c.id}/`)}>{isEn ? c.data.titleEn : c.data.title}</a></li>)}
+        <li><a class="hover:text-sun" href={href(isEn ? '/en/container-sizes/' : '/maqasat-hawiyat/')}>{isEn ? 'Container size guide' : 'دليل مقاسات الحاويات'}</a></li>
         <li><a class="hover:text-sun" href={href(isEn ? custom.pathEn : custom.path)}>{isEn ? custom.titleEn : custom.title}</a></li>
         <li><a class="hover:text-sun" href={href(isEn ? '/en/contractors/' : '/hawiyat-lilmuqawilin/')}>{isEn ? 'For contractors and companies' : 'حاويات للمقاولين والشركات'}</a></li>
         <li><a class="hover:text-sun" href={href(isEn ? '/en/our-work/' : '/aamaluna/')}>{isEn ? 'Our work' : 'أعمالنا'}</a></li>
@@ -31,7 +32,8 @@ const address = isEn ? business.addressEn : business.address;
     </div>
     <address class="not-italic">
       <p class="font-bold text-white">{isEn ? 'Contact' : 'التواصل'}</p>
-      {address && <p class="mt-2">{business.mapUrl ? <a class="hover:text-sun" href={business.mapUrl} target="_blank" rel="noopener">{address}</a> : address}</p>}
+      {address && <p class="mt-2">{address}</p>}
+      {business.mapUrl && <p class="mt-1"><a class="font-semibold text-sun underline" href={business.mapUrl} target="_blank" rel="noopener">{isEn ? 'Our location on Google Maps' : 'موقعنا على خرائط جوجل'}</a></p>}
       {hours && <p class="mt-1">{isEn ? 'Hours: ' : 'ساعات العمل: '}{hours}</p>}
       <p class="mt-2">{isEn ? 'WhatsApp: ' : 'واتساب: '}<a dir="ltr" class="font-bold text-white" href={`https://wa.me/965${business.whatsapp}`}>{business.whatsapp}</a></p>
       {business.phone === business.whatsapp && <p class="mt-1">{isEn ? 'Phone: ' : 'الهاتف: '}<a dir="ltr" class="font-bold text-white" href={`tel:+965${business.phone}`}>{business.phone}</a></p>}

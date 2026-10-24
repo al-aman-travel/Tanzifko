@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ContainerCard from '../components/ContainerCard.astro';
+import FAQ from '../components/FAQ.astro';
+import { business, custom } from '../data/business';
+import { waGeneral } from '../data/whatsapp';
+import { containers, dims } from '../lib/content';
+import { href } from '../lib/url';
+
+const list = await containers();
+const crumbs = [{ name: 'الرئيسية', path: '/' }, { name: 'مقاسات الحاويات', path: '/maqasat-hawiyat/' }];
+const faqs = [
+  { question: 'ما مقاسات حاويات الأنقاض لدى تنظيفكو المحلية؟', answer: 'حاوية أنقاض 12 متر مكعب للطابوق والرخام ومخلفات البناء، وحاوية 30 متر مكعب (6 × 2.30 × 2.10 م) للأخشاب والكرتون والإطارات، ونفصّل حاويات بمقاسات أخرى حسب طلب الشركات.' },
+  { question: 'ما الفرق بين حاوية 12 متر وحاوية 30 متر؟', answer: 'حاوية 12 متر مكعب مخصصة للمخلفات الثقيلة كالأنقاض والطابوق والرخام، وحاوية 30 متر مكعب مخصصة للمخلفات الكبيرة الحجم والأخف وزنًا كالأخشاب والكرتون والإطارات.' },
+  { question: 'كيف أعرف المقاس المناسب لمشروعي؟', answer: `اختر الحاوية حسب نوع المخلفات أولًا. وإن لم تكن متأكدًا، أرسل نوع العمل والمنطقة عبر واتساب ${business.whatsapp} ونقترح عليك المقاس.` },
+  { question: 'ماذا لو امتلأت الحاوية قبل انتهاء العمل؟', answer: 'نرفع الحاوية الممتلئة ونضع مكانها حاوية فارغة، ونرفعها نهائيًا عند انتهاء العمل.' },
+];
+---
+<BaseLayout
+  title="مقاسات حاويات الانقاض في الكويت: 12 و30 متر مكعب"
+  description={`دليل مقاسات حاويات الأنقاض في الكويت من ${business.name}: حاوية 12 متر مكعب للطابوق والرخام، وحاوية 30 متر مكعب (6 × 2.30 × 2.10 م) للأخشاب والكرتون، وتفصيل مقاسات خاصة.`}
+  faqs={faqs}
+  breadcrumbs={crumbs}
+  alternate="/en/container-sizes/"
+>
+  <div class="container-page pt-6">
+    <Breadcrumbs items={crumbs} />
+    <h1 class="mt-4 text-3xl font-bold leading-snug">مقاسات حاويات الأنقاض في الكويت: أي حاوية تناسب مشروعك؟</h1>
+    <p class="mt-4 max-w-3xl text-lg">المقاس المناسب يحدده نوع المخلفات قبل كميتها. هذه مقارنة بين الحاويات التي نؤجّرها، لتختار الحاوية الصحيحة من أول طلب.</p>
+
+    <div class="mt-8 overflow-x-auto rounded-2xl border border-line bg-white">
+      <table class="w-full min-w-[34rem] text-right text-sm md:text-base">
+        <caption class="sr-only">مقارنة مقاسات الحاويات</caption>
+        <thead class="bg-sand">
+          <tr><th scope="col" class="p-3">الحاوية</th><th scope="col" class="p-3">السعة</th><th scope="col" class="p-3">الأبعاد (طول × عرض × ارتفاع)</th><th scope="col" class="p-3">المخلفات المناسبة</th></tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          {list.map((c) => (
+            <tr>
+              <th scope="row" class="p-3"><a class="text-brand underline" href={href(`/${c.id}/`)}>{c.data.title}</a></th>
+              <td class="p-3">{c.data.capacity} متر مكعب</td>
+              <td class="p-3">{dims(c) || '—'}</td>
+              <td class="p-3">{c.data.accepts.join('، ')}</td>
+            </tr>
+          ))}
+          <tr>
+            <th scope="row" class="p-3"><a class="text-brand underline" href={href(custom.path)}>{custom.title}</a></th>
+            <td class="p-3">بالمقاس المطلوب</td>
+            <td class="p-3">حسب طلب الشركة</td>
+            <td class="p-3">حسب الاستخدام</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <section class="prose-ar mt-10 max-w-3xl">
+      <h2>المخلفات الثقيلة: حاوية 12 متر مكعب</h2>
+      <p>الأنقاض والطابوق والرخام ومخلفات البناء والترميم ثقيلة الوزن، لذلك نخصص لها حاوية الأنقاض 12 متر مكعب. تناسب أعمال الهدم والترميم والتشطيبات في المنازل والفلل ومواقع البناء.</p>
+      <h2>المخلفات الكبيرة الحجم: حاوية 30 متر مكعب</h2>
+      <p>الأخشاب والكرتون والإطارات تشغل حجمًا كبيرًا مع وزن أخف، لذلك نخصص لها حاوية 30 متر مكعب بطول 6 أمتار وعرض 2.30 متر وارتفاع 2.10 متر.</p>
+      <h2>مشروع كبير أو مخلفات مستمرة</h2>
+      <p>بدل طلب حاوية أكبر، نبدّل الحاوية عند امتلائها بحاوية فارغة طوال مدة العمل. وإن احتاجت شركتك مقاسًا مختلفًا، <a href={href(custom.path)}>نفصّل ونصمّم الحاوية بالمقاس الذي تطلبه</a>.</p>
+    </section>
+
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold">الحاويات المتوفرة</h2>
+      <div class="mt-5 grid gap-5 md:grid-cols-2">{list.map((c) => <ContainerCard c={c} />)}</div>
+    </section>
+
+    <FAQ faqs={faqs} />
+    <a class="btn btn-wa mt-10" href={waGeneral()} target="_blank" rel="noopener">اسألنا عن المقاس المناسب عبر واتساب</a>
+  </div>
+</BaseLayout>

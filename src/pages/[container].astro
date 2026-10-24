@@ -6,6 +6,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ContainerCard from '../components/ContainerCard.astro';
 import WorkGrid from '../components/WorkGrid.astro';
 import FAQ from '../components/FAQ.astro';
+import TrustBar from '../components/TrustBar.astro';
 import { business, operations } from '../data/business';
 import { waContainer } from '../data/whatsapp';
 import { containers, works, dims, type Container } from '../lib/content';
@@ -51,6 +52,7 @@ const crumbs = [
           <a class="btn btn-wa" href={waContainer(d.title)} target="_blank" rel="noopener">اطلب {d.title} عبر واتساب</a>
           <a class="btn btn-line" href={href('/talab-hawiya/')}>نموذج الطلب</a>
         </div>
+        <div class="mt-5"><TrustBar tone="light" /></div>
       </div>
       {d.image && (
         <Image src={d.image} alt={d.imageAlt ?? d.title} widths={[480, 720, 960]} sizes="(min-width: 1024px) 26rem, 100vw" class="w-full rounded-2xl object-cover" loading="eager" fetchpriority="high" />
@@ -76,6 +78,7 @@ const crumbs = [
     {others.length > 0 && (
       <section class="mt-12">
         <h2 class="text-2xl font-bold">الحاوية الأخرى</h2>
+        <p class="mt-1 text-muted">للمقارنة بين المقاسات: <a class="text-brand underline" href={href('/maqasat-hawiyat/')}>دليل مقاسات حاويات الأنقاض</a>.</p>
         <div class="mt-5 grid gap-5 md:grid-cols-2">{others.map((o) => <ContainerCard c={o} />)}</div>
       </section>
     )}

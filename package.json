@@ -4,7 +4,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "موقع شركة تنظيفكو المحلية — تأجير حاويات الأنقاض والمخلفات في الكويت (Astro + Sveltia CMS على GitHub Pages)",
-  "engines": { "node": ">=22.23.4" },
+  "engines": {
+    "node": ">=22.23.4"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -12,7 +14,6 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.4",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.5",
     "tailwindcss": "^4.3.3"

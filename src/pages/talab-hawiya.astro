@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import RequestForm from '../components/RequestForm.astro';
+import TrustBar from '../components/TrustBar.astro';
 import { business } from '../data/business';
 
 const crumbs = [{ name: 'الرئيسية', path: '/' }, { name: 'اطلب حاوية', path: '/talab-hawiya/' }];
@@ -16,6 +17,7 @@ const crumbs = [{ name: 'الرئيسية', path: '/' }, { name: 'اطلب حا�
     <Breadcrumbs items={crumbs} />
     <h1 class="mt-4 text-3xl font-bold">اطلب حاوية</h1>
     <p class="mt-3 text-muted">اختر الحاوية واكتب منطقة العمل، ثم اضغط الزر لتُفتح رسالة واتساب جاهزة إلى {business.whatsapp}.</p>
+    <div class="mt-4"><TrustBar tone="light" /></div>
     <div class="mt-6"><RequestForm /></div>
   </div>
 </BaseLayout>

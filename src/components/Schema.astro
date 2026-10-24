@@ -1,5 +1,11 @@
 ---
-import { business, description, descriptionEn } from '../data/business';
+/**
+ * البيانات المنظمة (JSON-LD) — رسم واحد مترابط بالمعرّفات (@id):
+ * LocalBusiness (الشركة) ← WebSite ← WebPage (الصفحة الحالية) ← Service / FAQPage / BreadcrumbList.
+ * كل قيمة هنا منشورة أيضًا في نص الصفحة، ولا تُضاف تقييمات أو أسعار غير حقيقية.
+ */
+import { getCollection } from 'astro:content';
+import { business, description, descriptionEn, custom } from '../data/business';
 import { abs } from '../lib/url';
 
 export interface Props {
@@ -7,51 +13,113 @@ export interface Props {
   breadcrumbs?: { name: string; url: string }[];
   service?: { name: string; url: string; description?: string; image?: string };
   lang?: 'ar' | 'en';
+  title: string;
+  description: string;
+  image: string;
 }
-const { faqs = [], breadcrumbs = [], service, lang = 'ar' } = Astro.props;
+const { faqs = [], breadcrumbs = [], service, lang = 'ar', title, description: pageDesc, image } = Astro.props;
 const isEn = lang === 'en';
-const home = abs('/', Astro.site);
+const site = Astro.site;
+const home = abs('/', site);
 const orgId = `${home}#organization`;
+const pageUrl = new URL(Astro.url.pathname, site).toString();
 
-// Organization وليس LocalBusiness: العنوان الرسمي لم يُضف بعد. عند إضافته من اللوحة يُضاف للبيانات تلقائيًا.
-const phones = [business.phone, ...business.extraPhones].filter(Boolean).map((p) => `+965${p}`);
-const graph: Record<string, unknown>[] = [
-  {
-    '@type': 'Organization',
-    '@id': orgId,
-    name: business.name,
-    ...(business.legalName ? { legalName: business.legalName } : {}),
-    alternateName: [business.short, business.nameEn, business.shortEn].filter(Boolean),
-    description: isEn ? descriptionEn : description,
-    url: home,
-    logo: abs('/icon-512.png', Astro.site),
-    image: abs('/og-image.jpg', Astro.site),
-    telephone: phones[0],
-    contactPoint: phones.map((telephone) => ({ '@type': 'ContactPoint', telephone, contactType: 'customer service', areaServed: 'KW', availableLanguage: ['ar', 'en'] })),
-    areaServed: { '@type': 'Country', name: 'Kuwait' },
-    ...(business.address ? { address: { '@type': 'PostalAddress', streetAddress: isEn ? business.addressEn || business.address : business.address, addressLocality: isEn ? 'Al Farwaniya' : 'الفروانية', addressRegion: isEn ? 'Al Farwaniya Governorate' : 'محافظة الفروانية', addressCountry: 'KW' } } : {}),
-    ...(business.crNumber ? { identifier: { '@type': 'PropertyValue', propertyID: 'Kuwait Commercial Registration', value: business.crNumber } } : {}),
-    ...(business.email ? { email: business.email } : {}),
-    ...(business.sameAs.length ? { sameAs: business.sameAs } : {}),
+const containers = (await getCollection('containers')).sort((a, b) => a.data.order - b.data.order);
+const phone = business.phone ? `+965${business.phone}` : undefined;
+
+const org: Record<string, unknown> = {
+  '@type': 'LocalBusiness',
+  '@id': orgId,
+  name: business.name,
+  ...(business.legalName ? { legalName: business.legalName } : {}),
+  alternateName: [business.short, business.nameEn, business.shortEn].filter(Boolean),
+  description: isEn ? descriptionEn : description,
+  url: home,
+  logo: { '@type': 'ImageObject', url: abs('/icon-512.png', site), width: 512, height: 512 },
+  image: abs('/og-image.jpg', site),
+  ...(phone ? { telephone: phone } : {}),
+  contactPoint: [{ '@type': 'ContactPoint', telephone: `+965${business.whatsapp}`, contactType: 'customer service', areaServed: 'KW', availableLanguage: ['Arabic', 'English'] }],
+  areaServed: { '@type': 'Country', name: isEn ? 'Kuwait' : 'الكويت' },
+  ...(business.address
+    ? {
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: isEn ? business.addressEn || business.address : business.address,
+          addressLocality: isEn ? 'Al Farwaniya' : 'الفروانية',
+          addressRegion: isEn ? 'Al Farwaniya Governorate' : 'محافظة الفروانية',
+          addressCountry: 'KW',
+        },
+      }
+    : {}),
+  ...(business.openingHours
+    ? {
+        openingHoursSpecification: {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          opens: business.openingHours.opens,
+          closes: business.openingHours.closes,
+        },
+      }
+    : {}),
+  ...(business.mapUrl ? { hasMap: business.mapUrl } : {}),
+  ...(business.crNumber ? { identifier: { '@type': 'PropertyValue', propertyID: isEn ? 'Kuwait commercial registration' : 'السجل التجاري — الكويت', value: business.crNumber } } : {}),
+  ...(business.email ? { email: business.email } : {}),
+  ...(business.sameAs.length ? { sameAs: business.sameAs } : {}),
+  knowsAbout: isEn
+    ? ['Rubble container rental', 'Construction waste containers', 'Skip containers', 'Waste transport']
+    : ['تأجير حاويات الأنقاض', 'حاويات مخلفات البناء', 'نقل النفايات الصلبة', 'تفصيل الحاويات'],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: isEn ? 'Waste containers' : 'حاويات المخلفات',
+    itemListElement: [
+      ...containers.map((c) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: isEn ? c.data.titleEn : c.data.title,
+          url: abs(isEn ? `/en/${c.data.enSlug}/` : `/${c.id}/`, site),
+          serviceType: isEn ? 'Waste container rental' : 'تأجير حاويات',
+        },
+      })),
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: isEn ? custom.titleEn : custom.title, url: abs(isEn ? custom.pathEn : custom.path, site) } },
+    ],
   },
-  { '@type': 'WebSite', '@id': `${home}#website`, url: home, name: business.name, alternateName: business.nameEn, inLanguage: ['ar-KW', 'en'], publisher: { '@id': orgId } },
+};
+
+const graph: Record<string, unknown>[] = [
+  org,
+  { '@type': 'WebSite', '@id': `${home}#website`, url: home, name: business.name, alternateName: [business.short, business.nameEn], inLanguage: ['ar-KW', 'en'], publisher: { '@id': orgId } },
+  {
+    '@type': 'WebPage',
+    '@id': `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: title,
+    description: pageDesc,
+    inLanguage: isEn ? 'en' : 'ar-KW',
+    isPartOf: { '@id': `${home}#website` },
+    about: { '@id': orgId },
+    primaryImageOfPage: { '@type': 'ImageObject', url: image },
+    ...(breadcrumbs.length > 1 ? { breadcrumb: { '@id': `${pageUrl}#breadcrumb` } } : {}),
+  },
 ];
 if (breadcrumbs.length > 1) {
-  graph.push({ '@type': 'BreadcrumbList', itemListElement: breadcrumbs.map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.name, item: b.url })) });
+  graph.push({ '@type': 'BreadcrumbList', '@id': `${pageUrl}#breadcrumb`, itemListElement: breadcrumbs.map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.name, item: b.url })) });
 }
 if (faqs.length) {
-  graph.push({ '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })) });
+  graph.push({ '@type': 'FAQPage', '@id': `${pageUrl}#faq`, isPartOf: { '@id': `${pageUrl}#webpage` }, mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })) });
 }
 if (service) {
   graph.push({
     '@type': 'Service',
+    '@id': `${service.url}#service`,
     name: service.name,
     serviceType: isEn ? 'Waste container rental' : 'تأجير حاويات المخلفات',
     url: service.url,
     ...(service.description ? { description: service.description } : {}),
     ...(service.image ? { image: service.image } : {}),
     provider: { '@id': orgId },
-    areaServed: { '@type': 'Country', name: 'Kuwait' },
+    areaServed: { '@type': 'Country', name: isEn ? 'Kuwait' : 'الكويت' },
+    mainEntityOfPage: { '@id': `${pageUrl}#webpage` },
   });
 }
 const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });

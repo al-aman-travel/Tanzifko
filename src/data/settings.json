@@ -9,9 +9,11 @@
   "extraPhones": [],
   "openingHoursText": "من 7 صباحًا حتى 10 مساءً",
   "openingHoursTextEn": "7 am to 10 pm",
+  "opens": "07:00",
+  "closes": "22:00",
   "address": "الفروانية، قطعة 3، شارع 106، مبنى نجيب عبدالعزيز عبدالله الحميضي، الدور 3، شقة 22",
   "addressEn": "Al Farwaniya, Block 3, Street 106, Najeeb Abdulaziz Abdullah Al-Humaidhi Building, Floor 3, Unit 22",
-  "mapUrl": "",
+  "mapUrl": "https://maps.app.goo.gl/iJoBniiR2hjmHmQi8",
   "email": "",
   "instagram": "",
   "clients": [

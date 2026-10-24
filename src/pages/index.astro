@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ContainerCard from '../components/ContainerCard.astro';
 import WorkGrid from '../components/WorkGrid.astro';
 import Clients from '../components/Clients.astro';
+import TrustBar from '../components/TrustBar.astro';
 import FAQ from '../components/FAQ.astro';
 import { business, operations, custom } from '../data/business';
 import { waGeneral } from '../data/whatsapp';
@@ -24,7 +25,7 @@ const faqs = [
 ];
 ---
 <BaseLayout
-  title={`تأجير حاويات أنقاض ومخلفات في الكويت — ${business.short}`}
+  title={`تأجير حاويات انقاض في الكويت 12 و30 متر مكعب — ${business.short}`}
   description={`${business.name}: تأجير حاويات أنقاض 12 متر مكعب وحاويات 30 متر مكعب للأخشاب والكرتون والإطارات في الكويت، وتفصيل حاويات بالمقاس المطلوب. اطلب عبر واتساب ${business.whatsapp}.`}
   faqs={faqs}
   alternate="/en/"
@@ -40,6 +41,7 @@ const faqs = [
           <a class="btn btn-sun" href={href('/talab-hawiya/')}>اطلب حاوية</a>
           <a class="btn btn-wa" href={waGeneral()} target="_blank" rel="noopener">واتساب {business.whatsapp}</a>
         </div>
+        <div class="mt-6"><TrustBar /></div>
       </div>
       <img src={hero.src} srcset={hero.srcset} sizes={hero.sizes} width={hero.width} height={hero.height} alt="حاوية أنقاض من تنظيفكو المحلية تحت أنبوب تنزيل المخلفات من مبنى قيد الترميم" fetchpriority="high" decoding="async" class="aspect-[4/3] w-full rounded-2xl object-cover shadow-xl lg:aspect-[3/4]" />
     </div>
@@ -47,7 +49,7 @@ const faqs = [
 
   <section class="container-page mt-12">
     <h2 class="text-2xl font-bold">مقاسات الحاويات</h2>
-    <p class="mt-1 text-muted">اختر الحاوية حسب نوع المخلفات.</p>
+    <p class="mt-1 text-muted">ايجار حاوية انقاض لترميم منزل، أو حاويات لمشروع شركة مقاولات: اختر الحاوية حسب نوع المخلفات، أو راجع <a class="text-brand underline" href={href('/maqasat-hawiyat/')}>دليل مقاسات الحاويات</a>.</p>
     <div class="mt-5 grid gap-5 md:grid-cols-2">
       {list.map((c) => <ContainerCard c={c} />)}
     </div>

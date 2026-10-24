@@ -18,8 +18,9 @@ faqs:
   - question: كيف أطلب حاوية أنقاض؟
     answer: أرسل لنا عبر واتساب منطقة العمل ونوع المخلفات والموعد المطلوب، ونؤكد لك التوفر وموعد التوصيل.
 description: تأجير حاوية أنقاض 12 متر مكعب في الكويت للطابوق والرخام ومخلفات البناء والترميم، مع التوصيل والتبديل والرفع. اطلبها من تنظيفكو المحلية عبر واتساب.
-seoTitle: حاوية أنقاض 12 متر مكعب للإيجار في الكويت
+seoTitle: حاويات انقاض 12 متر مكعب للإيجار في الكويت
 order: 1
+seoTitleEn: 12 m³ rubble container rental in Kuwait
 enSlug: rubble-container-12m3
 titleEn: 12 m³ rubble container
 h1En: 12 m³ rubble containers for rent in Kuwait
