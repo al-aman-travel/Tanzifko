@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>تجهيز دخول لوحة التحكم — تنظيفكو المحلية</title>
+  <link rel="icon" href="../favicon.ico" sizes="48x48" />
+  <style>
+    :root { --ink: #17221c; --muted: #55635a; --line: #d8d6c8; --brand: #03482a; --bg: #f7f6f1; }
+    @media (prefers-color-scheme: dark) { :root { --ink: #eef2ef; --muted: #a9b5ad; --line: #34413a; --bg: #0f1712; } input { background: #17221c; color: var(--ink); } }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.7; }
+    main { max-width: 32rem; margin: 0 auto; padding: 24px 16px; }
+    label { display: block; margin-top: 16px; font-weight: 700; }
+    input { width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; }
+    button { margin-top: 20px; width: 100%; font: inherit; font-size: 18px; font-weight: 700; padding: 12px; border: 0; border-radius: 10px; background: var(--brand); color: #fff; }
+    small, .hint { color: var(--muted); }
+    #out { margin-top: 16px; font-weight: 700; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>تجهيز الدخول بكلمة سر</h1>
+  <p class="hint">مرة واحدة فقط: الصق مفتاح GitHub واختر كلمة السر. يُشفَّر المفتاح بكلمة السر داخل جوالك، ويُحفظ مشفّرًا في المستودع. بعدها تدخل اللوحة بكلمة السر وحدها. ويمكنك العودة لهذه الصفحة لتغيير كلمة السر أو المفتاح.</p>
+  <form id="f">
+    <label for="tok">مفتاح GitHub (Fine-grained token)</label>
+    <input id="tok" autocomplete="off" required placeholder="github_pat_…" dir="ltr" />
+    <label for="p1">كلمة السر الجديدة</label>
+    <input id="p1" type="password" autocomplete="new-password" required minlength="6" />
+    <label for="p2">تأكيد كلمة السر</label>
+    <input id="p2" type="password" autocomplete="new-password" required minlength="6" />
+    <button type="submit">حفظ</button>
+  </form>
+  <p id="out" role="status"></p>
+</main>
+<script>
+  const REPO = "al-aman-travel/Tanzifko", BRANCH = "main", PATH = "public/admin/token.json", ITER = 600000;
+  const out = document.getElementById("out");
+  const b64 = (u8) => btoa(String.fromCharCode(...new Uint8Array(u8)));
+  const gh = (url, token, opts = {}) => fetch("https://api.github.com/repos/" + REPO + url, {
+    ...opts, headers: { Authorization: "Bearer " + token, Accept: "application/vnd.github+json", ...(opts.headers || {}) },
+  });
+  document.getElementById("f").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const token = document.getElementById("tok").value.trim();
+    const p1 = document.getElementById("p1").value, p2 = document.getElementById("p2").value;
+    if (p1 !== p2) { out.textContent = "كلمتا السر غير متطابقتين."; return; }
+    out.textContent = "جارٍ التحقق من المفتاح…";
+    try {
+      const r = await gh("", token);
+      if (!r.ok) { out.textContent = "المفتاح غير صالح أو لا يصل إلى المستودع " + REPO + "."; return; }
+      const repo = await r.json();
+      if (!repo.permissions || !repo.permissions.push) { out.textContent = "المفتاح يقرأ المستودع لكن لا يملك صلاحية الكتابة (Contents: Read and write)."; return; }
+      out.textContent = "جارٍ التشفير…";
+      const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+      const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(p1), "PBKDF2", false, ["deriveKey"]);
+      const key = await crypto.subtle.deriveKey({ name: "PBKDF2", salt, iterations: ITER, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["encrypt"]);
+      const data = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, new TextEncoder().encode(token));
+      const box = JSON.stringify({ v: 1, iter: ITER, salt: b64(salt), iv: b64(iv), data: b64(data) }, null, 2) + "\n";
+      out.textContent = "جارٍ الحفظ في المستودع…";
+      let sha;
+      const cur = await gh("/contents/" + PATH + "?ref=" + BRANCH, token);
+      if (cur.ok) sha = (await cur.json()).sha;
+      const put = await gh("/contents/" + PATH, token, {
+        method: "PUT",
+        body: JSON.stringify({ message: "تحديث مفتاح دخول لوحة التحكم (مشفّر)", content: btoa(box), branch: BRANCH, ...(sha ? { sha } : {}) }),
+      });
+      if (!put.ok) { out.textContent = "تعذّر الحفظ (" + put.status + "). تأكد أن المفتاح يملك صلاحية Contents: Read and write."; return; }
+      try { localStorage.removeItem("sveltia-cms.user"); } catch (_) {}
+      document.getElementById("f").reset();
+      out.innerHTML = "تم. انتظر دقيقتين حتى يُنشر الموقع، ثم ادخل من <a href=\"./\">لوحة التحكم</a> بكلمة السر.";
+    } catch (err) { out.textContent = "حدث خطأ: " + err.message; }
+  });
+</script>
+</body>
+</html>

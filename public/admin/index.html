@@ -72,19 +72,56 @@
     </div>
     <!-- المسارات نسبية فتعمل في رابط المعاينة (/Tanzifko/admin/) وبعد ربط الدومين (/admin/).
          Sveltia CMS مستضاف محلياً (نفس النطاق، إصدار مثبّت: انظر sveltia/VERSION.txt) فلا حاجة لـ SRI ولا لـ CDN خارجي -->
+    <!-- الدخول بكلمة سر: مفتاح GitHub محفوظ مشفّرًا في token.json (AES-GCM + PBKDF2) ويُفك في المتصفح فقط.
+         يُجهَّز أو يُغيَّر من setup.html. -->
+    <form id="gate" hidden style="position:fixed;inset:0;display:grid;place-content:center;gap:12px;padding:24px;background:#f7f6f1;font-family:Cairo,system-ui,sans-serif;text-align:center;z-index:10">
+      <img src="../icon-192.png" alt="" width="64" height="64" style="margin:0 auto" />
+      <b style="font-size:20px;color:#17221c">لوحة تحكم تنظيفكو المحلية</b>
+      <input id="pw" type="password" autocomplete="current-password" placeholder="كلمة السر" required
+        style="font:inherit;font-size:18px;padding:12px 14px;border:1px solid #d8d6c8;border-radius:10px;min-width:260px;text-align:center" />
+      <button type="submit" style="font:inherit;font-size:18px;font-weight:700;padding:12px;border:0;border-radius:10px;background:#03482a;color:#fff">دخول</button>
+      <span id="msg" role="alert" style="color:#b42318;min-height:1.5em"></span>
+    </form>
     <script>
       // العربية لغة افتراضية للوحة مهما كانت لغة المتصفح (يمكن تغييرها من الإعدادات وتُحفظ)
       try {
         var k = "sveltia-cms.prefs", p = JSON.parse(localStorage.getItem(k) || "{}") || {};
         if (!p.locale) { p.locale = "ar"; localStorage.setItem(k, JSON.stringify(p)); }
       } catch (e) {}
-    </script>
-    <script src="sveltia/sveltia-cms.js"></script>
-    <script>
-      // إخفاء شاشة التحميل حين تُرسم واجهة اللوحة
-      new MutationObserver(function (_, o) {
-        if (document.querySelector("body > :not(#boot):not(script)")) { var b = document.getElementById("boot"); if (b) b.remove(); o.disconnect(); }
-      }).observe(document.body, { childList: true });
+
+      (function () {
+        var USER = "sveltia-cms.user";
+        function startCms() {
+          var g = document.getElementById("gate"); if (g) g.remove();
+          var s = document.createElement("script"); s.src = "sveltia/sveltia-cms.js"; document.body.appendChild(s);
+          // إخفاء شاشة التحميل حين تُرسم واجهة اللوحة
+          new MutationObserver(function (_, o) {
+            if (document.querySelector("body > :not(#boot):not(script)")) { var b = document.getElementById("boot"); if (b) b.remove(); o.disconnect(); }
+          }).observe(document.body, { childList: true });
+        }
+        var stored = null;
+        try { stored = JSON.parse(localStorage.getItem(USER) || "null"); } catch (e) {}
+        if (stored && stored.token) { startCms(); return; }
+
+        var boot = document.getElementById("boot"); if (boot) boot.remove();
+        var gate = document.getElementById("gate"), msg = document.getElementById("msg");
+        gate.hidden = false; gate.style.display = "grid";
+        var b64 = function (s) { return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); }); };
+        gate.addEventListener("submit", async function (ev) {
+          ev.preventDefault(); msg.textContent = "جارٍ التحقق…";
+          try {
+            var res = await fetch("token.json", { cache: "no-store" });
+            if (!res.ok) { msg.innerHTML = 'لم يُجهَّز الدخول بعد. <a href="setup.html">التجهيز</a>'; return; }
+            var box = await res.json();
+            var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(document.getElementById("pw").value), "PBKDF2", false, ["deriveKey"]);
+            var key = await crypto.subtle.deriveKey({ name: "PBKDF2", salt: b64(box.salt), iterations: box.iter, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+            var plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(box.iv) }, key, b64(box.data));
+            var token = new TextDecoder().decode(plain);
+            localStorage.setItem(USER, JSON.stringify({ backendName: "github", token: token }));
+            startCms();
+          } catch (e) { msg.textContent = "كلمة السر غير صحيحة"; }
+        });
+      })();
     </script>
   </body>
 </html>
