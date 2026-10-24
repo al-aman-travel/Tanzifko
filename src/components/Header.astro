@@ -1,7 +1,9 @@
 ---
 import { business } from '../data/business';
 import { containers } from '../lib/content';
+import { Image } from 'astro:assets';
 import { href } from '../lib/url';
+import logo from '../assets/logo-horizontal.png';
 
 export interface Props {
   lang?: 'ar' | 'en';
@@ -30,12 +32,8 @@ const path = Astro.url.pathname;
 <header class="sticky top-0 z-30 bg-white/95 backdrop-blur">
   <div class="stripe" aria-hidden="true"></div>
   <div class="container-page flex items-center justify-between gap-3 py-3">
-    <a href={home} class="flex shrink-0 items-center gap-2" aria-label={isEn ? `${business.shortEn} — Home` : `${business.short} — الرئيسية`}>
-      <img src={href('/favicon.svg')} alt="" width="40" height="40" class="h-10 w-10" />
-      <span class="leading-tight">
-        <span class="block text-lg font-bold text-brand">{isEn ? business.shortEn : business.short}</span>
-        <span class="hidden text-xs text-muted sm:block">{isEn ? 'Waste container rental — Kuwait' : 'تأجير حاويات المخلفات — الكويت'}</span>
-      </span>
+    <a href={home} class="flex shrink-0 items-center" aria-label={isEn ? `${business.shortEn} — Home` : `${business.short} — الرئيسية`}>
+      <Image src={logo} alt={`${business.short} — ${business.shortEn}`} widths={[180, 360, 540]} sizes="180px" class="h-11 w-auto" loading="eager" />
     </a>
     <nav aria-label={isEn ? 'Main menu' : 'القائمة الرئيسية'} class="hidden gap-5 text-sm font-semibold lg:flex">
       {nav.map((l) => (

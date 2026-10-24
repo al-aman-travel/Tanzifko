@@ -7,7 +7,7 @@ backend:
   branch: main
 
 app_title: "لوحة تنظيفكو المحلية"
-logo_url: ../favicon.svg
+logo_url: ../icon-192.png
 output:
   omit_empty_optional_fields: true
 editor:

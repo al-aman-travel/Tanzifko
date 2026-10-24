@@ -34,7 +34,10 @@ jobs:
           key: astro-assets-${{ github.sha }}
           restore-keys: astro-assets-
       - name: Build
-        run: npm run build
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee build.log || { echo "::error title=Build failed::$(tail -c 2500 build.log | tr '\n' ' ')"; exit 1; }
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
