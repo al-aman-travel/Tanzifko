@@ -3,7 +3,7 @@ import { PREVIEW } from '../../site.config.mjs';
 import { abs } from '../lib/url';
 
 // قبل ربط الدومين: لا فهرسة لرابط المعاينة. بعده: محركات البحث وأدوات الذكاء الاصطناعي مسموح لها، واللوحة مستبعدة.
-const bots = ['Googlebot', 'Bingbot', 'GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'PerplexityBot', 'Google-Extended', 'Applebot'];
+const bots = ['Googlebot', 'Bingbot', 'GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-User', 'Claude-SearchBot', 'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot', 'Applebot-Extended', 'Meta-ExternalAgent', 'CCBot', 'DuckAssistBot', 'MistralAI-User', 'cohere-ai'];
 
 export const GET: APIRoute = ({ site }) => {
   const body = PREVIEW

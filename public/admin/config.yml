@@ -127,6 +127,7 @@ collections:
           - {label: "الاسم في السجل التجاري", name: "legalName", widget: "string", required: false}
           - {label: "رقم السجل التجاري", name: "crNumber", widget: "string", required: false}
           - {label: "رقم الترخيص", name: "licenseNumber", widget: "string", required: false}
+          - {label: "تاريخ القيد في السجل التجاري", name: "registeredSince", widget: "string", required: false, hint: "بصيغة 2022-06-23"}
           - {label: "رقم واتساب (للطلبات)", name: "whatsapp", widget: "string", hint: "8 أرقام بدون 965"}
           - {label: "رقم الاتصال الرئيسي", name: "phone", widget: "string", hint: "8 أرقام بدون 965"}
           - {label: "أرقام اتصال إضافية", name: "extraPhones", widget: "list", required: false, field: {label: "رقم", name: "p", widget: "string"}}

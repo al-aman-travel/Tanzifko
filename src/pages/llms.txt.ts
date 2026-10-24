@@ -42,6 +42,7 @@ export const GET: APIRoute = async ({ site }) => {
       ? ['## عقود وسابقة أعمال', '- لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات، منها:', ...business.clients.map((c) => `  - ${c.name}`), '']
       : []),
     '## صفحات أخرى',
+    `- [عن الشركة](${u('/an-alsharika/')})`,
     `- [مناطق الخدمة: جميع مناطق الكويت](${u('/manatiq-alkhidma/')})`,
     `- [دليل مقاسات حاويات الأنقاض](${u('/maqasat-hawiyat/')})`,
     `- [حاويات للمقاولين والشركات](${u('/hawiyat-lilmuqawilin/')})`,
@@ -54,7 +55,9 @@ export const GET: APIRoute = async ({ site }) => {
       const s = dims(c, true);
       return `- [${c.data.titleEn}](${u(`/en/${c.data.enSlug}/`)}): ${c.data.acceptsEn.join(', ')}${s ? `. Size ${s}` : ''}.`;
     }),
+    `- [About Tanzeefko Local](${u('/en/about/')})`,
     `- [Service areas — all of Kuwait](${u('/en/service-areas/')})`,
+    `- Full details for AI assistants: ${u('/llms-full.txt')}`,
     `- [Skip sizes guide](${u('/en/container-sizes/')})`,
     `- [Skip hire for contractors and projects](${u('/en/contractors/')})`,
     `- Skip hire in every area of Kuwait. Orders on WhatsApp: +965${business.whatsapp}.`,

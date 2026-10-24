@@ -58,3 +58,16 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # إبلاغ Bing وYandex (ومنها بحث ChatGPT وCopilot) بالصفحات فور كل نشر عبر IndexNow
+  indexnow:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: IndexNow
+        run: |
+          sleep 30
+          URLS=$(curl -fsSL https://hawiyatkw.com/sitemap.xml | grep -o '<loc>[^<]*</loc>' | sed 's#</\?loc>##g' | python3 -c "import sys,json;print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))")
+          [ "$URLS" = "[]" ] && exit 0
+          curl -sS -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' \
+            -d "{\"host\":\"hawiyatkw.com\",\"key\":\"2f1b317a52a91145805fdb87f78eaecd\",\"keyLocation\":\"https://hawiyatkw.com/2f1b317a52a91145805fdb87f78eaecd.txt\",\"urlList\":$URLS}" -w '\nHTTP %{http_code}\n'

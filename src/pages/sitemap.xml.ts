@@ -40,6 +40,7 @@ export const GET: APIRoute = async ({ site }) => {
         ...all.filter((w) => w.data.container === c.id).slice(0, 6).map(img),
       ],
     })),
+    { ar: '/an-alsharika/', en: '/en/about/', files: ['src/pages/an-alsharika.astro', 'src/pages/en/about.astro', 'src/components/QuickFacts.astro', ...SHARED] },
     { ar: '/manatiq-alkhidma/', en: '/en/service-areas/', files: ['src/pages/manatiq-alkhidma.astro', 'src/pages/en/service-areas.astro', 'src/data/areas.ts', ...SHARED] },
     { ar: '/maqasat-hawiyat/', en: '/en/container-sizes/', files: ['src/pages/maqasat-hawiyat.astro', 'src/pages/en/container-sizes.astro', 'src/content/containers', ...SHARED] },
     { ar: '/hawiyat-qumama-lilmataem/', en: '/en/restaurant-garbage-containers/', files: ['src/pages/hawiyat-qumama-lilmataem.astro', 'src/pages/en/restaurant-garbage-containers.astro', ...SHARED] },

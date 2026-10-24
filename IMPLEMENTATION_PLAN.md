@@ -98,3 +98,10 @@
 - السكربت داخلي صغير ويعمل بعد اكتمال التحميل في وقت الفراغ (لا يؤثر على LCP)، ويتوقف على أجهزة «لا تحسب زياراتي».
 - اللوحة: /admin/stats.html — 24 ساعة / أسبوع / شهر / سنة، مقارنة بالفترة السابقة، رسوم SVG بلا مكتبات.
 - الدخول للوحة التحكم بكلمة سر: public/admin/token.json (مفتاح GitHub مشفّر)، يُجهَّز من /admin/setup.html.
+
+## الظهور في أدوات الذكاء الاصطناعي (24 أكتوبر 2026)
+- صفحة «عن الشركة» (/an-alsharika/ و/en/about/) بنوع AboutPage، وجدول «حقائق سريعة» في الرئيسية وصفحة الشركة.
+- llms.txt (ملخص) وllms-full.txt (كل الحقائق والأسئلة عربي/إنجليزي، يُبنى تلقائيًا من بيانات الموقع).
+- robots.txt يسمح صراحةً لزواحف البحث بالذكاء الاصطناعي: GPTBot، OAI-SearchBot، ChatGPT-User، ClaudeBot، Claude-SearchBot، PerplexityBot، Google-Extended، Applebot-Extended، Meta-ExternalAgent، CCBot، DuckAssistBot وغيرها.
+- foundingDate من السجل التجاري (2022-06-23) في بيانات Organization.
+- IndexNow: بعد كل نشر تُبلَّغ Bing وYandex بكل صفحات خريطة الموقع (المفتاح في public/<key>.txt).

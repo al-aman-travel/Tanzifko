@@ -5,6 +5,7 @@ import WorkGrid from '../../components/WorkGrid.astro';
 import Clients from '../../components/Clients.astro';
 import TrustBar from '../../components/TrustBar.astro';
 import ServiceAreas from '../../components/ServiceAreas.astro';
+import QuickFacts from '../../components/QuickFacts.astro';
 import FAQ from '../../components/FAQ.astro';
 import { business, operations, custom, priceFaqEn, areasFaqEn, restaurants, contractsFaqEn } from '../../data/business';
 import { waGeneralEn } from '../../data/whatsapp';
@@ -106,6 +107,8 @@ const faqs = [
       <div class="mt-5"><WorkGrid items={featured} lang="en" /></div>
     </section>
   )}
+
+  <div class="container-page"><QuickFacts lang="en" /></div>
 
   <div class="container-page"><FAQ faqs={faqs} title="Frequently asked questions" /></div>
 </BaseLayout>

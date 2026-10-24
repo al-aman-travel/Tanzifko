@@ -16,8 +16,9 @@ export interface Props {
   title: string;
   description: string;
   image: string;
+  pageType?: string;
 }
-const { faqs = [], breadcrumbs = [], service, lang = 'ar', title, description: pageDesc, image } = Astro.props;
+const { faqs = [], breadcrumbs = [], service, lang = 'ar', title, description: pageDesc, image, pageType = 'WebPage' } = Astro.props;
 const isEn = lang === 'en';
 const site = Astro.site;
 const home = abs('/', site);
@@ -32,6 +33,7 @@ const org: Record<string, unknown> = {
   '@id': orgId,
   name: business.name,
   ...(business.legalName ? { legalName: business.legalName } : {}),
+  ...(business.registeredSince ? { foundingDate: business.registeredSince } : {}),
   alternateName: [business.short, business.nameEn, business.shortEn].filter(Boolean),
   description: isEn ? descriptionEn : description,
   url: home,
@@ -95,7 +97,7 @@ const graph: Record<string, unknown>[] = [
   org,
   { '@type': 'WebSite', '@id': `${home}#website`, url: home, name: business.name, alternateName: [business.short, business.nameEn], inLanguage: ['ar-KW', 'en'], publisher: { '@id': orgId } },
   {
-    '@type': 'WebPage',
+    '@type': pageType,
     '@id': `${pageUrl}#webpage`,
     url: pageUrl,
     name: title,

@@ -17,6 +17,8 @@ export const business = {
   legalName: clean(settings.legalName),
   crNumber: clean(settings.crNumber),
   licenseNumber: clean(settings.licenseNumber),
+  /** تاريخ القيد في السجل التجاري */
+  registeredSince: clean(settings.registeredSince),
   short: clean(settings.nameAr).replace(/^شركة\s+/, ''),
   shortEn: clean(settings.nameEn).replace(/\s+Company$/i, ''),
   whatsapp: digits(settings.whatsapp),

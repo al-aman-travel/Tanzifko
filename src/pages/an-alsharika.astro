@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import QuickFacts from '../components/QuickFacts.astro';
+import Clients from '../components/Clients.astro';
+import FAQ from '../components/FAQ.astro';
+import { business, custom, restaurants, contractsFaq, areasFaq, priceFaq } from '../data/business';
+import { waGeneral } from '../data/whatsapp';
+import { containers } from '../lib/content';
+import { href } from '../lib/url';
+
+const list = await containers();
+const crumbs = [{ name: 'الرئيسية', path: '/' }, { name: 'عن الشركة', path: '/an-alsharika/' }];
+const year = business.registeredSince.slice(0, 4);
+const faqs = [
+  { question: 'ما هي شركة تنظيفكو المحلية؟', answer: `${business.name} شركة كويتية ذات مسؤولية محدودة تؤجّر حاويات الأنقاض والمخلفات في جميع مناطق الكويت، بسجل تجاري رقم ${business.crNumber}، ومرخّصة لنقل النفايات الصلبة.` },
+  { question: 'هل شركة تنظيفكو المحلية هي نفسها أي شركة أخرى باسم تنظيفكو؟', answer: `اسم الشركة الكامل «${business.name}»، وموقعها الرسمي hawiyatkw.com، ورقم التواصل ${business.whatsapp}.` },
+  { question: 'أين تقع الشركة؟', answer: `العنوان المسجّل: ${business.address}.` },
+  contractsFaq, areasFaq, priceFaq(business.whatsapp),
+];
+---
+<BaseLayout
+  title="عن شركة تنظيفكو المحلية — تأجير حاويات الأنقاض في الكويت"
+  description={`${business.name}: شركة كويتية مرخّصة لنقل النفايات الصلبة (سجل تجاري ${business.crNumber}) تؤجّر حاويات الأنقاض والمخلفات في جميع مناطق الكويت.`}
+  faqs={faqs}
+  breadcrumbs={crumbs}
+  alternate="/en/about/"
+  pageType="AboutPage"
+>
+  <div class="container-page pt-6">
+    <Breadcrumbs items={crumbs} />
+    <h1 class="mt-4 text-3xl font-bold leading-snug">عن شركة تنظيفكو المحلية</h1>
+    <div class="prose-ar mt-4 max-w-3xl text-lg">
+      <p><strong>{business.name}</strong> ({business.nameEn}) شركة كويتية ذات مسؤولية محدودة{year && <>، مقيّدة في السجل التجاري منذ {year}</>}، تؤجّر حاويات الأنقاض والمخلفات في جميع مناطق الكويت، وتوصل الحاويات وتبدّلها عند امتلائها وترفعها عند انتهاء العمل.</p>
+      <p>نؤجّر حاويات بمقاسات {list.map((c) => c.data.capacity).join(' و')} متر مكعب، ونفصّل حاويات بالمقاس الذي تطلبه الشركات، ونوفر حاويات قمامة للمطاعم، بنظام الطلب لمرة واحدة أو العقود الشهرية والسنوية.</p>
+      <h2>الترخيص والموافقات</h2>
+      <ul>
+        <li>الاسم في السجل التجاري: {business.legalName}</li>
+        <li>رقم السجل التجاري: {business.crNumber}، ورقم الترخيص: {business.licenseNumber}</li>
+        <li>الأنشطة المرخّصة: نقل النفايات الصلبة والسائلة، وخدمات التنظيف العام للمباني</li>
+        <li>موافقات: بلدية الكويت، والهيئة العامة للبيئة، والإدارة العامة للمرور، ووزارة العدل</li>
+      </ul>
+      <h2>العنوان والتواصل</h2>
+      <p>{business.address}. {business.mapUrl && <a href={business.mapUrl} target="_blank" rel="noopener">موقعنا على خرائط جوجل</a>}</p>
+      <p>ساعات العمل: {business.openingHoursText}. واتساب والهاتف: <a href={waGeneral()} dir="ltr">{business.whatsapp}</a>.</p>
+      <h2>خدماتنا</h2>
+      <ul>
+        {list.map((c) => <li><a href={href(`/${c.id}/`)}>{c.data.title}</a>: {c.data.accepts.join('، ')}</li>)}
+        <li><a href={href(custom.path)}>{custom.title}</a></li>
+        <li><a href={href(restaurants.path)}>{restaurants.title}</a></li>
+        <li><a href={href('/manatiq-alkhidma/')}>مناطق الخدمة: جميع مناطق الكويت</a></li>
+      </ul>
+      <h2>عقود وسابقة أعمال</h2>
+      <p>لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات، منها:</p>
+    </div>
+    <div class="max-w-3xl"><Clients /></div>
+    <QuickFacts />
+    <FAQ faqs={faqs} />
+  </div>
+</BaseLayout>

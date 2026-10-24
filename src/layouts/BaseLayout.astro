@@ -20,10 +20,12 @@ export interface Props {
   breadcrumbs?: { name: string; path: string }[];
   service?: { name: string; url: string; description?: string; image?: string };
   lang?: 'ar' | 'en';
+  /** نوع الصفحة لجوجل: WebPage (افتراضي) أو AboutPage أو ContactPage */
+  pageType?: string;
   /** مسار الصفحة المقابلة باللغة الأخرى (يبدأ بـ / ومن دون مسار المعاينة) */
   alternate?: string;
 }
-const { title, description, noindex = false, ogImage, preloadImage, faqs, breadcrumbs, service, lang = 'ar', alternate } = Astro.props;
+const { title, description, noindex = false, ogImage, preloadImage, faqs, breadcrumbs, service, lang = 'ar', alternate, pageType } = Astro.props;
 const isEn = lang === 'en';
 const brand = isEn ? business.shortEn : business.short;
 const fullTitle = title.includes(brand) ? title : `${title} | ${brand}`;
@@ -75,7 +77,7 @@ const fonts = [400, 600, 700]
     <meta property="og:site_name" content={isEn ? business.nameEn : business.name} />
     <meta property="og:image" content={og} />
     <meta name="twitter:card" content="summary_large_image" />
-    <Schema faqs={faqs} breadcrumbs={breadcrumbs?.map((b) => ({ name: b.name, url: abs(b.path, Astro.site) }))} service={service} lang={lang} title={fullTitle} description={metaDescription} image={og} />
+    <Schema faqs={faqs} breadcrumbs={breadcrumbs?.map((b) => ({ name: b.name, url: abs(b.path, Astro.site) }))} service={service} lang={lang} title={fullTitle} description={metaDescription} image={og} pageType={pageType} />
   </head>
   <body class="flex min-h-screen flex-col">
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-3">{isEn ? 'Skip to content' : 'تخطَّ إلى المحتوى'}</a>

@@ -1,0 +1,50 @@
+---
+/**
+ * «حقائق سريعة» — معلومات الشركة في جدول واضح يسهل على جوجل وأدوات الذكاء الاصطناعي اقتباسه حرفيًا.
+ * كل سطر من بيانات مؤكدة (السجل التجاري والمالك).
+ */
+import { business } from '../data/business';
+import { containers } from '../lib/content';
+import { href } from '../lib/url';
+export interface Props { lang?: 'ar' | 'en'; title?: string }
+const isEn = Astro.props.lang === 'en';
+const list = await containers();
+const sizes = list.map((c) => c.data.capacity).join(isEn ? ', ' : ' و') + (isEn ? ' m³' : ' متر مكعب');
+const year = business.registeredSince.slice(0, 4);
+const rows: [string, string][] = isEn
+  ? [
+      ['Company', `${business.nameEn} (${business.name})`],
+      ['Service', 'Rubble skip and waste container rental, delivery, swap and pickup'],
+      ['Container sizes', `${sizes}, plus custom-built sizes for companies`],
+      ['Also', 'Garbage containers for restaurants; monthly and annual contracts'],
+      ['Service area', 'Every area of Kuwait, all six governorates'],
+      ['Hours', business.openingHoursTextEn],
+      ['WhatsApp / phone', `+965 ${business.whatsapp}`],
+      ['Licence', `Commercial registration ${business.crNumber}${year ? `, registered ${year}` : ''}; licensed for solid waste transport`],
+      ['Website', 'hawiyatkw.com'],
+    ]
+  : [
+      ['الشركة', business.name],
+      ['الخدمة', 'تأجير حاويات الأنقاض والمخلفات مع التوصيل والتبديل والرفع'],
+      ['مقاسات الحاويات', `${sizes}، وتفصيل مقاسات خاصة للشركات`],
+      ['خدمات أخرى', 'حاويات قمامة للمطاعم، وعقود شهرية وسنوية'],
+      ['مناطق الخدمة', 'جميع مناطق الكويت بلا استثناء (المحافظات الست)'],
+      ['ساعات العمل', business.openingHoursText],
+      ['واتساب والهاتف', business.whatsapp],
+      ['الترخيص', `سجل تجاري رقم ${business.crNumber}${year ? `، مقيّدة منذ ${year}` : ''}، مرخّصة لنقل النفايات الصلبة`],
+      ['الموقع', 'hawiyatkw.com'],
+    ];
+---
+<section class="mt-14">
+  <h2 class="text-2xl font-bold">{Astro.props.title ?? (isEn ? 'Quick facts' : 'حقائق سريعة')}</h2>
+  <div class="mt-4 overflow-hidden rounded-2xl border border-line bg-white">
+    <table class="w-full text-sm md:text-base">
+      <tbody class="divide-y divide-line">
+        {rows.filter((r) => r[1]).map(([k, v]) => (
+          <tr><th scope="row" class:list={['w-36 bg-sand p-3 align-top font-semibold md:w-48', isEn ? 'text-left' : 'text-right']}>{k}</th><td class="p-3">{v}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <a class="mt-3 inline-block font-semibold text-brand underline" href={href(isEn ? '/en/about/' : '/an-alsharika/')}>{isEn ? 'About the company' : 'عن الشركة'}</a>
+</section>

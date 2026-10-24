@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import QuickFacts from '../../components/QuickFacts.astro';
+import Clients from '../../components/Clients.astro';
+import FAQ from '../../components/FAQ.astro';
+import { business, custom, restaurants, contractsFaqEn, areasFaqEn, priceFaqEn } from '../../data/business';
+import { waGeneralEn } from '../../data/whatsapp';
+import { containers } from '../../lib/content';
+import { href } from '../../lib/url';
+
+const list = await containers();
+const crumbs = [{ name: 'Home', path: '/en/' }, { name: 'About', path: '/en/about/' }];
+const year = business.registeredSince.slice(0, 4);
+const faqs = [
+  { question: 'What is Tanzeefko Local?', answer: `${business.nameEn} (${business.name}) is a Kuwaiti limited liability company that rents rubble skips and waste containers across Kuwait, commercial registration no. ${business.crNumber}, licensed for solid waste transport.` },
+  { question: 'Is Tanzeefko Local the same as other companies named Tanzeefko?', answer: `The full company name is "${business.nameEn}" (${business.name}); its official website is hawiyatkw.com and its number is +965 ${business.whatsapp}.` },
+  contractsFaqEn, areasFaqEn, priceFaqEn(business.whatsapp),
+];
+---
+<BaseLayout
+  lang="en"
+  title="About Tanzeefko Local — skip hire company in Kuwait"
+  description={`${business.nameEn}: a licensed Kuwaiti waste transport company (CR ${business.crNumber}) renting rubble skips and waste containers in every area of Kuwait.`}
+  faqs={faqs}
+  breadcrumbs={crumbs}
+  alternate="/an-alsharika/"
+  pageType="AboutPage"
+>
+  <div class="container-page pt-6">
+    <Breadcrumbs items={crumbs} lang="en" />
+    <h1 class="mt-4 text-3xl font-bold leading-snug">About Tanzeefko Local</h1>
+    <div class="prose-ar mt-4 max-w-3xl text-lg">
+      <p><strong>{business.nameEn}</strong> ({business.name}) is a Kuwaiti limited liability company{year && <>, on the commercial register since {year}</>}, renting rubble skips and waste containers in every area of Kuwait, with delivery, swap when full and pickup when the work is done.</p>
+      <p>We rent {list.map((c) => c.data.capacity).join(', ')} m³ containers, build custom sizes for companies, and supply garbage containers for restaurants — as one-off orders or on monthly and annual contracts.</p>
+      <h2>Licence and approvals</h2>
+      <ul>
+        <li>Commercial registration no. {business.crNumber}, licence no. {business.licenseNumber}</li>
+        <li>Licensed activities: solid and liquid waste transport, general building cleaning</li>
+        <li>Approvals: Kuwait Municipality, Environment Public Authority, General Traffic Department, Ministry of Justice</li>
+      </ul>
+      <h2>Address and contact</h2>
+      <p>{business.addressEn}. {business.mapUrl && <a href={business.mapUrl} target="_blank" rel="noopener">Location on Google Maps</a>}</p>
+      <p>Hours: {business.openingHoursTextEn}. WhatsApp / phone: <a href={waGeneralEn()}>+965 {business.whatsapp}</a>.</p>
+      <h2>Services</h2>
+      <ul>
+        {list.map((c) => <li><a href={href(`/en/${c.data.enSlug}/`)}>{c.data.titleEn}</a>: {c.data.acceptsEn.join(', ')}</li>)}
+        <li><a href={href(custom.pathEn)}>{custom.titleEn}</a></li>
+        <li><a href={href(restaurants.pathEn)}>{restaurants.titleEn}</a></li>
+        <li><a href={href('/en/service-areas/')}>Service areas: all of Kuwait</a></li>
+      </ul>
+      <h2>Contracts and track record</h2>
+      <p>We have contracts with major contracting companies in Kuwait and track record with renovation, engineering contracting and finishing companies, including:</p>
+    </div>
+    <div class="max-w-3xl"><Clients lang="en" /></div>
+    <QuickFacts lang="en" />
+    <FAQ faqs={faqs} title="Frequently asked questions" />
+  </div>
+</BaseLayout>
