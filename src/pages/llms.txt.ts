@@ -40,6 +40,7 @@ export const GET: APIRoute = async ({ site }) => {
       ? ['## عقود وسابقة أعمال', '- لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات، منها:', ...business.clients.map((c) => `  - ${c.name}`), '']
       : []),
     '## صفحات أخرى',
+    `- [مناطق الخدمة: جميع مناطق الكويت](${u('/manatiq-alkhidma/')})`,
     `- [دليل مقاسات حاويات الأنقاض](${u('/maqasat-hawiyat/')})`,
     `- [حاويات للمقاولين والشركات](${u('/hawiyat-lilmuqawilin/')})`,
     `- [صور الأعمال](${u('/aamaluna/')})`,
@@ -51,7 +52,10 @@ export const GET: APIRoute = async ({ site }) => {
       const s = dims(c, true);
       return `- [${c.data.titleEn}](${u(`/en/${c.data.enSlug}/`)}): ${c.data.acceptsEn.join(', ')}${s ? `. Size ${s}` : ''}.`;
     }),
-    `- Orders on WhatsApp: +965${business.whatsapp}.`,
+    `- [Service areas — all of Kuwait](${u('/en/service-areas/')})`,
+    `- [Skip sizes guide](${u('/en/container-sizes/')})`,
+    `- [Skip hire for contractors and projects](${u('/en/contractors/')})`,
+    `- Skip hire in every area of Kuwait. Orders on WhatsApp: +965${business.whatsapp}.`,
     '',
   ];
   return new Response(lines.join('\n'), { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });

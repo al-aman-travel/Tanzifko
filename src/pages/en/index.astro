@@ -17,6 +17,7 @@ const list = await containers();
 const featured = (await works({ featured: true })).slice(0, 6);
 const hero = await heroImage(heroSrc, '(min-width: 1024px) 28rem, 100vw');
 const faqs = [
+  { question: 'Do you offer skip hire in Kuwait?', answer: 'Yes. We rent hook-lift skips (containers) for rubble and waste in every area of Kuwait, with delivery, swap and pickup.' },
   { question: 'Which container sizes do you have?', answer: 'A 12 m³ rubble container for bricks, marble and construction waste, and a 30 m³ container (6 × 2.30 × 2.1 m) for wood, cardboard and tyres.' },
   { question: 'Do you build containers in custom sizes?', answer: `Yes. We design and build containers to the size your company requests. Send the size and waste type on WhatsApp +965 ${business.whatsapp}.` },
   { question: 'Do you swap the container when it is full?', answer: 'Yes. We take the full container away and leave an empty one, and collect it when the work is finished.' },
@@ -29,8 +30,8 @@ const faqs = [
 ---
 <BaseLayout
   lang="en"
-  title={`Rubble container rental in Kuwait, 12 m³ and 30 m³ — ${business.shortEn}`}
-  description={`${business.nameEn}: 12 m³ rubble containers and 30 m³ containers for wood, cardboard and tyres in Kuwait, with delivery, swap and pickup. Order on WhatsApp +965 ${business.whatsapp}.`}
+  title={`Skip hire & rubble container rental in Kuwait — ${business.shortEn}`}
+  description={`Skip hire in Kuwait from ${business.nameEn}: 12 m³ rubble skips and 30 m³ skips for wood, cardboard and tyres, delivered, swapped and collected in every area. Order on WhatsApp +965 ${business.whatsapp}.`}
   faqs={faqs}
   alternate="/"
   preloadImage={hero}
@@ -39,8 +40,8 @@ const faqs = [
     <div class="container-page grid items-center gap-8 py-10 lg:grid-cols-[1fr_28rem] lg:py-14">
       <div>
         <p class="font-semibold text-sun">{business.nameEn}</p>
-        <h1 class="mt-2 text-3xl font-bold leading-snug md:text-4xl">Rubble and waste container rental in Kuwait</h1>
-        <p class="mt-4 max-w-2xl text-lg text-white/85">A 12 m³ rubble container for bricks, marble and construction waste, and a 30 m³ container for wood, cardboard and tyres. We deliver the container, swap it when it is full and collect it when the work is done.</p>
+        <h1 class="mt-2 text-3xl font-bold leading-snug md:text-4xl">Skip hire and rubble container rental in Kuwait</h1>
+        <p class="mt-4 max-w-2xl text-lg text-white/85">A 12 m³ rubble skip for bricks, marble and construction waste, and a 30 m³ skip for wood, cardboard and tyres. We deliver the skip anywhere in Kuwait, swap it when it is full and collect it when the work is done.</p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a class="btn btn-sun" href={href('/en/request/')}>Order a container</a>
           <a class="btn btn-wa" href={waGeneralEn()} target="_blank" rel="noopener">WhatsApp {business.whatsapp}</a>
@@ -52,7 +53,7 @@ const faqs = [
   </section>
 
   <section class="container-page mt-12">
-    <h2 class="text-2xl font-bold">Container sizes</h2>
+    <h2 class="text-2xl font-bold">Skip and container sizes</h2>
     <p class="mt-1 text-muted">Choose the container by the type of waste, or read our <a class="text-brand underline" href={href('/en/container-sizes/')}>container size guide</a>.</p>
     <div class="mt-5 grid gap-5 md:grid-cols-2">{list.map((c) => <ContainerCard c={c} lang="en" />)}</div>
     <div class="mt-5 flex flex-col gap-4 rounded-2xl border-2 border-sun bg-white p-5 sm:flex-row sm:items-center sm:justify-between">

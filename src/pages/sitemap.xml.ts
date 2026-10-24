@@ -40,9 +40,10 @@ export const GET: APIRoute = async ({ site }) => {
         ...all.filter((w) => w.data.container === c.id).slice(0, 6).map(img),
       ],
     })),
+    { ar: '/manatiq-alkhidma/', en: '/en/service-areas/', files: ['src/pages/manatiq-alkhidma.astro', 'src/pages/en/service-areas.astro', 'src/data/areas.ts', ...SHARED] },
     { ar: '/maqasat-hawiyat/', en: '/en/container-sizes/', files: ['src/pages/maqasat-hawiyat.astro', 'src/pages/en/container-sizes.astro', 'src/content/containers', ...SHARED] },
     { ar: custom.path, en: custom.pathEn, files: ['src/pages/tafseel-hawiyat.astro', 'src/pages/en/custom-containers.astro', ...SHARED] },
-    { ar: '/hawiyat-lilmuqawilin/', en: '/en/contractors/', files: ['src/pages/hawiyat-lilmuqawilin.astro', 'src/pages/en/contractors.astro', ...SHARED, ...workFiles] },
+    { ar: '/hawiyat-lilmuqawilin/', en: '/en/contractors/', files: ['src/pages/hawiyat-lilmuqawilin.astro', 'src/pages/en/contractors.astro', 'src/data/areas.ts', ...SHARED, ...workFiles] },
     { ar: '/aamaluna/', en: '/en/our-work/', files: ['src/pages/aamaluna.astro', 'src/pages/en/our-work.astro', 'src/content/works'], images: all.map(img) },
     { ar: '/talab-hawiya/', en: '/en/request/', files: ['src/pages/talab-hawiya.astro', 'src/pages/en/request.astro', 'src/components/RequestForm.astro', ...SHARED] },
   ];

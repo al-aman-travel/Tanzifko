@@ -9,11 +9,14 @@ import { business, operations, licenseTextEn, custom } from '../../data/business
 import { href } from '../../lib/url';
 import { waLink } from '../../data/whatsapp';
 import { containers } from '../../lib/content';
+import { projectTypes, newCities } from '../../data/areas';
 
 const list = await containers();
-const crumbs = [{ name: 'Home', path: '/en/' }, { name: 'For contractors', path: '/en/contractors/' }];
+const crumbs = [{ name: 'Home', path: '/en/' }, { name: 'Contractors and projects', path: '/en/contractors/' }];
+const sectors = ['Construction contractors', 'Engineering contractors', 'Renovation and finishing companies', 'Shops, warehouses and workshops', 'Home and villa owners'];
 const faqs = [
   { question: 'Do you work under contract with contracting companies?', answer: 'Yes. We have contracts with major contracting companies in Kuwait and track record with renovation, engineering contracting and finishing companies.' },
+  { question: 'Do you supply skips for demolition and new-build projects?', answer: 'Yes. We supply skips for new construction, demolition, renovation and finishing projects, and swap them when full for the whole project.' },
   { question: 'Which containers suit construction sites?', answer: 'The 12 m³ rubble container for bricks, marble and construction waste, and the 30 m³ container for wood, cardboard and tyres.' },
   { question: 'How do we order containers for a project?', answer: `Message us on WhatsApp +965 ${business.whatsapp} with the company name, project location, waste types and the expected number of containers.` },
 ];
@@ -21,7 +24,7 @@ const wa = waLink(`Hello ${business.shortEn}, we are a company and need containe
 ---
 <BaseLayout
   lang="en"
-  title="Waste containers for contractors and renovation companies in Kuwait"
+  title="Skip hire for contractors and construction projects in Kuwait"
   description={`${business.nameEn} rents rubble and waste containers to contracting, renovation and finishing companies in Kuwait, with delivery, swap and pickup.`}
   faqs={faqs}
   breadcrumbs={crumbs}
@@ -29,7 +32,7 @@ const wa = waLink(`Hello ${business.shortEn}, we are a company and need containe
 >
   <div class="container-page pt-6">
     <Breadcrumbs items={crumbs} lang="en" />
-    <h1 class="mt-4 text-3xl font-bold leading-snug">Waste containers for contractors and renovation companies in Kuwait</h1>
+    <h1 class="mt-4 text-3xl font-bold leading-snug">Skip and rubble container hire for contractors and projects in Kuwait</h1>
     <p class="mt-4 max-w-3xl text-lg">We rent rubble and waste containers for construction, renovation and finishing sites. We deliver the containers, swap them when full and collect them when the work is done.</p>
     <section class="mt-10">
       <h2 class="text-2xl font-bold">Contracts and track record</h2>
@@ -42,6 +45,17 @@ const wa = waLink(`Hello ${business.shortEn}, we are a company and need containe
         <p class="mt-2 max-w-3xl">{business.nameEn}: {licenseTextEn}</p>
       </section>
     )}
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold">Skips for every type of project</h2>
+      <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {projectTypes.map((t) => <li class="rounded-xl border border-line bg-white p-5"><h3 class="font-bold">{t.en}</h3><p class="mt-1 text-sm text-muted">{t.textEn}</p></li>)}
+      </ul>
+      <p class="mt-4 max-w-3xl">We also supply projects in the new residential cities: {newCities.map((c) => c.en).join(', ')} — <a class="font-semibold text-brand underline" href={href('/en/service-areas/')}>all service areas</a>.</p>
+    </section>
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold">Who we work with</h2>
+      <ul class="mt-4 flex flex-wrap gap-2">{sectors.map((s) => <li class="rounded-full border border-line bg-white px-3 py-1 font-semibold">{s}</li>)}</ul>
+    </section>
     <section class="mt-12">
       <h2 class="text-2xl font-bold">Available containers</h2>
       <div class="mt-5 grid gap-5 md:grid-cols-2">{list.map((c) => <ContainerCard c={c} lang="en" />)}</div>

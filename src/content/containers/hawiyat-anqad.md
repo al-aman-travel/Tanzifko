@@ -20,10 +20,11 @@ faqs:
 description: تأجير حاوية أنقاض 12 متر مكعب في الكويت للطابوق والرخام ومخلفات البناء والترميم، مع التوصيل والتبديل والرفع. اطلبها من تنظيفكو المحلية عبر واتساب.
 seoTitle: حاويات انقاض 12 متر مكعب للإيجار في الكويت
 order: 1
-seoTitleEn: 12 m³ rubble container rental in Kuwait
+seoTitleEn: 12 m³ rubble skip hire in Kuwait
 enSlug: rubble-container-12m3
 titleEn: 12 m³ rubble container
-h1En: 12 m³ rubble containers for rent in Kuwait
+navEn: 12 m³ rubble skip
+h1En: 12 m³ rubble skips for rent in Kuwait
 acceptsEn:
   - Rubble
   - Bricks
@@ -32,17 +33,19 @@ acceptsEn:
 notForEn: Wood, cardboard and tyres go in the 30 m³ container.
 imageAltEn: Tanzeefko Local 12 m³ rubble container in front of a villa under renovation
 bodyEn: |
-  The 12 m³ container is for heavy construction waste: rubble, bricks, marble and renovation debris. It suits demolition, renovation and finishing work on homes, villas and construction sites.
+  The 12 m³ rubble skip (container) is for heavy construction waste: rubble, bricks, marble and renovation debris. It suits demolition, renovation and finishing work on homes, villas and construction sites.
 
   We deliver the container to your site, swap it for an empty one when it is full, and collect it when the work is finished.
 faqsEn:
+  - question: Is a skip the same as a rubble container?
+    answer: Yes. The hook-lift containers we rent are what many people in Kuwait call skips or dumpsters. The 12 m³ one is for rubble and construction waste.
   - question: What goes in the 12 m³ rubble container?
     answer: Rubble, bricks, marble and construction and renovation waste. Wood, cardboard and tyres go in the 30 m³ container.
   - question: Do you swap the container when it is full?
     answer: Yes. We take the full container away and leave an empty one, and we collect it when the work is finished.
   - question: How do I order?
     answer: Send us the area, the type of waste and the date you need on WhatsApp, and we will confirm availability and the delivery time.
-descriptionEn: Rent a 12 m³ rubble container in Kuwait for bricks, marble and construction waste, with delivery, swap and pickup. Order from Tanzeefko Local on WhatsApp.
+descriptionEn: "12 m³ rubble skip hire in Kuwait: a rubble container for bricks, marble and construction waste, with delivery, swap and pickup. Order from Tanzeefko Local on WhatsApp."
 ---
 
 حاوية الـ12 متر مكعب مخصصة لمخلفات البناء الثقيلة: الأنقاض والطابوق والرخام وبقايا أعمال الترميم. تناسب أعمال الهدم والترميم والتشطيبات في المنازل والفلل ومواقع البناء.

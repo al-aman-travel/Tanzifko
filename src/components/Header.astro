@@ -15,15 +15,17 @@ const isEn = lang === 'en';
 const list = await containers();
 const nav = isEn
   ? [
-      ...list.map((c) => ({ href: href(`/en/${c.data.enSlug}/`), label: c.data.titleEn })),
-      { href: href(custom.pathEn), label: 'Custom sizes' },
-      { href: href('/en/contractors/'), label: 'For contractors' },
+      ...list.map((c) => ({ href: href(`/en/${c.data.enSlug}/`), label: c.data.navEn ?? c.data.titleEn })),
+      { href: href(custom.pathEn), label: 'Custom skips' },
+      { href: href('/en/contractors/'), label: 'Contractors' },
+      { href: href('/en/service-areas/'), label: 'Areas' },
       { href: href('/en/our-work/'), label: 'Our work' },
     ]
   : [
-      ...list.map((c) => ({ href: href(`/${c.id}/`), label: c.data.title })),
+      ...list.map((c) => ({ href: href(`/${c.id}/`), label: `حاوية ${c.data.capacity} م³` })),
       { href: href(custom.path), label: 'تفصيل حسب الطلب' },
-      { href: href('/hawiyat-lilmuqawilin/'), label: 'للمقاولين والشركات' },
+      { href: href('/hawiyat-lilmuqawilin/'), label: 'للشركات والمشاريع' },
+      { href: href('/manatiq-alkhidma/'), label: 'المناطق' },
       { href: href('/aamaluna/'), label: 'أعمالنا' },
     ];
 const home = href(isEn ? '/en/' : '/');
@@ -37,19 +39,19 @@ const path = Astro.url.pathname;
     <a href={home} class="flex shrink-0 items-center" aria-label={isEn ? `${business.shortEn} — Home` : `${business.short} — الرئيسية`}>
       <Image src={logo} alt={`${business.short} — ${business.shortEn}`} widths={[180, 360, 540]} sizes="180px" class="h-11 w-auto" loading="eager" />
     </a>
-    <nav aria-label={isEn ? 'Main menu' : 'القائمة الرئيسية'} class="hidden gap-5 text-sm font-semibold lg:flex">
+    <nav aria-label={isEn ? 'Main menu' : 'القائمة الرئيسية'} class="hidden gap-5 whitespace-nowrap text-sm font-semibold xl:flex">
       {nav.map((l) => (
         <a href={l.href} class:list={['hover:text-brand', path.startsWith(l.href) && 'text-brand underline underline-offset-8']}>{l.label}</a>
       ))}
     </nav>
     <div class="flex items-center gap-2">
       <a href={other} hreflang={isEn ? 'ar' : 'en'} lang={isEn ? 'ar' : 'en'} class="btn btn-line px-3 py-2 text-sm">{isEn ? 'العربية' : 'English'}</a>
-      <a href={request} class="btn btn-sun hidden px-3 py-2 text-sm sm:inline-flex">{isEn ? 'Order a container' : 'اطلب حاوية'}</a>
-      <details class="relative lg:hidden">
+      <a href={request} class="btn btn-sun hidden px-3 py-2 text-sm sm:inline-flex">{isEn ? 'Order a skip' : 'اطلب حاوية'}</a>
+      <details class="relative xl:hidden">
         <summary class="btn btn-line cursor-pointer list-none px-3 py-2 text-sm" aria-label={isEn ? 'Menu' : 'القائمة'}>☰</summary>
         <nav class:list={['absolute z-40 mt-2 w-60 rounded-lg border border-line bg-white p-2 shadow-lg', isEn ? 'right-0' : 'left-0']}>
           {nav.map((l) => <a href={l.href} class="block rounded px-3 py-2 hover:bg-sand">{l.label}</a>)}
-          <a href={request} class="mt-1 block rounded bg-sun px-3 py-2 font-bold">{isEn ? 'Order a container' : 'اطلب حاوية'}</a>
+          <a href={request} class="mt-1 block rounded bg-sun px-3 py-2 font-bold">{isEn ? 'Order a skip' : 'اطلب حاوية'}</a>
         </nav>
       </details>
     </div>

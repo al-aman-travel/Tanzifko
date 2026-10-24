@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ContainerCard from '../components/ContainerCard.astro';
+import FAQ from '../components/FAQ.astro';
+import TrustBar from '../components/TrustBar.astro';
+import { business, operations, areasFaq, priceFaq } from '../data/business';
+import { governorateAreas, newCities, industrialAreas } from '../data/areas';
+import { waLink } from '../data/whatsapp';
+import { containers } from '../lib/content';
+import { href } from '../lib/url';
+
+const list = await containers();
+const crumbs = [{ name: 'الرئيسية', path: '/' }, { name: 'مناطق الخدمة', path: '/manatiq-alkhidma/' }];
+const faqs = [
+  areasFaq,
+  { question: 'هل توصلون حاويات الأنقاض إلى المدن السكنية الجديدة مثل المطلاع وجابر الأحمد؟', answer: 'نعم، نوصل الحاويات إلى جميع مناطق الكويت، ومنها المدن السكنية الجديدة: المطلاع وجابر الأحمد وصباح الأحمد والخيران وعبدالله المبارك.' },
+  { question: 'هل تخدمون المناطق الصناعية؟', answer: 'نعم، نخدم المناطق الصناعية والحرفية مثل الشويخ الصناعية والري والعارضية الحرفية وأمغرة والصليبية والشعيبة الصناعية.' },
+  { question: 'كيف أطلب حاوية لمنطقتي؟', answer: `أرسل اسم المنطقة ونوع المخلفات عبر واتساب ${business.whatsapp}، ونؤكد لك موعد التوصيل.` },
+  priceFaq(business.whatsapp),
+];
+const waArea = (area: string) => waLink(`مرحبًا ${business.short}، أريد حاوية في ${area}.\nنوع المخلفات:\nالموعد:`);
+---
+<BaseLayout
+  title="حاويات انقاض في جميع مناطق الكويت — المحافظات الست"
+  description={`${business.name} توصل حاويات الأنقاض والمخلفات إلى جميع مناطق الكويت: العاصمة وحولي والفروانية والأحمدي والجهراء ومبارك الكبير، والمدن الجديدة كالمطلاع وجابر الأحمد وصباح الأحمد.`}
+  faqs={faqs}
+  breadcrumbs={crumbs}
+  alternate="/en/service-areas/"
+>
+  <div class="container-page pt-6">
+    <Breadcrumbs items={crumbs} />
+    <h1 class="mt-4 text-3xl font-bold leading-snug">حاويات انقاض في جميع مناطق الكويت</h1>
+    <p class="mt-4 max-w-3xl text-lg">نوصل حاويات الأنقاض والمخلفات ونبدّلها ونرفعها في جميع مناطق الكويت بلا استثناء، في المحافظات الست والمدن السكنية الجديدة والمناطق الصناعية. اختر محافظتك:</p>
+    <nav aria-label="المحافظات" class="mt-5 flex flex-wrap gap-2">
+      {governorateAreas.map((g) => <a class="btn btn-line px-3 py-2 text-sm" href={`#${g.id}`}>{g.ar}</a>)}
+    </nav>
+    <div class="mt-5"><TrustBar tone="light" /></div>
+
+    <div class="mt-10 grid gap-5 md:grid-cols-2">
+      {governorateAreas.map((g) => (
+        <section id={g.id} class="scroll-mt-24 rounded-2xl border border-line bg-white p-5">
+          <h2 class="text-xl font-bold">حاويات انقاض في {g.ar}</h2>
+          <p class="mt-2 text-sm text-muted">نخدم جميع مناطق {g.ar}، ومنها:</p>
+          <p class="mt-2 leading-8">{g.areas.map((a) => a.ar).join('، ')}.</p>
+          <a class="mt-3 inline-block font-semibold text-brand underline" href={waArea(g.ar)} target="_blank" rel="noopener">اطلب حاوية في {g.ar}</a>
+        </section>
+      ))}
+    </div>
+
+    <section class="mt-12 rounded-2xl bg-sand p-6">
+      <h2 class="text-2xl font-bold">حاويات انقاض للمدن السكنية الجديدة</h2>
+      <p class="mt-2 max-w-3xl">أعمال البناء والتشطيب في المدن الجديدة تحتاج حاويات أنقاض طوال مدة العمل. نوصل الحاويات ونبدّلها عند امتلائها في:</p>
+      <ul class="mt-4 flex flex-wrap gap-2">
+        {newCities.map((c) => <li class="rounded-full border border-line bg-white px-3 py-1 font-semibold">{c.ar}</li>)}
+      </ul>
+    </section>
+
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold">حاويات للمناطق الصناعية والحرفية</h2>
+      <p class="mt-2 max-w-3xl">لمخلفات الكرتون والأخشاب والإطارات من المصانع والمخازن والورش، نوفر <a class="text-brand underline" href={href('/hawiya-30-metr/')}>حاوية 30 متر مكعب</a> في المناطق الصناعية، ومنها:</p>
+      <ul class="mt-4 flex flex-wrap gap-2">
+        {industrialAreas.map((c) => <li class="rounded-full border border-line bg-white px-3 py-1 font-semibold">{c.ar}</li>)}
+      </ul>
+    </section>
+
+    <section class="mt-12">
+      <h2 class="text-2xl font-bold">الحاويات المتوفرة في كل المناطق</h2>
+      <div class="mt-5 grid gap-5 md:grid-cols-2">{list.map((c) => <ContainerCard c={c} />)}</div>
+      <ul class="mt-6 grid gap-4 sm:grid-cols-3">
+        {operations.map((o) => <li class="rounded-xl border border-line bg-white p-5"><h3 class="font-bold">{o.title}</h3><p class="mt-1 text-sm text-muted">{o.text}</p></li>)}
+      </ul>
+    </section>
+
+    <FAQ faqs={faqs} />
+  </div>
+</BaseLayout>

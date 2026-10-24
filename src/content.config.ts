@@ -38,6 +38,7 @@ const containers = defineCollection({
       // الإنجليزية
       enSlug: z.string(),
       titleEn: z.string(),
+      navEn: optStr(), // اسم مختصر للقائمة الإنجليزية
       h1En: z.string(),
       acceptsEn: list(),
       notForEn: optStr(),
