@@ -13,3 +13,6 @@ export const DOMAIN = 'hawiyatkw.com';
 export const PREVIEW = !DOMAIN;
 export const SITE = DOMAIN ? `https://${DOMAIN}` : 'https://al-aman-travel.github.io';
 export const BASE = DOMAIN ? '/' : '/Tanzifko/';
+
+/** خدمة الإحصائيات (Netlify): تستقبل الزيارات والنقرات وتعرض الملخص في /admin/stats.html */
+export const STATS_API = 'https://hawiyatkw-stats.netlify.app';

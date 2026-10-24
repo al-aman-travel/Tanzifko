@@ -1,0 +1,10 @@
+{
+  "name": "hawiyatkw-stats",
+  "private": true,
+  "type": "module",
+  "description": "إحصائيات hawiyatkw.com: يستقبل نقرات الزوار (بلا كوكيز ولا بيانات شخصية) ويعرض الملخص للوحة التحكم",
+  "dependencies": {
+    "@netlify/blobs": "^10.7.13",
+    "@netlify/functions": "^4.3.0"
+  }
+}

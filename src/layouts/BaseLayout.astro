@@ -6,7 +6,7 @@ import Schema from '../components/Schema.astro';
 import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
 import { business, description as descAr, descriptionEn } from '../data/business';
 import { href, abs } from '../lib/url';
-import { PREVIEW } from '../../site.config.mjs';
+import { PREVIEW, STATS_API } from '../../site.config.mjs';
 
 export interface Props {
   title: string;
@@ -85,5 +85,38 @@ const fonts = [400, 600, 700]
     </main>
     <Footer lang={lang} />
     <FloatingWhatsApp lang={lang} />
+    {!PREVIEW && !noindex && (
+      <script is:inline define:vars={{ api: STATS_API + '/api/e' }}>
+        // إحصائيات خفيفة بلا كوكيز: تُرسل بعد اكتمال تحميل الصفحة وفي وقت الفراغ فقط (لا تؤثر على LCP)
+        (function () {
+          try { if (localStorage.getItem('tz-notrack') === '1') return; } catch (e) {}
+          if (!/(^|\.)hawiyatkw\.com$/.test(location.hostname) || navigator.webdriver) return;
+          var send = function (t, l, h) {
+            var d = JSON.stringify({ t: t, p: location.pathname, l: (l || '').slice(0, 60), h: h || '', r: document.referrer, w: innerWidth });
+            try { navigator.sendBeacon ? navigator.sendBeacon(api, d) : fetch(api, { method: 'POST', body: d, keepalive: true }); } catch (e) {}
+          };
+          var idle = window.requestIdleCallback || function (f) { setTimeout(f, 1500); };
+          var pv = function () { idle(function () { send('pv'); }); };
+          document.readyState === 'complete' ? pv() : addEventListener('load', pv, { once: true });
+          document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a,button,summary');
+            if (!a) return;
+            var h = a.getAttribute('href') || '';
+            var l = (a.getAttribute('data-track') || a.getAttribute('aria-label') || a.textContent || '').replace(/\s+/g, ' ').trim();
+            var t = 'click';
+            if (/wa\.me|whatsapp/.test(h)) t = 'wa';
+            else if (h.indexOf('tel:') === 0) t = 'call';
+            else if (/\/talab-hawiya\/|\/en\/request\//.test(h)) t = 'cta';
+            else if (a.closest('form[data-wa-form]')) return; // زر إرسال النموذج يُسجَّل في submit
+            var dest = h;
+            try { var u = new URL(h, location.href); dest = u.host === location.host ? u.pathname : u.host; } catch (e) {}
+            send(t, l, dest);
+          }, { capture: true, passive: true });
+          document.addEventListener('submit', function (e) {
+            if (e.target.matches && e.target.matches('form[data-wa-form]')) send('order', 'نموذج الطلب', 'wa.me');
+          }, true);
+        })();
+      </script>
+    )}
   </body>
 </html>
