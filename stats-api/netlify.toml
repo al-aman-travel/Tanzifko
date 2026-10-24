@@ -3,6 +3,6 @@
   publish = "public"
   command = "echo stats-api"
   # لا يُعاد النشر إلا عند تغيّر ملفات خدمة الإحصائيات (المجلد stats-api)
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- ."
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ../netlify.toml"
 [functions]
   directory = "netlify/functions"
