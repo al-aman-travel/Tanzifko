@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ContainerCard from '../components/ContainerCard.astro';
 import Clients from '../components/Clients.astro';
+import ServiceAreas from '../components/ServiceAreas.astro';
 import WorkGrid from '../components/WorkGrid.astro';
 import FAQ from '../components/FAQ.astro';
 import { business, operations, licenseText, custom } from '../data/business';
@@ -66,6 +67,7 @@ const wa = waLink(`مرحبًا ${business.short}، نحن شركة ونحتاج
       </section>
     )}
 
+    <ServiceAreas />
     <FAQ faqs={faqs} />
 
     <div class="mt-10 rounded-2xl bg-brand p-6 text-white">

@@ -29,6 +29,8 @@ export const business = {
   address: clean(settings.address),
   addressEn: clean(settings.addressEn),
   mapUrl: clean(settings.mapUrl),
+  /** إحداثيات موقع الشركة على خرائط جوجل */
+  geo: clean(settings.latitude) && clean(settings.longitude) ? { latitude: Number(settings.latitude), longitude: Number(settings.longitude) } : null,
   email: clean(settings.email),
   sameAs: [settings.instagram].map(clean).filter(Boolean),
   clients: (settings.clients as { name: string; nameEn?: string }[]).filter((c) => clean(c.name)),
@@ -54,6 +56,28 @@ export const operations = [
   { title: 'تبديل الحاوية', titleEn: 'Container swap', text: 'عند امتلاء الحاوية نرفعها ونضع مكانها حاوية فارغة.', textEn: 'When the container is full, we take it away and leave an empty one.' },
   { title: 'رفع الحاوية', titleEn: 'Container pickup', text: 'نرفع الحاوية من الموقع عند انتهاء العمل.', textEn: 'We collect the container when the work is finished.' },
 ];
+
+/** مناطق الخدمة: جميع مناطق الكويت بلا استثناء (كما أكّده المالك) — المحافظات الست */
+export const governorates = [
+  { ar: 'محافظة العاصمة', en: 'Capital Governorate' },
+  { ar: 'محافظة حولي', en: 'Hawalli Governorate' },
+  { ar: 'محافظة الفروانية', en: 'Farwaniya Governorate' },
+  { ar: 'محافظة الأحمدي', en: 'Ahmadi Governorate' },
+  { ar: 'محافظة الجهراء', en: 'Jahra Governorate' },
+  { ar: 'محافظة مبارك الكبير', en: 'Mubarak Al-Kabeer Governorate' },
+];
+
+/** الأسعار حسب الطلب — تُرسل عبر واتساب (لا أسعار منشورة) */
+export const priceFaq = (whatsapp: string) => ({
+  question: 'كم سعر ايجار حاوية انقاض؟',
+  answer: `السعر حسب الطلب. أرسل نوع المخلفات والمقاس ومنطقة العمل عبر واتساب ${whatsapp}، ونرسل لك السعر.`,
+});
+export const priceFaqEn = (whatsapp: string) => ({
+  question: 'How much does it cost to rent a rubble container?',
+  answer: `Prices are given on request. Send the waste type, container size and work area on WhatsApp +965 ${whatsapp}, and we will send you the price.`,
+});
+export const areasFaq = { question: 'هل تخدمون جميع مناطق الكويت؟', answer: 'نعم، نخدم جميع مناطق الكويت بلا استثناء، في المحافظات الست: العاصمة وحولي والفروانية والأحمدي والجهراء ومبارك الكبير.' };
+export const areasFaqEn = { question: 'Do you serve all areas of Kuwait?', answer: 'Yes. We serve every area of Kuwait without exception, across all six governorates: Capital, Hawalli, Farwaniya, Ahmadi, Jahra and Mubarak Al-Kabeer.' };
 
 /** تفصيل الحاويات حسب الطلب (كما ذكره المالك): نصمّم ونفصّل الحاوية بالمقاس الذي تطلبه الشركة */
 export const custom = {

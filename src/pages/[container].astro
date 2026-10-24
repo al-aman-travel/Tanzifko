@@ -7,7 +7,7 @@ import ContainerCard from '../components/ContainerCard.astro';
 import WorkGrid from '../components/WorkGrid.astro';
 import FAQ from '../components/FAQ.astro';
 import TrustBar from '../components/TrustBar.astro';
-import { business, operations } from '../data/business';
+import { business, operations, priceFaq, areasFaq } from '../data/business';
 import { waContainer } from '../data/whatsapp';
 import { containers, works, dims, type Container } from '../lib/content';
 import { href, abs } from '../lib/url';
@@ -19,6 +19,7 @@ export async function getStaticPaths() {
 const { c } = Astro.props as { c: Container };
 const d = c.data;
 const { Content } = await render(c);
+const pageFaqs = [...d.faqs, priceFaq(business.whatsapp), areasFaq];
 const others = (await containers()).filter((x) => x.id !== c.id);
 const gallery = await works({ container: c.id });
 const size = dims(c);
@@ -31,7 +32,7 @@ const crumbs = [
 <BaseLayout
   title={d.seoTitle ?? d.h1}
   description={d.description}
-  faqs={d.faqs}
+  faqs={pageFaqs}
   alternate={`/en/${d.enSlug}/`}
   breadcrumbs={crumbs}
   service={{ name: d.title, url, description: d.description, image: d.image ? new URL(d.image.src, Astro.site).toString() : undefined }}
@@ -73,7 +74,7 @@ const crumbs = [
       </section>
     )}
 
-    <FAQ faqs={d.faqs} />
+    <FAQ faqs={pageFaqs} />
 
     {others.length > 0 && (
       <section class="mt-12">

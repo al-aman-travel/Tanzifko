@@ -5,7 +5,7 @@
  * كل قيمة هنا منشورة أيضًا في نص الصفحة، ولا تُضاف تقييمات أو أسعار غير حقيقية.
  */
 import { getCollection } from 'astro:content';
-import { business, description, descriptionEn, custom } from '../data/business';
+import { business, description, descriptionEn, custom, governorates } from '../data/business';
 import { abs } from '../lib/url';
 
 export interface Props {
@@ -39,7 +39,11 @@ const org: Record<string, unknown> = {
   image: abs('/og-image.jpg', site),
   ...(phone ? { telephone: phone } : {}),
   contactPoint: [{ '@type': 'ContactPoint', telephone: `+965${business.whatsapp}`, contactType: 'customer service', areaServed: 'KW', availableLanguage: ['Arabic', 'English'] }],
-  areaServed: { '@type': 'Country', name: isEn ? 'Kuwait' : 'الكويت' },
+  areaServed: [
+    { '@type': 'Country', name: isEn ? 'Kuwait' : 'الكويت' },
+    ...governorates.map((g) => ({ '@type': 'AdministrativeArea', name: isEn ? g.en : g.ar })),
+  ],
+  ...(business.geo ? { geo: { '@type': 'GeoCoordinates', ...business.geo } } : {}),
   ...(business.address
     ? {
         address: {

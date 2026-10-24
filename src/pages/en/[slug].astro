@@ -6,7 +6,7 @@ import ContainerCard from '../../components/ContainerCard.astro';
 import WorkGrid from '../../components/WorkGrid.astro';
 import FAQ from '../../components/FAQ.astro';
 import TrustBar from '../../components/TrustBar.astro';
-import { operations } from '../../data/business';
+import { business, operations, priceFaqEn, areasFaqEn } from '../../data/business';
 import { waContainerEn } from '../../data/whatsapp';
 import { containers, works, dims, type Container } from '../../lib/content';
 import { href, abs } from '../../lib/url';
@@ -20,6 +20,7 @@ const d = c.data;
 const others = (await containers()).filter((x) => x.id !== c.id);
 const gallery = await works({ container: c.id });
 const size = dims(c, true);
+const pageFaqs = [...d.faqsEn, priceFaqEn(business.whatsapp), areasFaqEn];
 const path = `/en/${d.enSlug}/`;
 const crumbs = [{ name: 'Home', path: '/en/' }, { name: d.titleEn, path }];
 const paragraphs = d.bodyEn.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
@@ -28,7 +29,7 @@ const paragraphs = d.bodyEn.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean
   lang="en"
   title={d.seoTitleEn ?? d.h1En}
   description={d.descriptionEn}
-  faqs={d.faqsEn}
+  faqs={pageFaqs}
   alternate={`/${c.id}/`}
   breadcrumbs={crumbs}
   service={{ name: d.titleEn, url: abs(path, Astro.site), description: d.descriptionEn, image: d.image ? new URL(d.image.src, Astro.site).toString() : undefined }}
@@ -68,7 +69,7 @@ const paragraphs = d.bodyEn.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean
       </section>
     )}
 
-    <FAQ faqs={d.faqsEn} title="Frequently asked questions" />
+    <FAQ faqs={pageFaqs} title="Frequently asked questions" />
 
     {others.length > 0 && (
       <section class="mt-12">

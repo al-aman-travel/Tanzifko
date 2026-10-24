@@ -4,8 +4,9 @@ import ContainerCard from '../components/ContainerCard.astro';
 import WorkGrid from '../components/WorkGrid.astro';
 import Clients from '../components/Clients.astro';
 import TrustBar from '../components/TrustBar.astro';
+import ServiceAreas from '../components/ServiceAreas.astro';
 import FAQ from '../components/FAQ.astro';
-import { business, operations, custom } from '../data/business';
+import { business, operations, custom, priceFaq, areasFaq } from '../data/business';
 import { waGeneral } from '../data/whatsapp';
 import { containers, works } from '../lib/content';
 import { heroImage } from '../lib/hero';
@@ -21,6 +22,9 @@ const faqs = [
   { question: 'هل تفصّلون حاويات بمقاسات خاصة؟', answer: `نعم، نفصّل ونصمّم الحاوية بالمقاس الذي تطلبه الشركة. أرسل المقاس ونوع المخلفات عبر واتساب ${business.whatsapp}.` },
   { question: 'هل تبدّلون الحاوية عند امتلائها؟', answer: 'نعم، نرفع الحاوية الممتلئة ونضع مكانها حاوية فارغة، ونرفعها نهائيًا عند انتهاء العمل.' },
   { question: 'كيف أطلب حاوية؟', answer: `عبر واتساب ${business.whatsapp}: أرسل منطقة العمل ونوع المخلفات والموعد، ونؤكد لك التوفر وموعد التوصيل.` },
+  areasFaq,
+  priceFaq(business.whatsapp),
+  { question: 'ما ساعات العمل؟', answer: `يوميًا من 7 صباحًا حتى 10 مساءً، طوال أيام الأسبوع.` },
   { question: 'هل تعملون مع شركات المقاولات؟', answer: 'نعم، لدينا عقود مع شركات مقاولات كبرى في الكويت، وسابقة أعمال مع شركات الترميم والمقاولات الهندسية والتشطيبات.' },
 ];
 ---
@@ -74,6 +78,8 @@ const faqs = [
       ))}
     </ol>
   </section>
+
+  <div class="container-page"><ServiceAreas /></div>
 
   <section class="container-page mt-14">
     <div class="rounded-2xl bg-sand p-6 md:p-8">

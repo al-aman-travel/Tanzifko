@@ -1,0 +1,17 @@
+---
+import { governorates } from '../data/business';
+export interface Props { lang?: 'ar' | 'en' }
+const isEn = Astro.props.lang === 'en';
+---
+<section class="mt-14">
+  <h2 class="text-2xl font-bold">{isEn ? 'We serve all of Kuwait' : 'نخدم جميع مناطق الكويت'}</h2>
+  <p class="mt-1 text-muted">{isEn ? 'Delivery, swap and pickup in every area of Kuwait without exception, across the six governorates:' : 'توصيل الحاويات وتبديلها ورفعها في جميع مناطق الكويت بلا استثناء، في المحافظات الست:'}</p>
+  <ul class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+    {governorates.map((g) => (
+      <li class="flex items-center gap-2 rounded-xl border border-line bg-white p-3 font-semibold">
+        <svg aria-hidden="true" viewBox="0 0 20 20" class="h-5 w-5 shrink-0 text-brand" fill="currentColor"><path d="M10 1.5a6 6 0 0 0-6 6c0 4.5 6 11 6 11s6-6.5 6-11a6 6 0 0 0-6-6Zm0 8.2a2.2 2.2 0 1 1 0-4.4 2.2 2.2 0 0 1 0 4.4Z"/></svg>
+        {isEn ? g.en : g.ar}
+      </li>
+    ))}
+  </ul>
+</section>

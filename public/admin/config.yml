@@ -136,6 +136,8 @@ collections:
           - {label: "العنوان (عربي)", name: "address", widget: "string", required: false, hint: "كما في السجل التجاري"}
           - {label: "العنوان (إنجليزي)", name: "addressEn", widget: "string", required: false}
           - {label: "رابط الموقع على الخريطة", name: "mapUrl", widget: "string", required: false}
+          - {label: "🔎 خط العرض (من رابط الخريطة)", name: "latitude", widget: "string", required: false}
+          - {label: "🔎 خط الطول (من رابط الخريطة)", name: "longitude", widget: "string", required: false}
           - {label: "البريد الإلكتروني", name: "email", widget: "string", required: false}
           - {label: "رابط إنستقرام", name: "instagram", widget: "string", required: false}
           - label: "شركات لنا معها عقود أو سابقة أعمال"

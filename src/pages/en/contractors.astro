@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import ContainerCard from '../../components/ContainerCard.astro';
 import Clients from '../../components/Clients.astro';
+import ServiceAreas from '../../components/ServiceAreas.astro';
 import FAQ from '../../components/FAQ.astro';
 import { business, operations, licenseTextEn, custom } from '../../data/business';
 import { href } from '../../lib/url';
@@ -52,6 +53,7 @@ const wa = waLink(`Hello ${business.shortEn}, we are a company and need containe
         {operations.map((o) => <li class="rounded-xl border border-line bg-white p-5"><h3 class="font-bold">{o.titleEn}</h3><p class="mt-1 text-sm text-muted">{o.textEn}</p></li>)}
       </ul>
     </section>
+    <ServiceAreas lang="en" />
     <FAQ faqs={faqs} title="Frequently asked questions" />
     <a class="btn btn-wa mt-10" href={wa} target="_blank" rel="noopener">Message us on WhatsApp</a>
   </div>

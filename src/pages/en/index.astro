@@ -4,8 +4,9 @@ import ContainerCard from '../../components/ContainerCard.astro';
 import WorkGrid from '../../components/WorkGrid.astro';
 import Clients from '../../components/Clients.astro';
 import TrustBar from '../../components/TrustBar.astro';
+import ServiceAreas from '../../components/ServiceAreas.astro';
 import FAQ from '../../components/FAQ.astro';
-import { business, operations, custom } from '../../data/business';
+import { business, operations, custom, priceFaqEn, areasFaqEn } from '../../data/business';
 import { waGeneralEn } from '../../data/whatsapp';
 import { containers, works } from '../../lib/content';
 import { heroImage } from '../../lib/hero';
@@ -20,6 +21,9 @@ const faqs = [
   { question: 'Do you build containers in custom sizes?', answer: `Yes. We design and build containers to the size your company requests. Send the size and waste type on WhatsApp +965 ${business.whatsapp}.` },
   { question: 'Do you swap the container when it is full?', answer: 'Yes. We take the full container away and leave an empty one, and collect it when the work is finished.' },
   { question: 'How do I order a container?', answer: `On WhatsApp +965 ${business.whatsapp}: send the work area, the type of waste and the date, and we will confirm availability and the delivery time.` },
+  areasFaqEn,
+  priceFaqEn(business.whatsapp),
+  { question: 'What are your working hours?', answer: 'Daily, 7 am to 10 pm, every day of the week.' },
   { question: 'Do you work with contracting companies?', answer: 'Yes. We have contracts with major contracting companies in Kuwait and track record with renovation, engineering contracting and finishing companies.' },
 ];
 ---
@@ -72,6 +76,8 @@ const faqs = [
       ))}
     </ol>
   </section>
+
+  <div class="container-page"><ServiceAreas lang="en" /></div>
 
   <section class="container-page mt-14">
     <div class="rounded-2xl bg-sand p-6 md:p-8">

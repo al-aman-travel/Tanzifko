@@ -22,7 +22,9 @@ export const GET: APIRoute = async ({ site }) => {
     ...(business.phone && business.phone !== business.whatsapp ? [`- الهاتف: ${business.phone}`] : []),
     ...(business.address ? [`- العنوان: ${business.address}`] : []),
     ...(business.openingHoursText ? [`- ساعات العمل: ${business.openingHoursText}`] : []),
-    '- منطقة الخدمة: الكويت.',
+    '- منطقة الخدمة: جميع مناطق الكويت بلا استثناء (المحافظات الست).',
+    '- الأسعار: حسب الطلب، تُرسل عبر واتساب.',
+    ...(business.mapUrl ? [`- موقع الشركة على الخريطة: ${business.mapUrl}`] : []),
     '',
     '## الحاويات',
     ...list.map((c) => {
