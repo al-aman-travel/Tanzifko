@@ -12,4 +12,13 @@ import { href } from '../lib/url';
       <a class="btn btn-line" href={href('/talab-hawiya/')}>اطلب حاوية</a>
     </div>
   </section>
+  <!-- أي رابط يبدأ بـ /adm (خطأ كتابة أو بدون .html) يُحوَّل إلى صفحة لوحة التحكم الصحيحة -->
+  <script is:inline define:vars={{ base: href('/admin/') }}>
+    (function () {
+      var p = decodeURIComponent(location.pathname).toLowerCase();
+      if (!/^\/+a[a-z]{0,2}m/.test(p)) return; // admin / admn / adim / amin …
+      var t = base + (/stat|احص|إحص/.test(p) ? 'stats.html' : /set|تجهيز/.test(p) ? 'setup.html' : '');
+      if (t !== location.pathname) location.replace(t);
+    })();
+  </script>
 </BaseLayout>
