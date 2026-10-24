@@ -56,6 +56,15 @@ const paragraphs = d.bodyEn.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean
     </div>
 
     <section class="mt-12">
+      <h2 class="text-2xl font-bold">How to order a {d.navEn ?? d.titleEn}</h2>
+      <ol class="mt-4 grid gap-4 sm:grid-cols-3">
+        <li class="rounded-xl border border-line bg-white p-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sun font-bold">1</span><h3 class="mt-2 font-bold">Send the details</h3><p class="mt-1 text-sm text-muted">Your area, waste type and date on WhatsApp +965 {business.whatsapp}.</p></li>
+        <li class="rounded-xl border border-line bg-white p-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sun font-bold">2</span><h3 class="mt-2 font-bold">Get price and date</h3><p class="mt-1 text-sm text-muted">We reply with the price and delivery time.</p></li>
+        <li class="rounded-xl border border-line bg-white p-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sun font-bold">3</span><h3 class="mt-2 font-bold">Delivery, swap, pickup</h3><p class="mt-1 text-sm text-muted">We deliver the skip, swap it when full and collect it when you are done.</p></li>
+      </ol>
+    </section>
+
+    <section class="mt-12">
       <h2 class="text-2xl font-bold">Delivery, swap and pickup</h2>
       <ul class="mt-4 grid gap-4 sm:grid-cols-3">
         {operations.map((o) => <li class="rounded-xl border border-line bg-white p-5"><h3 class="font-bold">{o.titleEn}</h3><p class="mt-1 text-sm text-muted">{o.textEn}</p></li>)}

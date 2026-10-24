@@ -61,6 +61,15 @@ const crumbs = [
     </div>
 
     <section class="mt-12">
+      <h2 class="text-2xl font-bold">كيف تطلب {d.title}؟</h2>
+      <ol class="mt-4 grid gap-4 sm:grid-cols-3">
+        <li class="rounded-xl border border-line bg-white p-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sun font-bold">1</span><h3 class="mt-2 font-bold">أرسل التفاصيل</h3><p class="mt-1 text-sm text-muted">منطقة العمل ونوع المخلفات والموعد عبر واتساب {business.whatsapp}.</p></li>
+        <li class="rounded-xl border border-line bg-white p-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sun font-bold">2</span><h3 class="mt-2 font-bold">نؤكد السعر والموعد</h3><p class="mt-1 text-sm text-muted">نرد عليك بالسعر وموعد التوصيل.</p></li>
+        <li class="rounded-xl border border-line bg-white p-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sun font-bold">3</span><h3 class="mt-2 font-bold">نوصل ونبدّل ونرفع</h3><p class="mt-1 text-sm text-muted">نوصل الحاوية، ونبدّلها عند امتلائها، ونرفعها عند انتهاء العمل.</p></li>
+      </ol>
+    </section>
+
+    <section class="mt-12">
       <h2 class="text-2xl font-bold">التوصيل والتبديل والرفع</h2>
       <ul class="mt-4 grid gap-4 sm:grid-cols-3">
         {operations.map((o) => <li class="rounded-xl border border-line bg-white p-5"><h3 class="font-bold">{o.title}</h3><p class="mt-1 text-sm text-muted">{o.text}</p></li>)}
