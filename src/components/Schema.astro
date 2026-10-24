@@ -7,6 +7,7 @@
 import { getCollection } from 'astro:content';
 import { business, description, descriptionEn, custom, governorates, restaurants } from '../data/business';
 import { abs } from '../lib/url';
+import { newCities } from '../data/areas';
 
 export interface Props {
   faqs?: { question: string; answer: string }[];
@@ -29,7 +30,7 @@ const containers = (await getCollection('containers')).sort((a, b) => a.data.ord
 const phone = business.phone ? `+965${business.phone}` : undefined;
 
 const org: Record<string, unknown> = {
-  '@type': 'LocalBusiness',
+  '@type': 'HomeAndConstructionBusiness',
   '@id': orgId,
   name: business.name,
   ...(business.legalName ? { legalName: business.legalName } : {}),
@@ -44,6 +45,7 @@ const org: Record<string, unknown> = {
   areaServed: [
     { '@type': 'Country', name: isEn ? 'Kuwait' : 'الكويت' },
     ...governorates.map((g) => ({ '@type': 'AdministrativeArea', name: isEn ? g.en : g.ar })),
+    ...newCities.map((c) => ({ '@type': 'City', name: isEn ? c.en : c.ar })),
   ],
   ...(business.geo ? { geo: { '@type': 'GeoCoordinates', ...business.geo } } : {}),
   ...(business.address

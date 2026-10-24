@@ -28,7 +28,15 @@ body { font-family: var(--font-sans); line-height: 1.75; }
 .prose-ar ul { list-style: disc; padding-inline-start: 1.5rem; }
 .prose-ar a { color: var(--color-brand); text-decoration: underline; }
 
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: .6rem; padding: .7rem 1.2rem; font-weight: 700; line-height: 1.4; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 44px; border-radius: .6rem; padding: .7rem 1.2rem; font-weight: 700; line-height: 1.4; cursor: pointer; transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+.btn:hover { box-shadow: 0 4px 14px rgb(0 0 0 / .12); }
+.btn:active { transform: translateY(1px); }
+.btn-sun:hover { background: #e3a70b; }
+.btn-wa:hover { background: #1a8a4a; }
+.btn-line:hover { border-color: var(--color-brand); }
+/* بطاقات قابلة للنقر: ارتفاع خفيف عند المرور (بلا تحريك للتخطيط) */
+.lift { transition: box-shadow .2s ease, transform .2s ease; }
+.lift:hover { box-shadow: 0 10px 28px rgb(0 0 0 / .10); transform: translateY(-2px); }
 .btn-wa { background: var(--color-wa); color: #fff; }
 .btn-sun { background: var(--color-sun); color: var(--color-ink); }
 .btn-brand { background: var(--color-brand); color: #fff; }

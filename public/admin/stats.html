@@ -110,7 +110,7 @@
   <div class="wrap" id="app" hidden>
     <header class="top">
       <div>
-        <h1>📊 إحصائيات الموقع</h1>
+        <h1>إحصائيات الموقع</h1>
         <div class="meta" id="meta">—</div>
       </div>
       <div class="links">
@@ -326,7 +326,7 @@
     barList($("refs"), d.refs, "--c-pv");
     var dv = [];
     var dsum = (d.dev.m || 0) + (d.dev.d || 0);
-    if (dsum) { dv.push(["📱 جوال", d.dev.m || 0]); dv.push(["💻 كمبيوتر", d.dev.d || 0]); dv.push(["العربية", d.lang.ar || 0]); dv.push(["English", d.lang.en || 0]); }
+    if (dsum) { dv.push(["جوال", d.dev.m || 0]); dv.push(["كمبيوتر", d.dev.d || 0]); dv.push(["العربية", d.lang.ar || 0]); dv.push(["English", d.lang.en || 0]); }
     barList($("devs"), dv, "--c-pv", dsum);
     barList($("ccs"), d.cc.map(function (x) { return [countryName(x[0]), x[1]]; }), "--c-pv");
   }

@@ -15,7 +15,7 @@ const size = dims(c, isEn);
 const url = href(isEn ? `/en/${d.enSlug}/` : `/${c.id}/`);
 const H = headingLevel;
 ---
-<article class="flex flex-col overflow-hidden rounded-2xl border border-line bg-white">
+<article class="lift flex flex-col overflow-hidden rounded-2xl border border-line bg-white">
   {d.image && (
     <a href={url} class="block bg-sand">
       <Image src={d.image} alt={(isEn ? d.imageAltEn : d.imageAlt) ?? title} widths={[400, 640, 900]} sizes="(min-width: 768px) 36rem, 100vw" class="aspect-[4/3] w-full object-cover" loading="lazy" />

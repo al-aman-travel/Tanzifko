@@ -46,8 +46,10 @@ const faqs = [
         <div class="mt-6 flex flex-wrap gap-3">
           <a class="btn btn-sun" href={href('/talab-hawiya/')}>اطلب حاوية</a>
           <a class="btn btn-wa" href={waGeneral()} target="_blank" rel="noopener">واتساب {business.whatsapp}</a>
+          <a class="btn border border-white/40 text-white hover:bg-white/10" href={`tel:+965${business.phone}`}>اتصل الآن</a>
         </div>
-        <div class="mt-6"><TrustBar /></div>
+        <dl class="mt-6 grid max-w-xl grid-cols-3 gap-2 text-center sm:gap-3"><div class="rounded-xl bg-white/10 p-2 sm:p-3"><dt class="text-xs text-white/75">مقاسات جاهزة</dt><dd class="font-bold sm:text-lg">6 · 12 · 30 م³</dd></div><div class="rounded-xl bg-white/10 p-2 sm:p-3"><dt class="text-xs text-white/75">التغطية</dt><dd class="font-bold sm:text-lg">كل الكويت</dd></div><div class="rounded-xl bg-white/10 p-2 sm:p-3"><dt class="text-xs text-white/75">يوميًا</dt><dd class="font-bold sm:text-lg" dir=ltr>7am–10pm</dd></div></dl>
+        <div class="mt-4"><TrustBar /></div>
       </div>
       <img src={hero.src} srcset={hero.srcset} sizes={hero.sizes} width={hero.width} height={hero.height} alt="حاوية أنقاض من تنظيفكو المحلية تحت أنبوب تنزيل المخلفات من مبنى قيد الترميم" fetchpriority="high" decoding="async" class="aspect-[4/3] w-full rounded-2xl object-cover shadow-xl lg:aspect-[3/4]" />
     </div>

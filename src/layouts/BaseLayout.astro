@@ -79,7 +79,7 @@ const fonts = [400, 600, 700]
     <meta name="twitter:card" content="summary_large_image" />
     <Schema faqs={faqs} breadcrumbs={breadcrumbs?.map((b) => ({ name: b.name, url: abs(b.path, Astro.site) }))} service={service} lang={lang} title={fullTitle} description={metaDescription} image={og} pageType={pageType} />
   </head>
-  <body class="flex min-h-screen flex-col">
+  <body class="flex min-h-screen flex-col pb-20 md:pb-0">
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-3">{isEn ? 'Skip to content' : 'تخطَّ إلى المحتوى'}</a>
     <Header lang={lang} switchHref={alternate ? href(alternate) : undefined} />
     <main id="main" class="flex-1">

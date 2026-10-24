@@ -47,8 +47,10 @@ const faqs = [
         <div class="mt-6 flex flex-wrap gap-3">
           <a class="btn btn-sun" href={href('/en/request/')}>Order a container</a>
           <a class="btn btn-wa" href={waGeneralEn()} target="_blank" rel="noopener">WhatsApp {business.whatsapp}</a>
+          <a class="btn border border-white/40 text-white hover:bg-white/10" href={`tel:+965${business.phone}`}>Call now</a>
         </div>
-        <div class="mt-6"><TrustBar lang="en" /></div>
+        <dl class="mt-6 grid max-w-xl grid-cols-3 gap-2 text-center sm:gap-3"><div class="rounded-xl bg-white/10 p-2 sm:p-3"><dt class="text-xs text-white/75">Standard sizes</dt><dd class="font-bold sm:text-lg">6 · 12 · 30 m³</dd></div><div class="rounded-xl bg-white/10 p-2 sm:p-3"><dt class="text-xs text-white/75">Coverage</dt><dd class="font-bold sm:text-lg">All Kuwait</dd></div><div class="rounded-xl bg-white/10 p-2 sm:p-3"><dt class="text-xs text-white/75">Daily</dt><dd class="font-bold sm:text-lg" dir=ltr>7am–10pm</dd></div></dl>
+        <div class="mt-4"><TrustBar lang="en" /></div>
       </div>
       <img src={hero.src} srcset={hero.srcset} sizes={hero.sizes} width={hero.width} height={hero.height} alt="Tanzeefko Local rubble container under a debris chute at a building under renovation" fetchpriority="high" decoding="async" class="aspect-[4/3] w-full rounded-2xl object-cover shadow-xl lg:aspect-[3/4]" />
     </div>

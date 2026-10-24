@@ -8,6 +8,6 @@ const bots = ['Googlebot', 'Bingbot', 'GPTBot', 'OAI-SearchBot', 'ChatGPT-User',
 export const GET: APIRoute = ({ site }) => {
   const body = PREVIEW
     ? 'User-agent: *\nDisallow: /\n'
-    : `${[...bots, '*'].map((ua) => `User-agent: ${ua}\nAllow: /\nDisallow: /admin/\n`).join('\n')}\nSitemap: ${abs('/sitemap.xml', site)}\n`;
+    : `${[...bots, '*'].map((ua) => `User-agent: ${ua}\nContent-Signal: search=yes, ai-input=yes, ai-train=yes\nAllow: /\nDisallow: /admin/\n`).join('\n')}\nSitemap: ${abs('/sitemap.xml', site)}\n`;
   return new Response(body, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 };
