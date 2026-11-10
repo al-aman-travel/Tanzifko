@@ -73,7 +73,8 @@ const field = 'mt-1 w-full rounded-lg border border-line bg-white px-3 py-2.5';
         if (s) lines.push(`${k}: ${s}`);
       });
       const url = `https://wa.me/965${form.dataset.wa}?text=${encodeURIComponent(lines.join('\n'))}`;
-      window.location.href = url;
+      const w = (window as unknown as { waSrc?: (u: string) => string }).waSrc;
+      window.location.href = w ? w(url) : url;
     });
   });
 </script>
