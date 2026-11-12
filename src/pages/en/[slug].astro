@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import GuideTeaser from '../../components/GuideTeaser.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import ContainerCard from '../../components/ContainerCard.astro';
@@ -79,6 +80,8 @@ const paragraphs = d.bodyEn.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean
     )}
 
     <FAQ faqs={pageFaqs} title="Frequently asked questions" />
+
+    <GuideTeaser lang="en" />
 
     {others.length > 0 && (
       <section class="mt-12">

@@ -2,6 +2,8 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 export type Container = CollectionEntry<'containers'>;
 export type Work = CollectionEntry<'works'>;
+export type Guide = CollectionEntry<'guides'>;
+export type GuideEn = CollectionEntry<'guidesEn'>;
 
 export const containers = async () =>
   (await getCollection('containers')).sort((a, b) => a.data.order - b.data.order);
@@ -19,3 +21,16 @@ export const dims = (c: Container, en = false) => {
   const f = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(2));
   return `${f(length)} × ${f(width)} × ${f(height)} ${en ? 'm' : 'م'}`;
 };
+
+/** مقالات الدليل: الأحدث أولًا */
+export const guides = async () =>
+  (await getCollection('guides', (g) => !g.data.draft)).sort((a, b) => b.data.date.getTime() - a.data.date.getTime() || a.data.order - b.data.order);
+
+/** أزواج (المقال العربي + نسخته الإنجليزية إن وُجدت) */
+export const guidePairs = async () => {
+  const en = await getCollection('guidesEn');
+  return (await guides()).map((ar) => ({ ar, en: en.find((e) => e.data.ar === ar.id) }));
+};
+
+export const guidePath = (g: Guide) => `/dalil/${g.id}/`;
+export const guidePathEn = (g: GuideEn) => `/en/guides/${g.id}/`;

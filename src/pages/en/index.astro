@@ -1,4 +1,5 @@
 ---
+import GuideTeaser from '../../components/GuideTeaser.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContainerCard from '../../components/ContainerCard.astro';
 import WorkGrid from '../../components/WorkGrid.astro';
@@ -111,6 +112,8 @@ const faqs = [
   )}
 
   <div class="container-page"><QuickFacts lang="en" /></div>
+
+  <div class="container-page"><GuideTeaser lang="en" /></div>
 
   <div class="container-page"><FAQ faqs={faqs} title="Frequently asked questions" /></div>
 </BaseLayout>

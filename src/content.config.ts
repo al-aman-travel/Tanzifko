@@ -66,4 +66,37 @@ const works = defineCollection({
     }),
 });
 
-export const collections = { containers, works };
+/**
+ * الدليل: مقالات إرشادية قصيرة (أسعار، ترميم، فرز) — اسم الملف هو رابط الصفحة العربية ولا يتغير.
+ * المعلومات من بيانات الشركة المؤكدة فقط: لا أسعار ولا أرقام غير منشورة في بقية الموقع.
+ */
+const guides = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/guides' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(), // العنوان الرئيسي (H1)
+      seoTitle: optStr(),
+      description: z.string(), // وصف جوجل والملخص في صفحة الدليل
+      date: z.coerce.date(), // تاريخ النشر
+      image: image(),
+      imageAlt: z.string(),
+      imageAltEn: optStr(),
+      faqs,
+      order: z.number().default(0),
+      draft: z.boolean().default(false),
+    }),
+});
+
+/** النسخة الإنجليزية من مقالات الدليل: اسم الملف هو الرابط الإنجليزي، والحقل ar يربطها بالمقال العربي */
+const guidesEn = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/guides-en' }),
+  schema: z.object({
+    ar: z.string(), // اسم ملف المقال العربي
+    title: z.string(),
+    seoTitle: optStr(),
+    description: z.string(),
+    faqs,
+  }),
+});
+
+export const collections = { containers, works, guides, guidesEn };

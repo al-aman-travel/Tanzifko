@@ -1,0 +1,93 @@
+---
+/**
+ * صفحة مقال من الدليل — قالب واحد للعربية والإنجليزية.
+ * الصورة وتاريخ النشر من المقال العربي؛ تاريخ «آخر تحديث» من سجل git (تاريخ حقيقي لا تاريخ البناء).
+ */
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import FAQ from './FAQ.astro';
+import TrustBar from './TrustBar.astro';
+import { business } from '../data/business';
+import { waLink } from '../data/whatsapp';
+import { guidePairs, guidePath, guidePathEn, type Guide, type GuideEn } from '../lib/content';
+import { lastmod } from '../lib/lastmod';
+import { href } from '../lib/url';
+
+export interface Props { ar: Guide; en?: GuideEn; lang?: 'ar' | 'en' }
+const { ar, en, lang = 'ar' } = Astro.props;
+const isEn = lang === 'en' && !!en;
+const entry = isEn ? en! : ar;
+const d = entry.data;
+const { Content } = await render(entry);
+
+const path = isEn ? guidePathEn(en!) : guidePath(ar);
+const alternate = isEn ? guidePath(ar) : en ? guidePathEn(en) : undefined;
+const indexPath = isEn ? '/en/guides/' : '/dalil/';
+const crumbs = [
+  { name: isEn ? 'Home' : 'الرئيسية', path: isEn ? '/en/' : '/' },
+  { name: isEn ? 'Guides' : 'الدليل', path: indexPath },
+  { name: d.title, path },
+];
+
+const published = ar.data.date;
+const file = isEn ? `src/content/guides-en/${en!.id}.md` : `src/content/guides/${ar.id}.md`;
+const modIso = lastmod([file]);
+const modified = modIso && new Date(modIso) > published ? new Date(modIso) : published;
+const fmt = (dt: Date) => new Intl.DateTimeFormat(isEn ? 'en-GB' : 'ar-KW-u-nu-latn-ca-gregory', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kuwait' }).format(dt);
+const og = await getImage({ src: ar.data.image, width: 1200, format: 'jpg' });
+const ogUrl = new URL(og.src, Astro.site).toString();
+const alt = isEn ? ar.data.imageAltEn ?? ar.data.imageAlt : ar.data.imageAlt;
+
+const others = (await guidePairs()).filter((p) => p.ar.id !== ar.id && (!isEn || p.en));
+const wa = isEn
+  ? waLink(`Hello ${business.shortEn}, I would like a price for a container.\nArea:\nWaste type:\nDate:`)
+  : waLink(`مرحبًا ${business.short}، أريد سعر حاوية.\nالمنطقة:\nنوع المخلفات:\nالموعد:`);
+---
+<BaseLayout
+  lang={isEn ? 'en' : 'ar'}
+  title={d.seoTitle ?? d.title}
+  description={d.description}
+  faqs={d.faqs}
+  breadcrumbs={crumbs}
+  alternate={alternate}
+  ogImage={og.src}
+  article={{ headline: d.title, datePublished: published.toISOString(), dateModified: modified.toISOString(), image: ogUrl }}
+>
+  <article class="container-page pt-6">
+    <Breadcrumbs items={crumbs} lang={isEn ? 'en' : 'ar'} />
+    <div class="mt-4 grid gap-8 lg:grid-cols-[1fr_24rem]">
+      <div>
+        <h1 class="text-3xl font-bold leading-snug">{d.title}</h1>
+        <p class="mt-2 text-sm text-muted">
+          {isEn ? 'By ' : 'إعداد: '}{isEn ? business.nameEn : business.name} · {isEn ? 'Published ' : 'نُشر في '}<time datetime={published.toISOString()}>{fmt(published)}</time>
+          {modified > published && <> · {isEn ? 'Updated ' : 'آخر تحديث '}<time datetime={modified.toISOString()}>{fmt(modified)}</time></>}
+        </p>
+        <div class="prose-ar mt-5 max-w-3xl text-lg"><Content /></div>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a class="btn btn-wa" href={wa} target="_blank" rel="noopener">{isEn ? 'Ask for a price on WhatsApp' : 'اطلب السعر عبر واتساب'}</a>
+          <a class="btn btn-line" href={`tel:+965${business.phone}`}>{isEn ? `Call ${business.phone}` : `اتصل ${business.phone}`}</a>
+        </div>
+        <div class="mt-5"><TrustBar tone="light" lang={isEn ? 'en' : 'ar'} /></div>
+      </div>
+      <Image src={ar.data.image} alt={alt} widths={[480, 720, 960]} sizes="(min-width: 1024px) 24rem, 100vw" class="aspect-[4/3] w-full rounded-2xl object-cover lg:sticky lg:top-24" loading="eager" fetchpriority="high" />
+    </div>
+
+    <FAQ faqs={d.faqs} title={isEn ? 'Frequently asked questions' : 'أسئلة شائعة'} />
+
+    {others.length > 0 && (
+      <section class="mt-12">
+        <h2 class="text-2xl font-bold">{isEn ? 'More guides' : 'مقالات أخرى من الدليل'}</h2>
+        <ul class="mt-4 grid gap-4 md:grid-cols-2">
+          {others.map((p) => (
+            <li class="rounded-xl border border-line bg-white p-5">
+              <a class="font-bold text-brand hover:underline" href={href(isEn ? guidePathEn(p.en!) : guidePath(p.ar))}>{isEn ? p.en!.data.title : p.ar.data.title}</a>
+              <p class="mt-1 text-sm text-muted">{isEn ? p.en!.data.description : p.ar.data.description}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </article>
+</BaseLayout>

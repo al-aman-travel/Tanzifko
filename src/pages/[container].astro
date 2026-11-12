@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { render } from 'astro:content';
+import GuideTeaser from '../components/GuideTeaser.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ContainerCard from '../components/ContainerCard.astro';
@@ -84,6 +85,8 @@ const crumbs = [
     )}
 
     <FAQ faqs={pageFaqs} />
+
+    <GuideTeaser />
 
     {others.length > 0 && (
       <section class="mt-12">

@@ -114,6 +114,63 @@ collections:
       - {label: "🇬🇧 🔎 عنوان جوجل", name: "seoTitleEn", widget: "string", required: false}
       - {label: "🇬🇧 🔎 وصف جوجل", name: "descriptionEn", widget: "text", required: false}
 
+  - name: "guides"
+    label: "الدليل (مقالات)"
+    label_singular: "مقال"
+    icon: "menu_book"
+    description: "مقالات إرشادية قصيرة. اكتب المعلومات المؤكدة فقط، ولا تكتب أسعارًا. رابط المقال يُؤخذ من «رابط الصفحة» ولا يتغير بعد النشر."
+    folder: "src/content/guides"
+    create: true
+    delete: true
+    slug: "{{fields.slug}}"
+    identifier_field: title
+    media_folder: "images"
+    public_folder: "./images"
+    fields:
+      - {label: "رابط الصفحة (بحروف إنجليزية وشرطات)", name: "slug", widget: "string", hint: "مثل: raf-anqad-altarmeem. لا يتغير بعد النشر.", pattern: ["^[a-z0-9-]+$", "حروف إنجليزية صغيرة وأرقام وشرطات فقط"]}
+      - {label: "العنوان", name: "title", widget: "string"}
+      - {label: "🔎 عنوان جوجل", name: "seoTitle", widget: "string", required: false}
+      - {label: "🔎 وصف جوجل (الملخص)", name: "description", widget: "text"}
+      - {label: "تاريخ النشر", name: "date", widget: "datetime", time_format: false, format: "YYYY-MM-DD"}
+      - {label: "📷 الصورة", name: "image", widget: "image", choose_url: false}
+      - {label: "وصف الصورة", name: "imageAlt", widget: "string"}
+      - {label: "🇬🇧 وصف الصورة", name: "imageAltEn", widget: "string", required: false}
+      - {label: "المحتوى", name: "body", widget: "markdown"}
+      - label: "أسئلة شائعة"
+        name: "faqs"
+        widget: "list"
+        required: false
+        fields:
+          - {label: "السؤال", name: "question", widget: "string"}
+          - {label: "الجواب", name: "answer", widget: "text"}
+      - {label: "⚙️ الترتيب", name: "order", widget: "number", default: 0, value_type: "int"}
+      - {label: "⚙️ مسودة (لا تظهر في الموقع)", name: "draft", widget: "boolean", default: false}
+
+  - name: "guidesEn"
+    label: "🇬🇧 الدليل بالإنجليزية"
+    label_singular: "Guide"
+    icon: "translate"
+    description: "النسخة الإنجليزية من مقالات الدليل. اكتب في «المقال العربي» اسم رابط المقال العربي كما هو."
+    folder: "src/content/guides-en"
+    create: true
+    delete: true
+    slug: "{{fields.slug}}"
+    identifier_field: title
+    fields:
+      - {label: "Page link (lowercase letters and dashes)", name: "slug", widget: "string", pattern: ["^[a-z0-9-]+$", "lowercase letters, numbers and dashes only"]}
+      - {label: "المقال العربي (رابط الصفحة العربية)", name: "ar", widget: "string"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "🔎 Google title", name: "seoTitle", widget: "string", required: false}
+      - {label: "🔎 Google description", name: "description", widget: "text"}
+      - {label: "Content", name: "body", widget: "markdown"}
+      - label: "FAQs"
+        name: "faqs"
+        widget: "list"
+        required: false
+        fields:
+          - {label: "Question", name: "question", widget: "string"}
+          - {label: "Answer", name: "answer", widget: "text"}
+
   - name: "settings"
     label: "بيانات الشركة"
     icon: "business"

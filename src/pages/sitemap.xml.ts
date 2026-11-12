@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { containers, works } from '../lib/content';
+import { containers, works, guidePairs, guidePath, guidePathEn } from '../lib/content';
 import { abs } from '../lib/url';
 import { lastmod } from '../lib/lastmod';
 import { custom } from '../data/business';
@@ -28,6 +28,8 @@ export const GET: APIRoute = async ({ site }) => {
   const featured = all.filter((w) => w.data.featured);
   const workFiles = all.map((w) => `src/content/works/${w.id}.md`);
   const img = (w: (typeof all)[number]) => ({ src: w.data.image, title: w.data.title });
+  const guideList = await guidePairs();
+  const GUIDE_TPL = ['src/components/GuideArticle.astro'];
 
   const entries: Entry[] = [
     { ar: '/', en: '/en/', files: ['src/pages/index.astro', 'src/pages/en/index.astro', ...SHARED, ...workFiles], images: featured.map(img) },
@@ -47,6 +49,13 @@ export const GET: APIRoute = async ({ site }) => {
     { ar: custom.path, en: custom.pathEn, files: ['src/pages/tafseel-hawiyat.astro', 'src/pages/en/custom-containers.astro', ...SHARED] },
     { ar: '/hawiyat-lilmuqawilin/', en: '/en/contractors/', files: ['src/pages/hawiyat-lilmuqawilin.astro', 'src/pages/en/contractors.astro', 'src/data/areas.ts', ...SHARED, ...workFiles] },
     { ar: '/aamaluna/', en: '/en/our-work/', files: ['src/pages/aamaluna.astro', 'src/pages/en/our-work.astro', 'src/content/works'], images: all.map(img) },
+    { ar: '/dalil/', en: '/en/guides/', files: ['src/components/GuideIndex.astro', 'src/content/guides', 'src/content/guides-en'] },
+    ...guideList.map((g) => ({
+      ar: guidePath(g.ar),
+      en: g.en ? guidePathEn(g.en) : undefined,
+      files: [...GUIDE_TPL, `src/content/guides/${g.ar.id}.md`, ...(g.en ? [`src/content/guides-en/${g.en.id}.md`] : [])],
+      images: [{ src: g.ar.data.image, title: g.ar.data.imageAlt }],
+    })),
     { ar: '/talab-hawiya/', en: '/en/request/', files: ['src/pages/talab-hawiya.astro', 'src/pages/en/request.astro', 'src/components/RequestForm.astro', ...SHARED] },
   ];
 

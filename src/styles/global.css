@@ -26,6 +26,7 @@ body { font-family: var(--font-sans); line-height: 1.75; }
 .prose-ar p { margin-block: .75rem; }
 .prose-ar h2 { font-size: 1.35rem; font-weight: 700; margin-top: 2rem; margin-bottom: .75rem; }
 .prose-ar ul { list-style: disc; padding-inline-start: 1.5rem; }
+.prose-ar li { margin-block: .3rem; }
 .prose-ar a { color: var(--color-brand); text-decoration: underline; }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 44px; border-radius: .6rem; padding: .7rem 1.2rem; font-weight: 700; line-height: 1.4; cursor: pointer; transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
