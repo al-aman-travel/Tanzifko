@@ -1,0 +1,25 @@
+---
+/** أحدث مقالات الدليل — في الرئيسية وصفحات الحاويات */
+import { guidePairs, guidePath, guidePathEn } from '../lib/content';
+import { href } from '../lib/url';
+
+export interface Props { lang?: 'ar' | 'en' }
+const isEn = Astro.props.lang === 'en';
+const pairs = (await guidePairs()).filter((p) => !isEn || p.en).slice(0, 3);
+---
+{pairs.length > 0 && (
+  <section class="mt-14">
+    <div class="flex items-end justify-between gap-4">
+      <h2 class="text-2xl font-bold">{isEn ? 'Guides before you order' : 'دليلك قبل طلب الحاوية'}</h2>
+      <a class="text-sm font-semibold underline" href={href(isEn ? '/en/guides/' : '/dalil/')}>{isEn ? 'All guides' : 'كل المقالات'}</a>
+    </div>
+    <ul class="mt-5 grid gap-4 md:grid-cols-3">
+      {pairs.map((p) => (
+        <li class="rounded-xl border border-line bg-white p-5">
+          <h3 class="font-bold leading-snug"><a class="text-brand hover:underline" href={href(isEn ? guidePathEn(p.en!) : guidePath(p.ar))}>{isEn ? p.en!.data.title : p.ar.data.title}</a></h3>
+          <p class="mt-2 text-sm text-muted">{isEn ? p.en!.data.description : p.ar.data.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

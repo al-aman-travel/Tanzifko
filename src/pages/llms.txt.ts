@@ -1,12 +1,13 @@
 import type { APIRoute } from 'astro';
 import { business, description, descriptionEn, operations, licenseText, custom, restaurants } from '../data/business';
-import { containers, dims } from '../lib/content';
+import { containers, dims, guidePairs, guidePath, guidePathEn } from '../lib/content';
 import { abs } from '../lib/url';
 
 // ملخص واضح للشركة لأدوات الذكاء الاصطناعي (llms.txt)
 export const GET: APIRoute = async ({ site }) => {
   const u = (p: string) => abs(p, site);
   const list = await containers();
+  const guideList = await guidePairs();
   const lines = [
     `# ${business.name} (${business.nameEn})`,
     '',
@@ -49,6 +50,9 @@ export const GET: APIRoute = async ({ site }) => {
     `- [صور الأعمال](${u('/aamaluna/')})`,
     `- [اطلب حاوية](${u('/talab-hawiya/')})`,
     '',
+    '## الدليل',
+    ...guideList.map((g) => `- [${g.ar.data.title}](${u(guidePath(g.ar))}): ${g.ar.data.description}`),
+    '',
     '## English',
     `- [${business.nameEn} — waste container rental in Kuwait](${u('/en/')})`,
     ...list.map((c) => {
@@ -60,6 +64,7 @@ export const GET: APIRoute = async ({ site }) => {
     `- Full details for AI assistants: ${u('/llms-full.txt')}`,
     `- [Skip sizes guide](${u('/en/container-sizes/')})`,
     `- [Skip hire for contractors and projects](${u('/en/contractors/')})`,
+    ...guideList.filter((g) => g.en).map((g) => `- [${g.en!.data.title}](${u(guidePathEn(g.en!))})`),
     `- Skip hire in every area of Kuwait. Orders on WhatsApp: +965${business.whatsapp}.`,
     '',
   ];
