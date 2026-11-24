@@ -5,7 +5,7 @@ seoTitle: Renovation rubble removal in Kuwait with a rubble container
 description: Steps for removing renovation rubble from a house or villa in Kuwait with a rubble container — when to order, which size to choose, and how the container is swapped when full and collected at the end.
 faqs:
   - question: When should I order a rubble container for a home renovation?
-    answer: Before demolition starts, so rubble goes straight into the container and does not pile up on site. Send the area and the date on WhatsApp +965 97502760 and we will confirm availability.
+    answer: Before demolition starts, so rubble goes straight into the container and does not pile up on site. Send the area and the date on WhatsApp +965 50207029 and we will confirm availability.
   - question: Which container suits renovation rubble?
     answer: The 12 m³ rubble container for bricks, marble and construction and renovation waste, and the 6 m³ skip for smaller jobs. Wood and cardboard go in the 30 m³ container.
   - question: What if the container fills up before the renovation is finished?
@@ -16,7 +16,7 @@ Renovation starts with demolition: old tiles, marble, bricks and walls. If the c
 
 ## 1. Order the container before demolition starts
 
-Send the work area and the date on WhatsApp +965 97502760 before work begins, and we will confirm availability and the delivery time. We serve every area of Kuwait, daily from 7 am to 10 pm.
+Send the work area and the date on WhatsApp +965 50207029 before work begins, and we will confirm availability and the delivery time. We serve every area of Kuwait, daily from 7 am to 10 pm.
 
 ## 2. Choose the size by waste type
 
