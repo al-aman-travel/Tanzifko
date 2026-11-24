@@ -3,12 +3,16 @@ name: نشر الموقع على GitHub Pages
 on:
   push:
     branches: [main]
+  # بناء يومي 6:05 صباحًا بتوقيت الكويت لنشر مقالات الدليل المجدولة في يومها
+  schedule:
+    - cron: '5 3 * * *'
   workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
+  actions: write
 
 concurrency:
   group: "pages"
@@ -67,7 +71,23 @@ jobs:
       - name: IndexNow
         run: |
           sleep 30
-          URLS=$(curl -fsSL https://hawiyatkw.com/sitemap.xml | grep -o '<loc>[^<]*</loc>' | sed 's#</\?loc>##g' | python3 -c "import sys,json;print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))")
+          # البناء اليومي المجدول: نُبلغ فقط بالصفحات التي تغيّرت اليوم (المقال المنشور اليوم ودليله)
+          SINCE=$([ "${{ github.event_name }}" = "schedule" ] && TZ=Asia/Kuwait date +%F || echo 0000)
+          URLS=$(curl -fsSL https://hawiyatkw.com/sitemap.xml | python3 -c "
+          import sys,json,re
+          x=sys.stdin.read(); s=sys.argv[1]
+          out=[l for l,m in re.findall(r'<loc>([^<]+)</loc>\s*(?:<lastmod>([^<]+)</lastmod>)?',x) if (m or '')[:10]>=s]
+          print(json.dumps(out))" "$SINCE")
           [ "$URLS" = "[]" ] && exit 0
           curl -sS -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' \
             -d "{\"host\":\"hawiyatkw.com\",\"key\":\"2f1b317a52a91145805fdb87f78eaecd\",\"keyLocation\":\"https://hawiyatkw.com/2f1b317a52a91145805fdb87f78eaecd.txt\",\"urlList\":$URLS}" -w '\nHTTP %{http_code}\n'
+
+  # GitHub يوقف الجدولة بعد 60 يومًا بلا نشاط في المستودع؛ هذا يعيد تفعيلها مع كل بناء مجدول
+  keepalive:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - name: إبقاء الجدولة فعّالة
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT repos/${{ github.repository }}/actions/workflows/deploy.yml/enable

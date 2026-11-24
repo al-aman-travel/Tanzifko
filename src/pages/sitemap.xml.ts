@@ -12,7 +12,7 @@ import { PREVIEW } from '../../site.config.mjs';
  * وصور الصفحة الحقيقية (image:image)، وتاريخ آخر تعديل من git.
  * قبل ربط الدومين تُنشر فارغة (رابط المعاينة لا يُفهرس).
  */
-type Entry = { ar: string; en?: string; files: string[]; images?: { src: ImageMetadata; title: string }[] };
+type Entry = { ar: string; en?: string; files: string[]; images?: { src: ImageMetadata; title: string }[]; date?: Date };
 
 const SHARED = ['src/data/settings.json', 'src/data/business.ts'];
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -49,12 +49,13 @@ export const GET: APIRoute = async ({ site }) => {
     { ar: custom.path, en: custom.pathEn, files: ['src/pages/tafseel-hawiyat.astro', 'src/pages/en/custom-containers.astro', ...SHARED] },
     { ar: '/hawiyat-lilmuqawilin/', en: '/en/contractors/', files: ['src/pages/hawiyat-lilmuqawilin.astro', 'src/pages/en/contractors.astro', 'src/data/areas.ts', ...SHARED, ...workFiles] },
     { ar: '/aamaluna/', en: '/en/our-work/', files: ['src/pages/aamaluna.astro', 'src/pages/en/our-work.astro', 'src/content/works'], images: all.map(img) },
-    { ar: '/dalil/', en: '/en/guides/', files: ['src/components/GuideIndex.astro', 'src/content/guides', 'src/content/guides-en'] },
+    { ar: '/dalil/', en: '/en/guides/', files: ['src/components/GuideIndex.astro', 'src/content/guides', 'src/content/guides-en'], date: guideList[0]?.ar.data.date },
     ...guideList.map((g) => ({
       ar: guidePath(g.ar),
       en: g.en ? guidePathEn(g.en) : undefined,
       files: [...GUIDE_TPL, `src/content/guides/${g.ar.id}.md`, ...(g.en ? [`src/content/guides-en/${g.en.id}.md`] : [])],
       images: [{ src: g.ar.data.image, title: g.ar.data.imageAlt }],
+      date: g.ar.data.date, // المقال المجدول: lastmod لا يسبق تاريخ نشره
     })),
     { ar: '/talab-hawiya/', en: '/en/request/', files: ['src/pages/talab-hawiya.astro', 'src/pages/en/request.astro', 'src/components/RequestForm.astro', ...SHARED] },
   ];
@@ -64,7 +65,9 @@ export const GET: APIRoute = async ({ site }) => {
 
   const urls: string[] = [];
   for (const e of entries) {
-    const mod = lastmod(e.files);
+    const git = lastmod(e.files);
+    const pub = e.date?.toISOString().slice(0, 10);
+    const mod = pub && (!git || pub > git.slice(0, 10)) ? pub : git;
     const images = await Promise.all((e.images ?? []).map(async (i) => ({ loc: await imageUrl(i.src), title: i.title })));
     const alts = [
       `    <xhtml:link rel="alternate" hreflang="ar-KW" href="${abs(e.ar, site)}"/>`,
