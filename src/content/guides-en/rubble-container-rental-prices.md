@@ -5,7 +5,7 @@ seoTitle: Rubble container and skip hire prices in Kuwait
 description: The price of renting a rubble or construction waste container in Kuwait depends on the container size, the waste type, the work area and the type of contract. Here is what to send Tanzeefko Local on WhatsApp to get a price.
 faqs:
   - question: How much does it cost to rent a construction waste container in Kuwait?
-    answer: Prices are given on request. They depend on the container size, the waste type, the work area and the type of contract. Send these details on WhatsApp +965 97502760 and we will send you the price.
+    answer: Prices are given on request. They depend on the container size, the waste type, the work area and the type of contract. Send these details on WhatsApp +965 50207029 and we will send you the price.
   - question: Is a rubble container priced differently from a wood and cardboard container?
     answer: Yes. Each waste type has its own container. Rubble, bricks and marble go in a 6 or 12 m³ container; wood, cardboard and tyres go in the 30 m³ container, and each size has its own price.
   - question: Do you offer contracts?
@@ -33,7 +33,7 @@ We deliver the container to your site, swap it for an empty one when it is full,
 - The delivery date you need
 - How long the work is expected to take
 
-Send them on WhatsApp +965 97502760 or through the [container request form](/en/request/), and we will reply with the price and the delivery time. We work daily from 7 am to 10 pm.
+Send them on WhatsApp +965 50207029 or through the [container request form](/en/request/), and we will reply with the price and the delivery time. We work daily from 7 am to 10 pm.
 
 ## Before you order
 
