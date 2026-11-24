@@ -22,9 +22,15 @@ export const dims = (c: Container, en = false) => {
   return `${f(length)} × ${f(width)} × ${f(height)} ${en ? 'm' : 'م'}`;
 };
 
-/** مقالات الدليل: الأحدث أولًا */
+// النشر المجدول (طلب المالك 2026-11-24): مقال كل أسبوعين. المقال ذو التاريخ القادم لا تُبنى صفحته ولا يظهر في
+// الدليل ولا خريطة الموقع ولا llms.txt حتى يحين يومه بتوقيت الكويت؛ البناء اليومي (deploy.yml) ينشره تلقائيًا.
+export const todayKuwait = () =>
+  new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kuwait', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+export const isDue = (d: Date) => d.toISOString().slice(0, 10) <= todayKuwait();
+
+/** مقالات الدليل المنشورة: الأحدث أولًا */
 export const guides = async () =>
-  (await getCollection('guides', (g) => !g.data.draft)).sort((a, b) => b.data.date.getTime() - a.data.date.getTime() || a.data.order - b.data.order);
+  (await getCollection('guides', (g) => !g.data.draft && isDue(g.data.date))).sort((a, b) => b.data.date.getTime() - a.data.date.getTime() || a.data.order - b.data.order);
 
 /** أزواج (المقال العربي + نسخته الإنجليزية إن وُجدت) */
 export const guidePairs = async () => {
